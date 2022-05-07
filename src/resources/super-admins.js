@@ -8,10 +8,10 @@ module.exports = {
   },
 
   getOneSuperAdmin(req, res) {
-    const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id));
+    const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id, 10));
 
     if (found) {
-      res.json(superAdmins.filter((superAdmin) => superAdmin.id === parseInt(req.params.id)));
+      res.json(superAdmins.filter((superAdmin) => superAdmin.id === parseInt(req.params.id, 10)));
     } else {
       res.status(400).json({ msg: `No superAdmin with the id of ${req.params.id}` });
     }
