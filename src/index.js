@@ -17,6 +17,12 @@ app.get('/admins', (req, res) => {
   });
 });
 
+// Projects
+
+const projectsRouter = require('./resources/projects');
+
+app.use('/projects', projectsRouter);
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
