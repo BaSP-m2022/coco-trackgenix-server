@@ -23,6 +23,8 @@ const projectsRouter = require('./resources/projects');
 
 app.use('/projects', projectsRouter);
 
+app.use(express.json());
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
