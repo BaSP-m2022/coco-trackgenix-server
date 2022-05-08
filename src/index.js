@@ -4,6 +4,8 @@ import express from 'express';
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
 
+const timeSheetRouter = require('./resources/time-sheets');
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -16,6 +18,8 @@ app.get('/admins', (req, res) => {
     data: admins,
   });
 });
+
+app.use('/time-sheets', timeSheetRouter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
