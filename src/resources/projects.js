@@ -19,8 +19,26 @@ router.post('/add', (req, res) => {
   }
 });
 // Modify a Project - PUT
+// router.put('/edit', (req, res) => {
 
+// server.put('api/memebers/:id', (req, res) => {
+//     const found = members.some(idFilter(req));
+//     if (found) {
+//     members.forEach((member, i) => {
+//     if (idFilter(req)(member)) {
+//     const updMember = {...member, ...req.body};
+//     members[i] = updMember
+//     res.json({ msg: 'Member updated', updMember });
+//     }
+//     });
+//     } else {
+//     res.status(400).json({ msg: `No member with the id of ${req.params.id}` });
+//     }
+//     });
 // Get a Project - GET
+router.get('/getAll', (req, res) => {
+  res.send(projects);
+});
 
 router.get('/getProjectById/:id', (req, res) => {
   const projectId = req.params.id;
