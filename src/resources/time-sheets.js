@@ -14,7 +14,7 @@ router.get('/getTimeSheetById/:id', (req, res) => {
   }
 });
 
-router.post('/TSadd', (req, res) => {
+router.post('/addTimeSheet', (req, res) => {
   const tsData = req.body;
   dataTimeSheets.push(tsData);
   fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
