@@ -23,4 +23,21 @@ router.delete('/deleteTimeSheet/:id', (req, res) => {
     });
   }
 });
+
+router.put('/updateTimeSheet/:id', (req, res) => {
+  const idFound = dataTimeSheets.some((tsMember) => tsMember.id === req.params.id);
+  if (idFound) {
+    const updTimeSheet = req.body;
+    dataTimeSheets.forEach((member, i) => {
+      if (member.id === req.params.id) {
+        const updateTs = { ...member, ...updTimeSheet };
+        dataTimeSheets[i] = updateTs;
+        res.json({ msg: 'Timesheet update', updateTs });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `No timesheet user with the id of ${req.params.id}` });
+  }
+});
+
 module.exports = router;
