@@ -17,6 +17,12 @@ app.get('/admins', (req, res) => {
   });
 });
 
+const adminsRouter = require('./resources/admins');
+
+app.use('/admins', adminsRouter);
+
+app.use(express.json());
+
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
