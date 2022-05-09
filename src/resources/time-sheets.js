@@ -4,7 +4,7 @@ const dataTimeSheets = require('../data/time-sheets.json');
 
 const router = express.Router();
 
-router.get('/getTimeSheetById/:id', (req, res) => {
+router.get('/:id', (req, res) => {
   const timeSheetId = req.params.id;
   const tsheet = dataTimeSheets.find((tsheets) => tsheets.id === timeSheetId);
   if (tsheet) {
@@ -14,7 +14,7 @@ router.get('/getTimeSheetById/:id', (req, res) => {
   }
 });
 
-router.post('/addTimeSheet', (req, res) => {
+router.post('/', (req, res) => {
   const tsData = req.body;
   dataTimeSheets.push(tsData);
   fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
