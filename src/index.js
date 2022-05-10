@@ -6,6 +6,7 @@ const admins = require('./data/admins.json');
 
 const app = express();
 const port = process.env.PORT || 3000;
+app.use(express.json());
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
@@ -22,8 +23,6 @@ app.get('/admins', (req, res) => {
 const projectsRouter = require('./resources/projects');
 
 app.use('/projects', projectsRouter);
-
-app.use(express.json());
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
