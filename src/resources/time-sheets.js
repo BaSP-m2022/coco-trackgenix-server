@@ -16,14 +16,20 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const tsData = req.body;
-  dataTimeSheets.push(tsData);
-  fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(201).json(tsData);
-    }
-  });
+  const dataId = req.body.id;
+  const tsheets = dataTimeSheets.find((timesheetId) => timesheetId.id === dataId);
+  if(tsheets){
+      res.send("error: ID already exists")
+  } else {
+    dataTimeSheets.push(tsData);
+    fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(201).json(tsData);
+      }
+    });
+  }
 });
 
 module.exports = router;
