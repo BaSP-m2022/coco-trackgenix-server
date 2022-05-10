@@ -102,7 +102,7 @@ router.post('/create-employee', (req, res) => {
 });
 
 // Edit an employee (no validations for wrong information)
-router.put('id/:id', (req, res) => {
+router.put('/id/:id', (req, res) => {
   const editEmployee = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
@@ -130,7 +130,16 @@ router.put('id/:id', (req, res) => {
     if (password !== '') {
       employees[index].password = password;
     }
-    res.json({ msg: 'Employee updated' });
+    const updatedEmployee = employees[index];
+    const updatedList = employees.filter((employee) => employee.id !== parseInt(req.params.id, 10));
+    updatedList.splice(index, 1, updatedEmployee);
+    fs.writeFile('src/data/employees.json', JSON.stringify(updatedList), (err) => {
+      if (err) {
+        res.status(400).json(err);
+      } else {
+        res.json({ msg: 'Employee updated', updatedEmployee });
+      }
+    });
   } else {
     res.status(404).json({ msg: `Member with id ${req.params.id} not found` });
   }
