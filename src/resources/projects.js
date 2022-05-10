@@ -9,16 +9,17 @@ router.delete('/:id', (req, res) => {
   const projectId = req.params.id;
   const filterProj = jsonProject.filter((e) => e.id !== projectId);
   if (filterProj.length === jsonProject.length) {
-    res.send('project not found');
+    res.status(404).send('project not found');
   } else {
     fs.writeFile('src/data/projects.json', JSON.stringify(filterProj), (err) => {
       if (err) {
-        res.send(err);
+        res.status(400).send(err);
       } else {
-        res.send(filterProj);
+        res.status(200).send({ msg: 'Project deleted' }, filterProj);
       }
     });
   }
+  res.send(filterProj);
 });
 // Add employee to DEV, QAS, TL, or PM (first employee)
 router.put('/employee/:id/one', (req, res) => {
@@ -33,15 +34,15 @@ router.put('/employee/:id/one', (req, res) => {
         firstE.rate = upEmployee.rate ? upEmployee.rate : e.rate;
         fs.writeFile('src/data/projects.json', JSON.stringify(e), (err) => {
           if (err) {
-            res.send(err);
+            res.status(400).send(err);
           } else {
-            res.send(e);
-          }
+            res.status(200).send(e);
+          }res.status(200).send(e, { msg: 'Employee added' });
         });
       }
     });
   } else {
-    res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
+    res.status(404).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
 // Add employee to DEV, QAS, TL, or PM (second employee)
@@ -57,15 +58,15 @@ router.put('/employee/:id/two', (req, res) => {
         secondE.rate = upEmployee.rate ? upEmployee.rate : e.rate;
         fs.writeFile('src/data/projects.json', JSON.stringify(e), (err) => {
           if (err) {
-            res.send(err);
+            res.status(400).send(err);
           } else {
-            res.send(e);
-          }
+            res.status(200).send(e);
+          }res.status(200).send(e, { msg: 'Employee added' });
         });
       }
     });
   } else {
-    res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
+    res.status(404).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
 // Add employee to DEV, QAS, TL, or PM (third employee)
@@ -81,15 +82,15 @@ router.put('/employee/:id/three', (req, res) => {
         thirdE.rate = upEmployee.rate ? upEmployee.rate : e.rate;
         fs.writeFile('src/data/projects.json', JSON.stringify(e), (err) => {
           if (err) {
-            res.send(err);
+            res.status(400).send(err);
           } else {
-            res.send(e);
-          }
+            res.status(200).send(e);
+          }res.status(200).send(e, { msg: 'Employee added' });
         });
       }
     });
   } else {
-    res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
+    res.status(404).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
 // Add employee to DEV, QAS, TL, or PM (fourth employee)
@@ -105,15 +106,15 @@ router.put('/employee/:id/four', (req, res) => {
         fourthE.rate = upEmployee.rate ? upEmployee.rate : e.rate;
         fs.writeFile('src/data/projects.json', JSON.stringify(e), (err) => {
           if (err) {
-            res.send(err);
+            res.status(400).send(err);
           } else {
-            res.send(e);
-          }
+            res.status(200).send(e);
+          }res.status(200).send(e, { msg: 'Employee added' });
         });
       }
     });
   } else {
-    res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
+    res.status(404).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
 
@@ -133,15 +134,15 @@ router.put('/put/:id', (req, res) => {
         e.admin = upEmployee.admin ? upEmployee.admin : e.admin;
         fs.writeFile('src/data/projects.json', JSON.stringify(e), (err) => {
           if (err) {
-            res.send(err);
+            res.status(400).send(err);
           } else {
-            res.send(e);
-          }
+            res.status(200).send(e);
+          }res.status(200).send(e, { msg: 'Project modified' });
         });
       }
     });
   } else {
-    res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
+    res.status(404).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
 module.exports = router;
