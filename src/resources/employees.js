@@ -113,7 +113,6 @@ router.put('id/:id', (req, res) => {
   const {
     first_name: firstName = '', last_name: lastName = '', phone = '', email = '', password = '',
   } = editEmployee;
-  console.log('hello');
   if (employees.some((employee) => employee.id === parseInt(req.params.id, 10))) {
     const index = employees.findIndex((employee) => employee.id === parseInt(req.params.id, 10));
     if (firstName !== '') {
