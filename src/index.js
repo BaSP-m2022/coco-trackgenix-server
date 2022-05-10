@@ -3,6 +3,7 @@ import express from 'express';
 
 // use "require" to import JSON files
 const admins = require('./data/admins.json');
+const adminsRouter = require('./resources/admins');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -17,11 +18,8 @@ app.get('/admins', (req, res) => {
   });
 });
 
-const adminsRouter = require('./resources/admins');
-
-app.use('/admins', adminsRouter);
-
 app.use(express.json());
+app.use('/admins', adminsRouter);
 
 app.listen(port, () => {
   // eslint-disable-next-line no-console
