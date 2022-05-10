@@ -1,6 +1,6 @@
 import express from 'express';
+import fs from 'fs';
 
-// const fs = require('fs');
 const employees = require('../data/employees.json');
 
 const router = express.Router();
@@ -22,12 +22,39 @@ const generateId = () => {
 };
 
 // get 1 employee
-router.get('/:id', (req, res) => {
+router.get('/id/:id', (req, res) => {
   const employee = employees.filter((user) => user.id === parseInt(req.params.id, 10));
   if (employee.length === 0) {
     res.status(404).json({ msg: `Member with id ${req.params.id} not found` });
   } else {
     res.json({ employee });
+  }
+});
+
+// filter list of employees
+router.get('/filter', (req, res) => {
+  const filters = {
+    name: req.query.name,
+    lastName: req.query.lastName,
+    active: req.query.active,
+  };
+  const { name = '', lastName = '', active = '' } = filters;
+  let filteredList;
+
+  if (name !== '') {
+    filteredList = employees.filter((employee) => employee.first_name === name);
+  }
+  if (lastName !== '') {
+    filteredList = filteredList.filter((employee) => employee.last_name === lastName);
+  }
+  if (active !== '') {
+    filteredList = filteredList.filter((employee) => employee.active === active);
+  }
+
+  if (name === '' && lastName === '' && active === '') {
+    res.json(employees);
+  } else {
+    res.json(filteredList);
   }
 });
 
@@ -64,16 +91,15 @@ router.post('/create-employee', (req, res) => {
     }
     res.json(errors);
   } else {
-    res.send(newEmployee);
+    employees.push(newEmployee);
+    fs.writeFile('src/data/employees.json', JSON.stringify(employees), (err) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send('Employee Added');
+      }
+    });
   }
 });
-
-// filter list of employees
-// router.get('/filter', (req, res) => {
-//     const name = req.query.name;
-//     const lastName = req.query.lastName;
-//     const onlineStatus = req.query.onlineStatus;
-
-// })
 
 export default router;
