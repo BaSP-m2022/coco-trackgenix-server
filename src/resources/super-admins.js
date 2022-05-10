@@ -1,12 +1,10 @@
-const superAdmins = require('../data/super-admins.json');
 const express = require('express');
 
 const router = express.Router();
 const fs = require('fs');
-const res = require('express/lib/response');
+const superAdmins = require('../data/super-admins.json');
 
 router.use((req, res, next) => {
-  console.log('Time: ', Date.now());
   next();
 });
 
@@ -80,33 +78,33 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id, 10));
-    if (found) {
-        const updatedSuperAdmin = {
-            id: req.params.id.length + 1,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            phone: req.body.phone,
-            email: req.body.email,
-            password: req.body.password,
-            active: true,
-          };
-        superAdmins.forEach((superAdmin, i) => {
-            if (superAdmin.id == req.params.id) {
-                superAdmins[i] = updatedSuperAdmin;
-            }
-        }); 
-        
-        fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins), (err) => {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send({
-                msg: 'Updated successfully',
-                updated_superadmin: updatedSuperAdmin,
-              });
-            }
+  const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id, 10));
+  if (found) {
+    const updatedSuperAdmin = {
+      id: req.params.id.length + 1,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      phone: req.body.phone,
+      email: req.body.email,
+      password: req.body.password,
+      active: true,
+    };
+    superAdmins.forEach((superAdmin, i) => {
+      if (superAdmin.id == req.params.id) {
+        superAdmins[i] = updatedSuperAdmin;
+      }
+    });
+
+    fs.writeFile('src/data/super-admins.json', JSON.stringify(superAdmins), (err) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.send({
+          msg: 'Updated successfully',
+          updated_superadmin: updatedSuperAdmin,
         });
-    }
+      }
+    });
+  }
 });
 module.exports = router;
