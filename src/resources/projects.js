@@ -1,4 +1,6 @@
 const express = require('express');
+const fs = require('fs');
+
 const projects = require('../data/projects.json');
 
 const router = express.Router();
@@ -22,26 +24,27 @@ router.post('/', (req, res) => {
     id: generateId(),
     ...req.body,
   };
+  projects.push(newProject);
   const {
     name,
     description,
     clientName,
     startDate,
     endDate,
-    devRate,
-    qaRate,
-    pmRate,
-    tiRate,
-    projectManager,
-    techLeader,
-    admin,
+    employee,
   } = newProject;
-  if (name && description && clientName && startDate && endDate && devRate && qaRate
-        && pmRate && tiRate && projectManager && techLeader && admin) {
+  if (name && description && clientName && startDate && endDate && employee) {
     res.json(newProject);
   } else {
     res.json({ msg: 'Please, check your data is complete.' });
   }
+  fs.writeFile('src/data/projects.json', JSON.stringify(projects), (err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send('Project created!');
+    }
+  });
 });
 
 // Get a Project - GET
