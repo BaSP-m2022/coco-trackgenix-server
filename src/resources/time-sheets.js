@@ -19,9 +19,9 @@ router.post('/', (req, res) => {
   dataTimeSheets.push(tsData);
   fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
     if (err) {
-      res.send(err);
+      res.status(404).send(err);
     } else {
-      res.send('Created correctly');
+      res.status(201).json(tsData);
     }
   });
 });
