@@ -22,7 +22,6 @@ app.get('/admins', (req, res) => {
 });
 
 app.use('/time-sheets', timeSheetRouter);
-
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
