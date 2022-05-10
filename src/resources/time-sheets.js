@@ -4,11 +4,11 @@ const dataTimeSheets = require('../data/time-sheets.json');
 
 const router = express.Router();
 
-router.get('/getAllTimeSheet', (req, res) => {
+router.get('/', (req, res) => {
   res.send(dataTimeSheets);
 });
 
-router.delete('/deleteTimeSheet/:id', (req, res) => {
+router.delete('/:id', (req, res) => {
   const timeSheetId = req.params.id;
   const filterTs = dataTimeSheets.filter((timeSheet) => timeSheet.id !== timeSheetId);
   if (dataTimeSheets.length === filterTs.length) {
@@ -18,13 +18,13 @@ router.delete('/deleteTimeSheet/:id', (req, res) => {
       if (err) {
         res.send(err);
       } else {
-        res.send('Deleted correctly');
+        res.send(filterTs);
       }
     });
   }
 });
 
-router.put('/updateTimeSheet/:id', (req, res) => {
+router.put('/:id', (req, res) => {
   const idFound = dataTimeSheets.some((tsMember) => tsMember.id === req.params.id);
   if (idFound) {
     const updTimeSheet = req.body;
@@ -32,6 +32,13 @@ router.put('/updateTimeSheet/:id', (req, res) => {
       if (member.id === req.params.id) {
         const updateTs = { ...member, ...updTimeSheet };
         dataTimeSheets[i] = updateTs;
+        fs.writeFile('src/data/time-sheets.json', JSON.stringify(updateTs), (err) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send('Updated correctly');
+          }
+        });
         res.json({ msg: 'Timesheet update', updateTs });
       }
     });
