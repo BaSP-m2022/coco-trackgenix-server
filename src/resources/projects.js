@@ -20,7 +20,7 @@ router.delete('/:id', (req, res) => {
     });
   }
 });
-// Add employee to DEV, QAS, TL, or PM
+// Add employee to DEV, QAS, TL, or PM (first employee)
 router.put('/employee/:id/one', (req, res) => {
   const found = jsonProject.some((e) => e.id === req.params.id);
   if (found) {
@@ -44,6 +44,7 @@ router.put('/employee/:id/one', (req, res) => {
     res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
+// Add employee to DEV, QAS, TL, or PM (second employee)
 router.put('/employee/:id/two', (req, res) => {
   const found = jsonProject.some((e) => e.id === req.params.id);
   if (found) {
@@ -67,6 +68,7 @@ router.put('/employee/:id/two', (req, res) => {
     res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
+// Add employee to DEV, QAS, TL, or PM (third employee)
 router.put('/employee/:id/three', (req, res) => {
   const found = jsonProject.some((e) => e.id === req.params.id);
   if (found) {
@@ -90,6 +92,7 @@ router.put('/employee/:id/three', (req, res) => {
     res.status(400).json({ msg: `proyect not found with the id of ${req.params.id}` });
   }
 });
+// Add employee to DEV, QAS, TL, or PM (fourth employee)
 router.put('/employee/:id/four', (req, res) => {
   const found = jsonProject.some((e) => e.id === req.params.id);
   if (found) {
