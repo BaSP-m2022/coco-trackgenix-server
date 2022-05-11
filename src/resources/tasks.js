@@ -40,7 +40,7 @@ router.post('/', (req, res) => {
   });
 });
 router.put('/:id', (req, res) => {
-  const Found = taskData.some((tsAdmin) => tsAdmin.id === req.params.id);
+  const Found = taskData.some((modifiedTask) => modifiedTask.id === req.params.id);
   if (Found) {
     const updateTask = req.body;
     taskData.forEach((task, i) => {
