@@ -6,10 +6,9 @@ const admins = require('./data/admins.json');
 const userRouter = require('./resources/tasks');
 
 const app = express();
-app.use(express.json());
 const port = process.env.PORT || 3000;
 app.use(express.json());
-app.use('/api/tasks', userRouter);
+app.use('/tasks', userRouter);
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
