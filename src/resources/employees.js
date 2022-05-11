@@ -21,6 +21,12 @@ const generateId = () => {
   return count;
 };
 
+router.get('/', (req, res) => {
+  res.status(200).json({
+    data: employees,
+  });
+});
+
 // get 1 employee
 router.get('/id/:id', (req, res) => {
   const employee = employees.filter((user) => user.id === parseInt(req.params.id, 10));
