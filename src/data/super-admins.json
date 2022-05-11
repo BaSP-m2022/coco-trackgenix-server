@@ -1,0 +1,72 @@
+[{
+    "id": 1,
+    "firstName": "Dasi",
+    "lastName": "Emmatt",
+    "email": "demmatt0@chicagotribune.com",
+    "password": "LO1jq4",
+    "active": true
+  },
+  {
+    "id": 3,
+    "firstName": "Lyman",
+    "lastName": "Adenet",
+    "email": "ladenet2@mit.edu",
+    "password": "Y7cRjBZm",
+    "active": true
+  },
+  {
+    "id": 4,
+    "firstName": "Nerti",
+    "lastName": "Smithe",
+    "email": "nsmithe3@jiathis.com",
+    "password": "H8fjmXf3F4nk",
+    "active": false
+  },
+  {
+    "id": 5,
+    "firstName": "Lil",
+    "lastName": "Ligertwood",
+    "email": "lligertwood4@netvibes.com",
+    "password": "ZspZFF81f3e",
+    "active": false
+  },
+  {
+    "id": 6,
+    "firstName": "Murvyn",
+    "lastName": "Tomkowicz",
+    "email": "mtomkowicz5@digg.com",
+    "password": "QDWshb",
+    "active": true
+  },
+  {
+    "id": 7,
+    "firstName": "Rois",
+    "lastName": "Wittman",
+    "email": "rwittman6@buzzfeed.com",
+    "password": "P5NVT3g5O",
+    "active": true
+  },
+  {
+    "id": 8,
+    "firstName": "Clarke",
+    "lastName": "Shout",
+    "email": "cshout7@cnbc.com",
+    "password": "k1HUEzT6",
+    "active": false
+  },
+  {
+    "id": 9,
+    "firstName": "Maurise",
+    "lastName": "Clausson",
+    "email": "mclausson8@lulu.com",
+    "password": "Yh6eUYx",
+    "active": true
+  },
+  {
+    "id": 10,
+    "firstName": "Kevan",
+    "lastName": "Meade",
+    "email": "kmeade9@nymag.com",
+    "password": "jkp1oE1",
+    "active": true
+}]
