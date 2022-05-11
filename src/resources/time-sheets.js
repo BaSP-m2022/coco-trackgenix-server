@@ -8,6 +8,34 @@ router.get('/', (req, res) => {
   res.send(dataTimeSheets);
 });
 
+router.get('/:id', (req, res) => {
+  const timeSheetId = req.params.id;
+  const tsheet = dataTimeSheets.find((tsheets) => tsheets.id === timeSheetId);
+  if (tsheet) {
+    res.send(tsheet);
+  } else {
+    res.send('Id not found');
+  }
+});
+
+router.post('/', (req, res) => {
+  const tsData = req.body;
+  const dataId = req.body.id;
+  const tsheets = dataTimeSheets.find((timesheetId) => timesheetId.id === dataId);
+  if (tsheets) {
+    res.send('error: ID already exists');
+  } else {
+    dataTimeSheets.push(tsData);
+    fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(201).json(tsData);
+      }
+    });
+  }
+});
+
 router.delete('/:id', (req, res) => {
   const timeSheetId = req.params.id;
   const filterTs = dataTimeSheets.filter((timeSheet) => timeSheet.id !== timeSheetId);

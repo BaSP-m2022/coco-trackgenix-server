@@ -14,12 +14,10 @@ app.use(express.json());
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
-
-// Routers
-app.use('/time-sheets', timeSheetRouter);
+// router
 app.use('/employees', router);
 app.use('/projects', projects);
-
+app.use('/time-sheets', timeSheetRouter);
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
