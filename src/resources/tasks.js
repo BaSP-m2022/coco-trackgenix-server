@@ -1,11 +1,8 @@
 const express = require('express');
 const fs = require('fs');
-
 const router = express.Router();
 const taskData = require('../data/tasks.json');
-
 router.get('/', (req, res) => res.json(taskData));
-
 router.get('/:id', (req, res) => {
     const found = taskData.find((data) => data.id === req.params.id);
     if (found) {
@@ -14,7 +11,6 @@ router.get('/:id', (req, res) => {
         res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
     }
 });
-
 router.delete('/:id', (req, res) => {
     const taskId = req.params.id;
     const filterTs = taskData.filter((taskParams) => taskParams.id !== taskId);
@@ -30,7 +26,6 @@ router.delete('/:id', (req, res) => {
         });
     }
 });
-
 router.post('/', (req, res) => {
     const tasksjson = req.body;
     taskData.push(tasksjson);
@@ -42,8 +37,6 @@ router.post('/', (req, res) => {
         }
     });
 });
-
-
 router.put('/:id', (req, res) => {
     const Found = taskData.some((tsAdmin) => tsAdmin.id === req.params.id);
     if (Found) {
