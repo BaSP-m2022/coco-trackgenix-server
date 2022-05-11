@@ -1,6 +1,5 @@
 const express = require('express');
 const fs = require('fs');
-
 const projects = require('../data/projects.json');
 
 const router = express.Router();
@@ -32,8 +31,9 @@ router.post('/', (req, res) => {
     startDate,
     endDate,
     employee,
+    admin,
   } = newProject;
-  if (name && description && clientName && startDate && endDate && employee) {
+  if (name && description && clientName && startDate && endDate && employee && admin) {
     res.json(newProject);
   } else {
     res.json({ msg: 'Please, check your data is complete.' });
