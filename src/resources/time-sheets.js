@@ -18,8 +18,8 @@ router.post('/', (req, res) => {
   const tsData = req.body;
   const dataId = req.body.id;
   const tsheets = dataTimeSheets.find((timesheetId) => timesheetId.id === dataId);
-  if(tsheets){
-      res.send("error: ID already exists")
+  if (tsheets) {
+    res.send('error: ID already exists');
   } else {
     dataTimeSheets.push(tsData);
     fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
