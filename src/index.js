@@ -4,7 +4,7 @@ import express from 'express';
 const superAdmins = require('./resources/super-admins');
 const admins = require('./data/admins.json');
 const projects = require('./resources/projects');
-// configure the app to use bodyParser()
+
 const app = express();
 const port = process.env.PORT || 3000;
 
