@@ -5,9 +5,6 @@ const employees = require('../data/employees.json');
 
 const router = express.Router();
 
-// Body parser
-router.use(express.json());
-
 const generateId = () => {
   let count = 0;
   employees.forEach((employee) => {
