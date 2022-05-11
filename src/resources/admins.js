@@ -1,16 +1,13 @@
 const express = require('express');
 const fs = require('fs');
 const admins = require('../data/admins.json');
+
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.send(admins);
-});
-
 router.get('/:id', (req, res) => {
-  const found = admins.find((data) => data.id === req.params.id);
-  if (found) {
-    res.send(found);
+  const admin = admins.find((data) => data.id === req.params.id);
+  if (admin) {
+    res.json(admin);
   } else {
     res.send('User not found');
   }
@@ -18,14 +15,19 @@ router.get('/:id', (req, res) => {
 
 router.post('/', (req, res) => {
   const adminsData = req.body;
-  admins.push(adminsData);
-  fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(201).json(adminsData);
-    }
-  });
+  const found = admins.some((data) => data.id === req.params.id);
+  if (found) {
+    res.send('This id already exists');
+  } else {
+    admins.push(adminsData);
+    fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
+      if (err) {
+        res.status(404).send(err);
+      } else {
+        res.status(200).json(adminsData);
+      }
+    });
+  }
 });
 
 router.delete('/:id', (req, res) => {
@@ -45,26 +47,26 @@ router.delete('/:id', (req, res) => {
 });
 
 router.put('/:id', (req, res) => {
-    const idFound = admins.some((tsAdmin) => tsAdmin.id === req.params.id);
-    if (idFound) {
-      const updAdmin = req.body;
-      admins.forEach((member, i) => {
-        if (member.id === req.params.id) {
-          const tsUpdate = { ...member, ...updAdmin };
-          admins[i] = tsUpdate;
-          fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-            if (err) {
-              res.send(err);
-            } else {
-              res.send('Updated correctly');
-            }
-          });
-          res.json({ msg: 'Admin update', tsUpdate });
-        }
-      });
-    } else {
-      res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
-    }
-  });
+  const idFound = admins.some((tsAdmin) => tsAdmin.id === req.params.id);
+  if (idFound) {
+    const updAdmin = req.body;
+    admins.forEach((member, i) => {
+      if (member.id === req.params.id) {
+        const tsUpdate = { ...member, ...updAdmin };
+        admins[i] = tsUpdate;
+        fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.send('Updated correctly');
+          }
+        });
+        res.json({ msg: 'Admin update', tsUpdate });
+      }
+    });
+  } else {
+    res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
+  }
+});
 
 module.exports = router;
