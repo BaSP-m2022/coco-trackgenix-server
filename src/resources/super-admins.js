@@ -4,13 +4,22 @@ const router = express.Router();
 const fs = require('fs');
 const superAdmins = require('../data/super-admins.json');
 
-router.use((req, res, next) => {
-  next();
-});
+const generateId = () => {
+  let count = 0;
+  superAdmins.forEach((superAdmin) => {
+    count += 1;
+    if (count !== superAdmin.id) {
+      return count;
+    }
+    return count;
+  });
+  count += 1;
+  return count;
+};
 
 router.post('/', (req, res) => {
   const newSuperAdmin = {
-    id: superAdmins.length + 1,
+    id: generateId(),
     firstName: req.body.firstName,
     lastName: req.body.lastName,
     phone: req.body.phone,
@@ -60,7 +69,9 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
   const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id, 10));
   if (found) {
+    // eslint-disable-next-line max-len
     const newSuperAdmins = (superAdmins.filter((superAdmin) => superAdmin.id !== parseInt(req.params.id, 10)));
+    // eslint-disable-next-line max-len
     const deletedSuperAdmin = (superAdmins.filter((superAdmin) => superAdmin.id === parseInt(req.params.id, 10)));
     fs.writeFile('src/data/super-admins.json', JSON.stringify(newSuperAdmins), (err) => {
       if (err) {
@@ -81,7 +92,7 @@ router.put('/:id', (req, res) => {
   const found = superAdmins.some((superAdmin) => superAdmin.id === parseInt(req.params.id, 10));
   if (found) {
     const updatedSuperAdmin = {
-      id: req.params.id.length + 1,
+      id: parseInt(req.params.id, 10),
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phone: req.body.phone,
@@ -90,7 +101,7 @@ router.put('/:id', (req, res) => {
       active: true,
     };
     superAdmins.forEach((superAdmin, i) => {
-      if (superAdmin.id == req.params.id) {
+      if (superAdmin.id === req.params.id) {
         superAdmins[i] = updatedSuperAdmin;
       }
     });
