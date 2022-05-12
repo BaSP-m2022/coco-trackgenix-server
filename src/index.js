@@ -1,38 +1,30 @@
+/* eslint-disable no-console */
 import express from 'express';
-import router from './resources/employees';
+import mongoose from 'mongoose';
+import router from './routes';
 
-const userRouter = require('./resources/tasks');
-
-// use "require" to import JSON files
-const admins = require('./data/admins.json');
-const adminsRouter = require('./resources/admins');
-const superAdmins = require('./resources/super-admins');
-const projects = require('./resources/projects');
-const timeSheetRouter = require('./resources/time-sheets');
-
+// Server
 const app = express();
 const port = process.env.PORT || 3000;
 
 // Body parser
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Database connection
+const mongoDBURL = 'mongodb+srv://BaSP_datatabase:RadiumRocket@basp-coco.zj49d.mongodb.net/BaSP-Coco?retryWrites=true&w=majority';
+
+mongoose.connect(mongoDBURL, () => {
+  console.log('Connection to database established');
+}, () => console.log('Connection to database failed'));
+
+// Routes
+app.use(router);
 
 app.get('/', async (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/admins', (req, res) => {
-  res.status(200).json({
-    data: admins,
-  });
-});
-
-// router
-app.use('/employees', router);
-app.use('/admins', adminsRouter);
-app.use('/tasks', userRouter);
-app.use('/projects', projects);
-app.use('/superAdmins', superAdmins);
-app.use('/time-sheets', timeSheetRouter);
 app.listen(port, () => {
   // eslint-disable-next-line no-console
   console.log(`Example app listening on port ${port}`);
