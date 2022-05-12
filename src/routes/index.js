@@ -7,3 +7,5 @@ const router = express.Router();
 
 router
   .use('/tasks', tasksRouter);
+
+export default router;
