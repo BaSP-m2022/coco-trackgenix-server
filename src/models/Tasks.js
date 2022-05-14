@@ -5,6 +5,12 @@ const taskSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxlength: 120,
+    lowercase: true,
+  },
+  created: {
+    type: Date,
+    immutable: true,
+    default: () => Date.now(),
   },
 });
 
