@@ -1,7 +1,27 @@
-import Task from '../models/Tasks';
+import joi from 'joi';
+import Tasks from '../models/Tasks';
 
+// Validation Schema
+const validationSchema = joi.object({
+  description: joi
+    .string()
+    .min(1)
+    .max(120)
+    .required()
+    .regex(/[0-:A-Za-z ",-.]/g),
+});
+
+// Validations
 const validateCreation = async (req, res, next) => {
-  const found = await Task.find({ description: req.body.description.toLowerCase().trim() });
+  const validation = validationSchema.validate(req.body);
+  const found = await Tasks.find({ description: req.body.description.toLowerCase().trim() });
+  if (validation.error) {
+    return res.status(400).json({
+      msg: validation.error.details[0].message,
+      data: undefined,
+      error: true,
+    });
+  }
   if (found) {
     return res.status(400).json({
       msg: 'This task already exists',
@@ -13,7 +33,15 @@ const validateCreation = async (req, res, next) => {
 };
 
 const validateUpdate = async (req, res, next) => {
-  const found = await Task.find({ description: req.body.description.toLowerCase().trim() });
+  const validation = validationSchema.validate(req.body);
+  const found = await Tasks.find({ description: req.body.description.toLowerCase().trim() });
+  if (validation.error) {
+    return res.status(400).json({
+      msg: validation.error.details[0].message,
+      data: undefined,
+      error: true,
+    });
+  }
   if (!found) {
     return res.status(400).json({
       msg: 'This task do not exists',

@@ -1,64 +1,106 @@
-const express = require('express');
-const fs = require('fs');
+import Tasks from '../models/Tasks';
 
-const router = express.Router();
-const taskData = require('../data/tasks.json');
-
-router.get('/', (req, res) => res.json(taskData));
-router.get('/:id', (req, res) => {
-  const found = taskData.find((data) => data.id === req.params.id);
-  if (found) {
-    res.json(taskData.filter((data) => data.id === req.params.id));
-  } else {
-    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  }
-});
-router.delete('/:id', (req, res) => {
-  const taskId = req.params.id;
-  const filterTs = taskData.filter((taskParams) => taskParams.id !== taskId);
-  if (taskData.length === filterTs.length) {
-    res.send('Could not delete because the time sheet was not found');
-  } else {
-    fs.writeFile('src/data/tasks.json', JSON.stringify(filterTs), (err) => {
-      if (err) {
-        res.status(404).send(err);
-      } else {
-        res.send(filterTs);
-      }
+const getTasks = async (req, res) => {
+  try {
+    const list = await Tasks.find({});
+    res.status(200).json({
+      msg: 'List of tasks successfully fetched',
+      data: list,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'There was an error',
+      data: error,
+      error: true,
     });
   }
-});
-router.post('/', (req, res) => {
-  const tasksjson = req.body;
-  taskData.push(tasksjson);
-  fs.writeFile('src/data/tasks.json', JSON.stringify(taskData), (err) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(201).json(tasksjson);
+};
+
+const getTaskById = async (req, res) => {
+  try {
+    const task = await Tasks.find({ _id: req.params.id });
+    if (task) {
+      res.status(200).json({
+        msg: `Task with id ${req.params.id} successfully fetched`,
+        data: task,
+        error: false,
+      });
     }
-  });
-});
-router.put('/:id', (req, res) => {
-  const Found = taskData.some((modifiedTask) => modifiedTask.id === req.params.id);
-  if (Found) {
-    const updateTask = req.body;
-    taskData.forEach((task, i) => {
-      if (task.id === req.params.id) {
-        const tsUpdate = { ...task, ...updateTask };
-        taskData[i] = tsUpdate;
-        fs.writeFile('src/data/tasks.json', JSON.stringify(taskData), (err) => {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send('Updated correctly');
-          }
-        });
-        res.json({ msg: 'task update', tsUpdate });
-      }
+    res.status(404).json({
+      msg: `Task with id ${req.params.id} not found`,
+      data: undefined,
+      error: true,
     });
-  } else {
-    res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'There was an error',
+      data: error,
+      error: true,
+    });
   }
-});
-module.exports = router;
+};
+
+// const createTask = async (req, res) => {
+//   try {
+//     if (task) {
+//       res.status(200).json({
+//         msg: `Task with id ${req.params.id} successfully fetched`,
+//         data: task,
+//         error: false,
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       msg: 'There was an error',
+//       data: error,
+//       error: true,
+//     });
+//   }
+// };
+
+// const deleteTask = async (req, res) => {
+//   try {
+//     const task = await Tasks.find({ _id: req.params.id });
+//     if (task) {
+//       res.status(200).json({
+//         msg: `Task with id ${req.params.id} successfully fetched`,
+//         data: task,
+//         error: false,
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       msg: 'There was an error',
+//       data: error,
+//       error: true,
+//     });
+//   }
+// };
+
+// const updateTask = async (req, res) => {
+//   try {
+//     const task = await Tasks.find({ _id: req.params.id });
+//     if (task) {
+//       res.status(200).json({
+//         msg: `Task with id ${req.params.id} successfully fetched`,
+//         data: task,
+//         error: false,
+//       });
+//     }
+//   } catch (error) {
+//     res.status(500).json({
+//       msg: 'There was an error',
+//       data: error,
+//       error: true,
+//     });
+//   }
+// };
+
+export default {
+  getTasks,
+  getTaskById,
+  // createTask,
+  // deleteTask,
+  // updateTask,
+};
