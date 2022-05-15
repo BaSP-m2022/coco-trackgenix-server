@@ -6,7 +6,8 @@ const router = express.Router();
 
 router
   .get('/', adminsController.getAllAdmins)
-  .get('/:id', adminsController.getAdminById);
+  .get('/:id', adminsController.getAdminById)
+  .delete('/:id', adminsController.deleteAdmin);
 
 export default router;
 

@@ -14,13 +14,12 @@ const getAllAdmins = async (req, res) => {
 const getAdminById = async (req, res) => {
   try {
     if (req.params.id) {
-      const admin = await adminModel.findById({_id: req.params.id});
+      const admin = await adminModel.findById({ _id: req.params.id });
       return res.status(200).json(admin);
-    } else{
-        return res.status(400).json({
-        msg: 'missing id parameter',
-        });
     }
+    return res.status(400).json({
+      msg: 'missing id parameter',
+    });
   } catch (error) {
     return res.json({
       msg: error,
@@ -28,7 +27,34 @@ const getAdminById = async (req, res) => {
   }
 };
 
-export default { getAllAdmins, getAdminById };
+const deleteAdmin = async (req, res) => {
+  try {
+    if (!req.params.id) {
+      return res.status(400).json({
+        msg: 'missing id parameter',
+      });
+    }
+    const result = await adminModel.findByIdAndDelete({ _id: req.params.id });
+    if (!result) {
+      return res.status(404).json({
+        msg: 'The admin has not been found',
+      });
+    }
+    return res.status(200).json({
+      msg: 'The admin has been successfully deleted',
+    });
+  } catch (error) {
+    return res.json({
+      msg: 'An error has ocurred',
+    });
+  }
+};
+
+export default {
+  getAllAdmins,
+  getAdminById,
+  deleteAdmin,
+};
 
 // const express = require('express');
 // const fs = require('fs');
