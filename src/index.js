@@ -7,8 +7,6 @@ import router from './routes';
 const app = express();
 const port = process.env.PORT || 3000;
 
-const timeSheet = require("./models/Time-sheets");
-
 // Body parser
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
