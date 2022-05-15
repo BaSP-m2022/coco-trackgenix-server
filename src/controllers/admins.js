@@ -50,81 +50,55 @@ const deleteAdmin = async (req, res) => {
   }
 };
 
+const createAdmin = async (req, res) => {
+  try {
+    const admin = await adminModel.create({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      active: req.body.active,
+    });
+    const resultAdmin = await admin.save();
+    return res.status(201).json(resultAdmin);
+  } catch (error) {
+    return res.json({
+      msg: 'An error has occurred',
+      error: error.details[0].message,
+    });
+  }
+};
+
+const updateAdmin = async (req, res) => {
+  try {
+    if (!req.params) {
+      return res.status(400).json({
+        msg: 'Missing id parameter',
+      });
+    }
+    const result = await adminModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!result) {
+      return res.status(404).json({
+        msg: 'Admin has not been found',
+      });
+    }
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.json({
+      msg: 'There was an error',
+      error: error.details[0].message,
+    });
+  }
+};
+
 export default {
   getAllAdmins,
   getAdminById,
   deleteAdmin,
+  createAdmin,
+  updateAdmin,
 };
-
-// const express = require('express');
-// const fs = require('fs');
-// const admins = require('../data/admins.json');
-
-// const router = express.Router();
-
-// router.get('/:id', (req, res) => {
-//   const admin = admins.find((data) => data.id === req.params.id);
-//   if (admin) {
-//     res.json(admin);
-//   } else {
-//     res.send('User not found');
-//   }
-// });
-
-// router.post('/', (req, res) => {
-//   const adminsData = req.body;
-//   const found = admins.some((data) => data.id === req.params.id);
-//   if (found) {
-//     res.send('This id already exists');
-//   } else {
-//     admins.push(adminsData);
-//     fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-//       if (err) {
-//         res.status(404).send(err);
-//       } else {
-//         res.status(200).json(adminsData);
-//       }
-//     });
-//   }
-// });
-
-// router.delete('/:id', (req, res) => {
-//   const adminsId = req.params.id;
-//   const filterTs = admins.filter((admin) => admin.id !== adminsId);
-//   if (admins.length === filterTs.length) {
-//     res.send('Could not delete because the time sheet was not found');
-//   } else {
-//     fs.writeFile('src/data/admins.json', JSON.stringify(filterTs), (err) => {
-//       if (err) {
-//         res.status(404).send(err);
-//       } else {
-//         res.send(filterTs);
-//       }
-//     });
-//   }
-// });
-
-// router.put('/:id', (req, res) => {
-//   const idFound = admins.some((tsAdmin) => tsAdmin.id === req.params.id);
-//   if (idFound) {
-//     const updAdmin = req.body;
-//     admins.forEach((member, i) => {
-//       if (member.id === req.params.id) {
-//         const tsUpdate = { ...member, ...updAdmin };
-//         admins[i] = tsUpdate;
-//         fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-//           if (err) {
-//             res.send(err);
-//           } else {
-//             res.send('Updated correctly');
-//           }
-//         });
-//         res.json({ msg: 'Admin update', tsUpdate });
-//       }
-//     });
-//   } else {
-//     res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
-//   }
-// });
-
-// module.exports = router;
