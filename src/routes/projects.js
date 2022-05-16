@@ -5,5 +5,6 @@ const router = express.Router();
 
 router
   .get('/:id', projects.getProjectById)
-  .delete('/:id', projects.deleteProject);
+  .delete('/:id', projects.deleteProject)
+  .put('/:id', projects.updateProject);
 export default router;
