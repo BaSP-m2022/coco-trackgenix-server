@@ -6,15 +6,14 @@ const validationSchema = joi.object({
   description: joi
     .string()
     .min(1)
-    .max(120)
+    .max(90)
     .required()
-    .regex(/[0-:A-Za-z ",-.]{1,120}/),
+    .regex(/^[0-:A-Za-z ",-.]{1,90}$/),
 });
 
 // Validations
 const validateCreation = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
-  const found = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
   if (validation.error) {
     return res.status(400).json({
       msg: validation.error.details[0].message,
@@ -22,6 +21,7 @@ const validateCreation = async (req, res, next) => {
       error: true,
     });
   }
+  const found = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
   if (found) {
     return res.status(400).json({
       msg: 'This task already exists',
@@ -34,7 +34,6 @@ const validateCreation = async (req, res, next) => {
 
 const validateUpdate = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
-  const found = await Tasks.find({ description: req.body.description.toLowerCase().trim() });
   if (validation.error) {
     return res.status(400).json({
       msg: validation.error.details[0].message,
@@ -42,10 +41,19 @@ const validateUpdate = async (req, res, next) => {
       error: true,
     });
   }
+  const existing = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
+  const found = await Tasks.findOne({ _id: req.params.id });
   if (!found) {
     return res.status(400).json({
       msg: 'This task do not exists',
       data: undefined,
+      error: true,
+    });
+  }
+  if (existing) {
+    return res.status(400).json({
+      msg: 'This task already exists',
+      data: existing,
       error: true,
     });
   }

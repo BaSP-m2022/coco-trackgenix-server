@@ -1,6 +1,6 @@
 import express from 'express';
-import tasksController from '../controllers/tasks';
 import taskValidation from '../validations/tasks';
+import tasksController from '../controllers/tasks';
 
 const router = express.Router();
 

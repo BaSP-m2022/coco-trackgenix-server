@@ -19,32 +19,34 @@ const getTasks = async (req, res) => {
 
 const getTaskById = async (req, res) => {
   try {
-    const task = await Tasks.find({ _id: req.params.id });
+    const task = await Tasks.findById({ _id: req.params.id });
     if (task) {
       res.status(200).json({
         msg: `Task with id ${req.params.id} successfully fetched`,
         data: task,
         error: false,
       });
-    } else {
+    }
+  } catch (error) {
+    if (error.value) { // the server recieved the data
       res.status(404).json({
         msg: `Task with id ${req.params.id} not found`,
         data: undefined,
         error: false,
       });
+    } else { // the server did not receieve the data
+      res.status(500).json({
+        msg: 'There was an error',
+        data: error,
+        error: true,
+      });
     }
-  } catch (error) {
-    res.status(500).json({
-      msg: 'There was an error',
-      data: error,
-      error: true,
-    });
   }
 };
 
 const createTask = async (req, res) => {
   try {
-    const newTask = await Tasks.create({ description: req.body.description });
+    const newTask = await Tasks.create({ description: req.body.description.toLowerCase() });
     res.status(201).json({
       msg: 'Task successfully created',
       data: newTask,
@@ -70,26 +72,26 @@ const createTask = async (req, res) => {
 const deleteTask = async (req, res) => {
   try {
     const found = await Tasks.findById(req.params.id);
-    if (found) {
-      await Tasks.deleteOne({ _id: req.params.id });
-      res.status(204).json({
-        msg: 'Task successfully deleted',
-        data: found,
-        error: false,
-      });
-    } else {
+    await Tasks.deleteOne({ _id: req.params.id });
+    res.status(204).json({
+      msg: 'Task successfully deleted',
+      data: found,
+      error: false,
+    });
+  } catch (error) {
+    if (error.value) {
       res.status(404).json({
         msg: `Task with id ${req.params.id} not found`,
         data: undefined,
         error: false,
       });
+    } else {
+      res.status(500).json({
+        msg: 'There was an error',
+        data: error,
+        error: true,
+      });
     }
-  } catch (error) {
-    res.status(500).json({
-      msg: 'There was an error',
-      data: error,
-      error: true,
-    });
   }
 };
 
@@ -97,7 +99,7 @@ const updateTask = async (req, res) => {
   try {
     const targetTask = await Tasks.findById(req.params.id);
     if (targetTask) {
-      targetTask.description = req.body.description;
+      targetTask.description = req.body.description.toLowerCase();
       await targetTask.save();
       res.status(201).json({
         msg: 'Task successfully updated',
