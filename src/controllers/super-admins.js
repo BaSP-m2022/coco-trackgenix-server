@@ -69,9 +69,36 @@ const createSuperAdmin = async (req, res) => {
   }
 };
 
+const updateSuperAdmin = async (req, res) => {
+  try {
+    if (!req.params) {
+      return res.status(400).json({
+        msg: 'Missing id parameter',
+      });
+    }
+    const result = await superAdminModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!result) {
+      return res.status(404).json({
+        msg: 'Super-Admin has not been found',
+      });
+    }
+    return res.status(200).json(result);
+  } catch (error) {
+    return res.json({
+      msg: 'There was an error',
+      error: error.details[0].message,
+    });
+  }
+};
+
 export default {
   getAllSuperAdmins,
   getSuperAdminById,
   deleteSuperAdmin,
   createSuperAdmin,
+  updateSuperAdmin,
 };
