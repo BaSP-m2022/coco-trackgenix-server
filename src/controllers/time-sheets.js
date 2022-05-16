@@ -4,10 +4,10 @@ const deleteTimesheet = async (req, res) => {
   try {
     if (req.params.id) {
       const timesheet = await models.deleteOne({ _id: req.params.id });
-      return res.status(200).json(timesheet);
+      return res.status(204).json(timesheet);
     }
   } catch (error) {
-    return res.status(500).json({
+    return res.status(400).json({
       msg: 'There was an error.',
     });
   }
