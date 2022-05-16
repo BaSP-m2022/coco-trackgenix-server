@@ -16,23 +16,21 @@ const deleteTimesheet = async (req, res) => {
 
 const createTimesheet = async (req, res) => {
   try {
+    // eslint-disable-next-line new-cap
     const newTimesheet = await models.create({
-      description: 'this is the description',
-      date: new Date(),
-      validate: true,
-      task: 'this is the task',
-      projectId: 'project id',
-      employee: {
-        name: 'Dayana Guerra',
-        role: ['DEV', 'PM'],
-      },
+      description: req.body.description,
+      date: req.body.date,
+      validation: req.body.validation,
+      task: req.body.task,
+      projectId: req.body.projectId,
+      employee: req.body.employee,
     });
     const result = await newTimesheet.save();
     return res.status(201).json(result);
   } catch (error) {
     return res.json({
       msg: 'An error has occurred.',
-      error: error.details(0).message,
+      error: error.message,
     });
   }
 };
@@ -58,7 +56,7 @@ const updateTimesheet = async (req, res) => {
   } catch (error) {
     return res.json({
       msg: 'An error has occurred.',
-      error: error.details(0).message,
+      error: error.message,
     });
   }
 };

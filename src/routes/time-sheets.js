@@ -5,8 +5,8 @@ import timesheetsController from '../controllers/time-sheets';
 const router = express.Router();
 
 router
-  .delete('/:id', timesheetsController.deleteTimesheet);
-//   .post('/', timesheetsValidation.validateCreation, timesheetsController.postTimesheet)
+  .delete('/:id', timesheetsController.deleteTimesheet)
+  .post('/', timesheetsController.createTimesheet);
 //   .put('/', timesheetsController.putTimesheet)
 //   .get('/timesheets', timesheetsController.getTimesheets);
 

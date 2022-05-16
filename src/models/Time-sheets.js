@@ -4,7 +4,7 @@ const timesheetSchema = new mongoose.Schema({
   description: String,
   date: Date,
   task: String,
-  validate: Boolean,
+  validation: Boolean,
   projectId: String,
   employee: {
     name: String,
