@@ -1,6 +1,7 @@
 import Joi from 'joi';
+import employeesModels from '../models/Employees';
 
-const validateEmployee = (req, res, next) => {
+const validateEmployee = async (req, res, next) => {
   const employee = Joi.object({
     firstName: Joi.string().min(3).max(30).regex(/^[a-zA-Z]+$/)
       .required(),
@@ -17,10 +18,16 @@ const validateEmployee = (req, res, next) => {
       error: validate.error.details[0].message,
     });
   }
+  const emailExist = await employeesModels.findOne({ email: req.body.email });
+  if (emailExist) {
+    return res.status(400).json({
+      msg: 'Email already exist',
+    });
+  }
   return next();
 };
 
-const validateMod = (req, res, next) => {
+const validateMod = async (req, res, next) => {
   const employee = Joi.object({
     firstName: Joi.string().min(3).max(30).regex(/^[a-zA-Z]+$/),
     lastName: Joi.string().min(3).max(30).regex(/^[a-zA-Z]+$/),
@@ -33,6 +40,12 @@ const validateMod = (req, res, next) => {
   if (validate.error) {
     return res.status(400).json({
       error: validate.error.details[0].message,
+    });
+  }
+  const emailExist = await employeesModels.findOne({ email: req.body.email });
+  if (emailExist) {
+    return res.status(400).json({
+      msg: 'Email already exist',
     });
   }
   return next();
