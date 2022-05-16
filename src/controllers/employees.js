@@ -5,7 +5,8 @@ const getAllEmployees = async (req, res) => {
     const allEmployees = await Employee.find({});
     return res.status(200).json({
       msg: 'status 200',
-      allEmployees,
+      data: allEmployees,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
@@ -19,7 +20,8 @@ const getEmployeeById = async (req, res) => {
     const oneEmployee = await Employee.findById(req.params.id);
     return res.status(200).json({
       msg: 'Status 200',
-      oneEmployee,
+      data: oneEmployee,
+      error: false,
     });
   } catch (error) {
     if (error) {
@@ -46,7 +48,8 @@ const addNewEmployee = async (req, res) => {
     const Rta = await AddEmployee.save();
     return res.status(201).json({
       msg: 'Status 200',
-      Rta,
+      data: Rta,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
@@ -64,7 +67,8 @@ const modifyEmployee = async (req, res) => {
     );
     return res.status(200).json({
       msg: 'Status 200',
-      update,
+      data: update,
+      error: false,
     });
   } catch (error) {
     if (error) {
