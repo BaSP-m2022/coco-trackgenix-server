@@ -6,7 +6,7 @@ const employeeSchema = new Schema(
   {
     firstName: { type: String },
     lastName: { type: String },
-    phone: { type: String },
+    phone: { type: Number },
     email: { type: String },
     password: { type: String },
     active: { type: Boolean },
