@@ -20,7 +20,7 @@ const createTimesheet = async (req, res) => {
     const newTimesheet = await models.create({
       description: req.body.description,
       date: req.body.date,
-      validation: req.body.validation,
+      validate: req.body.validation,
       task: req.body.task,
       projectId: req.body.projectId,
       employee: req.body.employee,
@@ -49,7 +49,7 @@ const updateTimesheet = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        msg: 'The project has not been found.',
+        msg: 'The timesheet has not been found.',
       });
     }
     return res.status(200).json(result);
