@@ -2,7 +2,7 @@ import express from 'express';
 import tasksController from '../controllers/tasks';
 import taskValidation from '../validations/tasks';
 
-const router = express.Router;
+const router = express.Router();
 
 router
   .get('/', tasksController.getTasks)

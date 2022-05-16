@@ -8,13 +8,13 @@ const validationSchema = joi.object({
     .min(1)
     .max(120)
     .required()
-    .regex(/[0-:A-Za-z ",-.]/g),
+    .regex(/[0-:A-Za-z ",-.]{1,120}/),
 });
 
 // Validations
 const validateCreation = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
-  const found = await Tasks.find({ description: req.body.description.toLowerCase().trim() });
+  const found = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
   if (validation.error) {
     return res.status(400).json({
       msg: validation.error.details[0].message,
