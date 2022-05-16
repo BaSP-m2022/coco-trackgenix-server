@@ -18,9 +18,10 @@ const createProject = async (req, res) => {
       description: req.body.description,
       starDate: req.body.starDate,
       endDate: req.body.endDate,
+      clientName: req.body.clientName,
       active: req.body.active,
       employees: req.body.employees,
-      admin: req.body.admin,
+      admins: req.body.admins,
     });
     const result = await project.save();
     return res.status(201).json(result);
