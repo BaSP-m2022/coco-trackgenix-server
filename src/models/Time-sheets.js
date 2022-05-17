@@ -1,15 +1,24 @@
 const mongoose = require('mongoose');
 
 const timesheetSchema = new mongoose.Schema({
-  description: String,
-  date: Date,
+  description: {
+    type: String,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
   task: String,
-  validate: Boolean,
+  validate: {
+    type: Boolean,
+  },
   projectId: String,
   employee: {
     name: String,
     role: {
       type: String,
+      required: true,
       enum: ['DEV', 'TL', 'PM', 'QA'],
     },
   },
