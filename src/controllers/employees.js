@@ -11,27 +11,36 @@ const getAllEmployees = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       msg: 'Status 500: internal server error',
+      data: undefined,
+      error: true,
     });
   }
 };
 
 const getEmployeeById = async (req, res) => {
+  const oneEmployee = await Employee.findById(req.params.id);
   try {
-    const oneEmployee = await Employee.findById(req.params.id);
-    return res.status(200).json({
-      msg: 'Status 200',
-      data: oneEmployee,
-      error: false,
-    });
-  } catch (error) {
-    if (error) {
-      return res.status(404).json({
-        msg: `Status 404: employee not found with id ${req.params.id} `,
+    if (oneEmployee) {
+      res.status(200).json({
+        msg: 'Status 200',
+        data: oneEmployee,
+        error: false,
+      });
+    } if (!oneEmployee) {
+      res.status(404).json({
+        msg: 'Status 404: Employee not found with id',
+        data: undefined,
+        error: false,
       });
     }
-    return res.status(500).json({
-      msg: 'Status 500: internal server error',
-    });
+  } catch (error) {
+    if (error) {
+      res.status(500).json({
+        msg: 'Status 500: internal server error',
+        data: undefined,
+        error: true,
+      });
+    }
   }
 };
 
@@ -54,6 +63,8 @@ const addNewEmployee = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       msg: 'Status 500: internal server error',
+      data: undefined,
+      error: true,
     });
   }
 };
@@ -65,38 +76,46 @@ const modifyEmployee = async (req, res) => {
       req.body,
       { new: true },
     );
-    return res.status(200).json({
+    res.status(200).json({
       msg: 'Status 200',
       data: update,
       error: false,
     });
   } catch (error) {
     if (error) {
-      return res.status(404).json({
-        msg: `Status 404: employee not found with ${req.params.id} id`,
+      res.status(500).json({
+        msg: 'Status 500: internal server error',
+        data: undefined,
+        error: true,
       });
     }
-    return res.status(500).json({
-      msg: 'Status 500: internal server error',
-    });
   }
 };
 
 const deleteEmployee = async (req, res) => {
   try {
-    await Employee.findByIdAndDelete(req.params.id);
-    return res.status(200).json({
-      msg: `Status 200: employee with ${req.params.id} id was deleted`,
-    });
-  } catch (error) {
-    if (error) {
-      return res.status(404).json({
+    const del = await Employee.findByIdAndDelete(req.params.id);
+    if (del) {
+      res.status(200).json({
+        msg: `Status 200: employee with ${req.params.id} id was deleted`,
+        data: undefined,
+        error: false,
+      });
+    } if (!del) {
+      res.status(404).json({
         msg: 'Status 404: Employee not found',
+        data: undefined,
+        error: false,
       });
     }
-    return res.status(500).json({
-      msg: 'Status 500: internal server error',
-    });
+  } catch (error) {
+    if (error) {
+      res.status(500).json({
+        msg: 'Status 500: internal server error',
+        data: undefined,
+        error: true,
+      });
+    }
   }
 };
 
