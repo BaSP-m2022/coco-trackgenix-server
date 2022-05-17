@@ -6,14 +6,17 @@ const validateCreation = (req, res, next) => {
     rate: Joi.string().required(),
   });
   const projectValidation = Joi.object({
-    name: Joi.string().min(1).max(50).required(),
+    name: Joi.string().min(1).max(50).required()
+      .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(1).max(130).required(),
     starDate: Joi.date().required(),
     endDate: Joi.date().optional(),
-    clientName: Joi.string().min(1).max(50).required(),
+    clientName: Joi.string().min(1).max(50).required()
+      .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean().required(),
     employees: Joi.array().items(employeePropSchema),
-    admins: Joi.string().min(1).max(50).required(),
+    admins: Joi.string().min(1).max(50).required()
+      .regex(/^[a-zA-Z]+$/),
   });
   const validate = projectValidation.validate(req.body);
   if (validate.error) {
