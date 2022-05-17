@@ -40,4 +40,3 @@ mongoose.connect(
     }
   },
 );
-
