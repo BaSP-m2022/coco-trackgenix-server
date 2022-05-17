@@ -1,3 +1,4 @@
+
 import projectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
@@ -37,3 +38,4 @@ export default {
   getAllProjects,
   createProject,
 };
+
