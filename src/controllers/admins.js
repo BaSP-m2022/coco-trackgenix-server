@@ -1,11 +1,11 @@
-import adminModel from '../models/Admins';
+import AdminModel from '../models/Admins';
 
 const getAllAdmins = async (req, res) => {
   try {
-    const AllAdmins = await adminModel.find({});
+    const allAdmins = await AdminModel.find({});
     res.status(200).json({
       msg: 'Status 200',
-      data: AllAdmins,
+      data: allAdmins,
       error: false,
     });
   } catch (error) {
@@ -19,7 +19,7 @@ const getAllAdmins = async (req, res) => {
 
 const getAdminById = async (req, res) => {
   try {
-    const admin = await adminModel.findById({ _id: req.params.id });
+    const admin = await AdminModel.findById({ _id: req.params.id });
     if (admin) {
       res.status(200).json({
         msg: 'Success',
@@ -46,7 +46,7 @@ const getAdminById = async (req, res) => {
 
 const deleteAdmin = async (req, res) => {
   try {
-    const result = await adminModel.findByIdAndDelete({ _id: req.params.id });
+    const result = await AdminModel.findByIdAndDelete({ _id: req.params.id });
     res.status(204).json({
       msg: 'The admin has been successfully deleted',
       data: result,
@@ -71,7 +71,7 @@ const deleteAdmin = async (req, res) => {
 
 const createAdmin = async (req, res) => {
   try {
-    const admin = await adminModel.create({
+    const admin = await AdminModel.create({
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -94,7 +94,7 @@ const createAdmin = async (req, res) => {
 
 const updateAdmin = async (req, res) => {
   try {
-    const result = await adminModel.findByIdAndUpdate(
+    const result = await AdminModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },

@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import adminsModel from '../models/Admins';
+import AdminsModel from '../models/Admins';
 
 const validateAdminCreation = async (req, res, next) => {
   const adminPropSchema = Joi.object({
@@ -16,7 +16,7 @@ const validateAdminCreation = async (req, res, next) => {
       error: validation.error.details[0].message,
     });
   }
-  const repeatedEmail = await adminsModel.findOne({ email: req.body.email });
+  const repeatedEmail = await AdminsModel.findOne({ email: req.body.email });
   if (repeatedEmail) {
     res.status(400).json({
       msg: 'This email already exists',
@@ -42,7 +42,7 @@ const validateUpdate = async (req, res, next) => {
       error: validation.error.details[0].message,
     });
   }
-  const repeatedEmail = await adminsModel.findOne({ email: req.body.email });
+  const repeatedEmail = await AdminsModel.findOne({ email: req.body.email });
   if (repeatedEmail) {
     res.status(400).json({
       msg: 'This email already exists',
