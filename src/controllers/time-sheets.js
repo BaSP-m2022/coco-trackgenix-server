@@ -1,78 +1,83 @@
-const express = require('express');
-const fs = require('fs');
-const dataTimeSheets = require('../data/time-sheets.json');
+import TimesheetModel from '../models/Time-sheets';
 
-const router = express.Router();
-
-router.get('/', (req, res) => {
-  res.send(dataTimeSheets);
-});
-
-router.get('/:id', (req, res) => {
-  const timeSheetId = req.params.id;
-  const tsheet = dataTimeSheets.find((tsheets) => tsheets.id === timeSheetId);
-  if (tsheet) {
-    res.send(tsheet);
-  } else {
-    res.send('Id not found');
-  }
-});
-
-router.post('/', (req, res) => {
-  const tsData = req.body;
-  const dataId = req.body.id;
-  const tsheets = dataTimeSheets.find((timesheetId) => timesheetId.id === dataId);
-  if (tsheets) {
-    res.send('error: ID already exists');
-  } else {
-    dataTimeSheets.push(tsData);
-    fs.writeFile('src/data/time-sheets.json', JSON.stringify(dataTimeSheets), (err) => {
-      if (err) {
-        res.status(404).send(err);
-      } else {
-        res.status(201).json(tsData);
-      }
+const deleteTimesheet = async (req, res) => {
+  try {
+    const result = await TimesheetModel.findByIdAndDelete({ _id: req.params.id });
+    if (!result) {
+      return res.status(404).json({
+        msg: 'Wrong id. Status code: 404',
+        data: undefined,
+        error: true,
+      });
+    }
+    res.status(204).json({
+      msg: 'Timesheet deleted. Status code: 204',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'There was an error. Status code: 500',
     });
   }
-});
+  return null;
+};
 
-router.delete('/:id', (req, res) => {
-  const timeSheetId = req.params.id;
-  const filterTs = dataTimeSheets.filter((timeSheet) => timeSheet.id !== timeSheetId);
-  if (dataTimeSheets.length === filterTs.length) {
-    res.send('Could not delete because the time sheet was not found');
-  } else {
-    fs.writeFile('src/data/time-sheets.json', JSON.stringify(filterTs), (err) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.send(filterTs);
-      }
+const createTimesheet = async (req, res) => {
+  try {
+    const newTimesheet = await TimesheetModel.create({
+      description: req.body.description,
+      date: req.body.date,
+      validate: req.body.validation,
+      task: req.body.task,
+      projectId: req.body.projectId,
+      employee: req.body.employee,
+    });
+    const result = await newTimesheet.save();
+    return res.status(201).json({
+      message: 'Timesheet created. Status code: 201',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(400).json({
+      msg: 'There was an error. Status code: 400',
+      data: error,
+      error: true,
     });
   }
-});
+};
 
-router.put('/:id', (req, res) => {
-  const idFound = dataTimeSheets.some((tsMember) => tsMember.id === req.params.id);
-  if (idFound) {
-    const updTimeSheet = req.body;
-    dataTimeSheets.forEach((member, i) => {
-      if (member.id === req.params.id) {
-        const updateTs = { ...member, ...updTimeSheet };
-        dataTimeSheets[i] = updateTs;
-        fs.writeFile('src/data/time-sheets.json', JSON.stringify(updateTs), (err) => {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send('Updated correctly');
-          }
-        });
-        res.json({ msg: 'Timesheet update', updateTs });
-      }
+const updateTimesheet = async (req, res) => {
+  try {
+    const result = await TimesheetModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!result) {
+      return res.status(404).json({
+        msg: 'The timesheet has not been found. Status code: 404',
+        data: result,
+        error: false,
+      });
+    }
+    return res.status(200).json({
+      msg: 'Timesheet updated. Status code: 200',
+      data: result,
+      error: false,
     });
-  } else {
-    res.status(400).json({ msg: `No timesheet user with the id of ${req.params.id}` });
+  } catch (error) {
+    return res.status(500).json({
+      msg: 'An error has occurred. Status code: 500',
+      data: undefined,
+      error: true,
+    });
   }
-});
+};
 
-module.exports = router;
+export default {
+  deleteTimesheet,
+  createTimesheet,
+  updateTimesheet,
+};

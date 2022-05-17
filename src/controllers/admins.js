@@ -1,72 +1,121 @@
-const express = require('express');
-const fs = require('fs');
-const admins = require('../data/admins.json');
+import AdminModel from '../models/Admins';
 
-const router = express.Router();
-
-router.get('/:id', (req, res) => {
-  const admin = admins.find((data) => data.id === req.params.id);
-  if (admin) {
-    res.json(admin);
-  } else {
-    res.send('User not found');
-  }
-});
-
-router.post('/', (req, res) => {
-  const adminsData = req.body;
-  const found = admins.some((data) => data.id === req.params.id);
-  if (found) {
-    res.send('This id already exists');
-  } else {
-    admins.push(adminsData);
-    fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-      if (err) {
-        res.status(404).send(err);
-      } else {
-        res.status(200).json(adminsData);
-      }
+const getAllAdmins = async (req, res) => {
+  try {
+    const allAdmins = await AdminModel.find({});
+    res.status(200).json({
+      msg: 'Status 200',
+      data: allAdmins,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'There was an error',
+      data: error,
+      error: true,
     });
   }
-});
+};
 
-router.delete('/:id', (req, res) => {
-  const adminsId = req.params.id;
-  const filterTs = admins.filter((admin) => admin.id !== adminsId);
-  if (admins.length === filterTs.length) {
-    res.send('Could not delete because the time sheet was not found');
-  } else {
-    fs.writeFile('src/data/admins.json', JSON.stringify(filterTs), (err) => {
-      if (err) {
-        res.status(404).send(err);
-      } else {
-        res.send(filterTs);
-      }
+const getAdminById = async (req, res) => {
+  try {
+    const admin = await AdminModel.findById({ _id: req.params.id });
+    if (admin) {
+      res.status(200).json({
+        msg: 'Success',
+        data: admin,
+        error: false,
+      });
+    }
+  } catch (error) {
+    if (error.value) {
+      res.status(404).json({
+        msg: 'Admin with that id could not be found',
+        data: undefined,
+        error: true,
+      });
+    } else {
+      res.status(500).json({
+        msg: 'There was an error',
+        data: error,
+        error: true,
+      });
+    }
+  }
+};
+
+const deleteAdmin = async (req, res) => {
+  try {
+    const result = await AdminModel.findByIdAndDelete({ _id: req.params.id });
+    res.status(204).json({
+      msg: 'The admin has been successfully deleted',
+      data: result,
+      error: false,
+    });
+  } catch (error) {
+    if (error.value) {
+      res.status(404).json({
+        msg: 'The admin could not be found',
+        data: undefined,
+        error: true,
+      });
+    } else {
+      res.status(500).json({
+        msg: 'There was an error',
+        data: error,
+        error: true,
+      });
+    }
+  }
+};
+
+const createAdmin = async (req, res) => {
+  try {
+    const admin = await AdminModel.create({
+      name: req.body.name,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      active: req.body.active,
+    });
+    const resultAdmin = await admin.save();
+    return res.status(201).json({
+      msg: 'Admin has been successfully created',
+      data: resultAdmin,
+      error: false,
+    });
+  } catch (error) {
+    return res.json({
+      msg: 'An error has occurred',
+      error: error.details[0].message,
     });
   }
-});
+};
 
-router.put('/:id', (req, res) => {
-  const idFound = admins.some((tsAdmin) => tsAdmin.id === req.params.id);
-  if (idFound) {
-    const updAdmin = req.body;
-    admins.forEach((member, i) => {
-      if (member.id === req.params.id) {
-        const tsUpdate = { ...member, ...updAdmin };
-        admins[i] = tsUpdate;
-        fs.writeFile('src/data/admins.json', JSON.stringify(admins), (err) => {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send('Updated correctly');
-          }
-        });
-        res.json({ msg: 'Admin update', tsUpdate });
-      }
+const updateAdmin = async (req, res) => {
+  try {
+    const result = await AdminModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    res.status(200).json({
+      msg: 'Admin successfully updated',
+      data: result,
+      error: false,
     });
-  } else {
-    res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
+  } catch (error) {
+    res.json({
+      msg: 'There was an error',
+      error: error.details[0].message,
+    });
   }
-});
+};
 
-module.exports = router;
+export default {
+  getAllAdmins,
+  getAdminById,
+  deleteAdmin,
+  createAdmin,
+  updateAdmin,
+};

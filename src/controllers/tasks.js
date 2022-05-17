@@ -1,64 +1,139 @@
-const express = require('express');
-const fs = require('fs');
+import Tasks from '../models/Tasks';
 
-const router = express.Router();
-const taskData = require('../data/tasks.json');
-
-router.get('/', (req, res) => res.json(taskData));
-router.get('/:id', (req, res) => {
-  const found = taskData.find((data) => data.id === req.params.id);
-  if (found) {
-    res.json(taskData.filter((data) => data.id === req.params.id));
-  } else {
-    res.status(400).json({ msg: `No task with the id of ${req.params.id}` });
-  }
-});
-router.delete('/:id', (req, res) => {
-  const taskId = req.params.id;
-  const filterTs = taskData.filter((taskParams) => taskParams.id !== taskId);
-  if (taskData.length === filterTs.length) {
-    res.send('Could not delete because the time sheet was not found');
-  } else {
-    fs.writeFile('src/data/tasks.json', JSON.stringify(filterTs), (err) => {
-      if (err) {
-        res.status(404).send(err);
-      } else {
-        res.send(filterTs);
-      }
+const getTasks = async (req, res) => {
+  try {
+    const list = await Tasks.find({});
+    res.status(200).json({
+      msg: 'code 200: List of tasks successfully fetched',
+      data: list,
+      error: false,
+    });
+  } catch (error) {
+    res.status(500).json({
+      msg: 'Code 500: There was an error',
+      data: error,
+      error: true,
     });
   }
-});
-router.post('/', (req, res) => {
-  const tasksjson = req.body;
-  taskData.push(tasksjson);
-  fs.writeFile('src/data/tasks.json', JSON.stringify(taskData), (err) => {
-    if (err) {
-      res.status(404).send(err);
-    } else {
-      res.status(201).json(tasksjson);
+};
+
+const getTaskById = async (req, res) => {
+  try {
+    const task = await Tasks.findById({ _id: req.params.id });
+    if (task) {
+      res.status(200).json({
+        msg: `Code 200: Task with id ${req.params.id} successfully fetched`,
+        data: task,
+        error: false,
+      });
     }
-  });
-});
-router.put('/:id', (req, res) => {
-  const Found = taskData.some((modifiedTask) => modifiedTask.id === req.params.id);
-  if (Found) {
-    const updateTask = req.body;
-    taskData.forEach((task, i) => {
-      if (task.id === req.params.id) {
-        const tsUpdate = { ...task, ...updateTask };
-        taskData[i] = tsUpdate;
-        fs.writeFile('src/data/tasks.json', JSON.stringify(taskData), (err) => {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send('Updated correctly');
-          }
-        });
-        res.json({ msg: 'task update', tsUpdate });
-      }
-    });
-  } else {
-    res.status(400).json({ msg: `No admin with the id of ${req.params.id}` });
+  } catch (error) {
+    if (error.value) { // the server recieved the data
+      res.status(404).json({
+        msg: `Code 404: Task with id ${req.params.id} not found`,
+        data: undefined,
+        error: false,
+      });
+    } else { // the server did not receieve the data
+      res.status(500).json({
+        msg: 'Code 500: There was an error',
+        data: error,
+        error: true,
+      });
+    }
   }
-});
-module.exports = router;
+};
+
+const createTask = async (req, res) => {
+  try {
+    const newTask = await Tasks.create({ description: req.body.description.toLowerCase() });
+    res.status(201).json({
+      msg: 'Code 201: Task successfully created',
+      data: newTask,
+      error: false,
+    });
+  } catch (error) {
+    if (error.message) {
+      res.status(400).json({
+        msg: `Code 400: ${error.message}`,
+        data: error,
+        error: true,
+      });
+    } else {
+      res.status(500).json({
+        msg: 'Code 500: There was an internal error',
+        data: error,
+        error: true,
+      });
+    }
+  }
+};
+
+const deleteTask = async (req, res) => {
+  try {
+    const found = await Tasks.findById(req.params.id);
+    await Tasks.deleteOne({ _id: req.params.id });
+    res.status(204).json({
+      msg: 'Code 204: Task successfully deleted',
+      data: found,
+      error: false,
+    });
+  } catch (error) {
+    if (error.value) {
+      res.status(404).json({
+        msg: `Code 404: Task with id ${req.params.id} not found`,
+        data: undefined,
+        error: false,
+      });
+    } else {
+      res.status(500).json({
+        msg: 'Code 500: There was an error',
+        data: error,
+        error: true,
+      });
+    }
+  }
+};
+
+const updateTask = async (req, res) => {
+  try {
+    const targetTask = await Tasks.findById(req.params.id);
+    if (targetTask) {
+      targetTask.description = req.body.description.toLowerCase();
+      await targetTask.save();
+      res.status(201).json({
+        msg: 'Code 201: Task successfully updated',
+        data: targetTask,
+        error: false,
+      });
+    } else {
+      res.status(404).json({
+        msg: `Code 404: Task with id ${req.params.id} not found`,
+        data: undefined,
+        error: false,
+      });
+    }
+  } catch (error) {
+    if (error.message) {
+      res.status(400).json({
+        msg: `Code 400: ${error.message}`,
+        data: error,
+        error: true,
+      });
+    } else {
+      res.status(500).json({
+        msg: 'Code 500: There was an internal error',
+        data: error,
+        error: true,
+      });
+    }
+  }
+};
+
+export default {
+  getTasks,
+  getTaskById,
+  createTask,
+  deleteTask,
+  updateTask,
+};
