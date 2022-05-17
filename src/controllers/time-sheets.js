@@ -127,6 +127,6 @@ export default {
   deleteTimesheet,
   createTimesheet,
   updateTimesheet,
-  getByOne, 
+  getByOne,
   getAll,
 };
