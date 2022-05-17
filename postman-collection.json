@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6b9ce3cd-78b7-4dda-8f47-62ed7b1007be",
+		"_postman_id": "1f12b4f1-c811-43e1-8196-a04df3d9ea36",
 		"name": "Validations",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -722,6 +722,209 @@
 							"port": "3000",
 							"path": [
 								"admins"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"item": [
+				{
+					"name": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "aplication/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ricardo Nery Dosko\",\n    \"description\": \"this is the description\",\n    \"starDate\": \"2022-05-16T02:19:28.653Z\",\n    \"clientName\": \"Fernando\",\n    \"active\": true,\n    \"employees\": [\n        {\n            \"role\": \"QA\",\n            \"rate\": \"20\"\n        },\n        {\n            \"role\": \"QA\",\n            \"rate\": \"50\"\n        },\n        {\n            \"role\": \"PM\",\n            \"rate\": \"63\"\n        }\n    ],\n    \"admins\": \"Lucas Rendo\"\n\n}\n"
+						},
+						"url": {
+							"raw": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects",
+								"6281c03e12eea3082f4cf758"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/projects",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects",
+								"6281c03e12eea3082f4cf758"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SuperAdmins",
+			"item": [
+				{
+					"name": "http://localhost:3000/superAdmins/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/6281d4fdfef4e493b3e7d423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								"6281d4fdfef4e493b3e7d423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								"6281e61efef4e493b3e7d426"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/Superadmins/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ariana\",\n    \"lastName\": \"Maldonado\",\n    \"email\": \"ariana@gmail.com\",\n    \"password\": \"djskfjhf\",\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/Superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Superadmins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"luciano\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superAdmins",
+								"6281d4fdfef4e493b3e7d423"
 							]
 						}
 					},
