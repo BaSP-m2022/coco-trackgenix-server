@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "2140b831-4cc0-4eb6-98cb-98f6b84f663b",
-		"name": "Validations",
+		"_postman_id": "4e043bfb-236f-434c-85cb-401e3c17efc3",
+		"name": "Validations Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -802,6 +802,298 @@
 							"path": [
 								"projects",
 								"6281c03e12eea3082f4cf758"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create project",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Ezequiel Rocco\",\r\n    \"description\": \"this is the description\",\r\n    \"starDate\": \"2022-05-16T02:19:28.653Z\",\r\n    \"clientName\": \"Ramon\",\r\n    \"active\": true,\r\n    \"admins\": \"Ricardo Dosko\",\r\n    \"employees\": [{\"id\": 7,\"role\": \"TL\",\"rate\": 4},{\"id\": 5,\"role\": \"QA\",\"rate\": 6},{\"id\": 1,\"role\": \"TL\",\"rate\": 9}]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/projects",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"projects"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "SuperAdmins",
+			"item": [
+				{
+					"name": "http://localhost:3000/superAdmins/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/6281d4fdfef4e493b3e7d423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								"6281d4fdfef4e493b3e7d423"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superadmins",
+								"6281e61efef4e493b3e7d426"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/Superadmins/",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Ariana\",\n    \"lastName\": \"Maldonado\",\n    \"email\": \"ariana@gmail.com\",\n    \"password\": \"djskfjhf\",\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/Superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"Superadmins",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"luciano\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"superAdmins",
+								"6281d4fdfef4e493b3e7d423"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/employees/62829bb99a4848a298b128d8",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employees",
+								"62829bb99a4848a298b128d8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"ramirez\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/employees/62829bb99a4848a298b128d8",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employees",
+								"62829bb99a4848a298b128d8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"firstName\": \"nuevo\",\r\n        \"lastName\": \"prueba\",\r\n        \"phone\": 2981726,\r\n        \"email\": \"nuevo@gmail.com\",\r\n        \"password\": \"esteban123\",\r\n        \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/employees/6283c5e975a4239221987190",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"employees",
+								"6283c5e975a4239221987190"
 							]
 						}
 					},
