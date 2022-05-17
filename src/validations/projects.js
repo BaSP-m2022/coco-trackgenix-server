@@ -20,7 +20,7 @@ const updateValidate = (req, res, next) => {
     return res.status(400).json({
       message: 'There was an error during the validation process',
       data: validation.error.details[0],
-      error: true
+      error: true,
     });
   }
   return next();

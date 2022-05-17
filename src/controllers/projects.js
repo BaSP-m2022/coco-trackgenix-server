@@ -5,9 +5,9 @@ const getProjectById = async (req, res) => {
     if (req.params.id) {
       const project = await ProjectSchema.findById({ _id: req.params.id });
       return res.status(200).json({
-      msg:'found',
-      data: project,
-      error: false,
+        msg: 'found',
+        data: project,
+        error: false,
       });
     }
     return res.status(400).json({
@@ -17,7 +17,7 @@ const getProjectById = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      msg:'there was an error',
+      msg: 'there was an error',
       data: error,
       error: true,
     });
@@ -29,7 +29,7 @@ const deleteProject = async (req, res) => {
       return res.status(400).json({
         msg: 'missing id parameter',
         data: undefined,
-        error: true
+        error: true,
       });
     }
     const result = await ProjectSchema.findByIdAndDelete({ _id: req.params.id });
