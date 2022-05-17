@@ -4,9 +4,9 @@ const getAllSuperAdmins = async (req, res) => {
   try {
     const AllSuperAdmins = await superAdminModel.find({});
     return res.status(200).json({
-        msg: 'success',
-        data: AllSuperAdmins,
-        error: false,
+      msg: 'success',
+      data: AllSuperAdmins,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
@@ -22,16 +22,16 @@ const getSuperAdminById = async (req, res) => {
     if (req.params.id) {
       const superAdmin = await superAdminModel.findById({ _id: req.params.id });
       return res.status(200).json({
-          msg: 'success',
-          data: superAdmin,
-          error: false,
-        });
+        msg: 'success',
+        data: superAdmin,
+        error: false,
+      });
     }
     return res.status(400).json({
       msg: 'missing id parameter',
     });
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       msg: 'There was an error',
       data: error,
       error: true,
@@ -60,7 +60,7 @@ const deleteSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       msg: 'There was an error could not delete Super-Admin',
     });
   }
@@ -77,12 +77,12 @@ const createSuperAdmin = async (req, res) => {
     });
     const resultSuperAdmin = await superAdmin.save();
     return res.status(201).json({
-        msg: 'a Super-Admin has been created',
-        data: resultSuperAdmin,
-        error: false,
+      msg: 'a Super-Admin has been created',
+      data: resultSuperAdmin,
+      error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       msg: 'An error has occurred',
       error: error.details[0].message,
     });
@@ -107,12 +107,12 @@ const updateSuperAdmin = async (req, res) => {
       });
     }
     return res.status(200).json({
-        msg: 'Super-Admin updated',
-        data: result,
-        error: false,
+      msg: 'Super-Admin updated',
+      data: result,
+      error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(500).json({
       msg: 'There was an error',
       error: error.details[0].message,
     });
