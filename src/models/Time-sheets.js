@@ -12,7 +12,6 @@ const timesheetSchema = new mongoose.Schema({
   task: String,
   validate: {
     type: Boolean,
-    required: true,
   },
   projectId: String,
   employee: {
