@@ -3,10 +3,16 @@ import superAdminModel from '../models/Super-admins';
 const getAllSuperAdmins = async (req, res) => {
   try {
     const AllSuperAdmins = await superAdminModel.find({});
-    return res.status(200).json(AllSuperAdmins);
+    return res.status(200).json({
+        msg: 'success',
+        data: AllSuperAdmins,
+        error: false,
+    });
   } catch (error) {
     return res.status(500).json({
       msg: 'There was an error',
+      data: error,
+      error: true,
     });
   }
 };
@@ -15,14 +21,20 @@ const getSuperAdminById = async (req, res) => {
   try {
     if (req.params.id) {
       const superAdmin = await superAdminModel.findById({ _id: req.params.id });
-      return res.status(200).json(superAdmin);
+      return res.status(200).json({
+          msg: 'success',
+          data: superAdmin,
+          error: false,
+        });
     }
     return res.status(400).json({
       msg: 'missing id parameter',
     });
   } catch (error) {
     return res.json({
-      msg: error,
+      msg: 'There was an error',
+      data: error,
+      error: true,
     });
   }
 };
@@ -37,15 +49,19 @@ const deleteSuperAdmin = async (req, res) => {
     const result = await superAdminModel.findByIdAndDelete({ _id: req.params.id });
     if (!result) {
       return res.status(404).json({
-        msg: 'The admin has not been found',
+        msg: 'The Super-Admin has not been found',
+        data: result,
+        error: true,
       });
     }
     return res.status(200).json({
-      msg: 'The admin has been successfully deleted',
+      msg: 'The Super-Admin has been successfully deleted',
+      data: result,
+      error: false,
     });
   } catch (error) {
     return res.json({
-      msg: 'An error has ocurred',
+      msg: 'There was an error could not delete Super-Admin',
     });
   }
 };
@@ -60,7 +76,11 @@ const createSuperAdmin = async (req, res) => {
       active: req.body.active,
     });
     const resultSuperAdmin = await superAdmin.save();
-    return res.status(201).json(resultSuperAdmin);
+    return res.status(201).json({
+        msg: 'a Super-Admin has been created',
+        data: resultSuperAdmin,
+        error: false,
+    });
   } catch (error) {
     return res.json({
       msg: 'An error has occurred',
@@ -86,7 +106,11 @@ const updateSuperAdmin = async (req, res) => {
         msg: 'Super-Admin has not been found',
       });
     }
-    return res.status(200).json(result);
+    return res.status(200).json({
+        msg: 'Super-Admin updated',
+        data: result,
+        error: false,
+    });
   } catch (error) {
     return res.json({
       msg: 'There was an error',
