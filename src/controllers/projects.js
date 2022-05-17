@@ -1,16 +1,4 @@
 import projectSchema from '../models/Projects';
-
-// const getAllProjects = async(req, res) => {
-//   try {
-//     const allProjects = await projectSchema.find({});
-//     res.status(200).json(allProjects);
-//   } catch (err) {
-//       res.status(500).json({
-//       msg: "there was an error"
-//     });
-//   }
-// };
-
 const getProjectById = async (req, res) => {
   try {
     if (req.params.id) {
@@ -26,7 +14,6 @@ const getProjectById = async (req, res) => {
     });
   }
 };
-
 const deleteProject = async (req, res) => {
   try {
     if (!req.params.id) {
@@ -49,7 +36,6 @@ const deleteProject = async (req, res) => {
     });
   }
 };
-
 const updateProject = async (req, res) => {
   try {
     if (!req.params) {
@@ -75,7 +61,6 @@ const updateProject = async (req, res) => {
     });
   }
 };
-
 export default {
   getProjectById,
   deleteProject,
