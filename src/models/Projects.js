@@ -1,7 +1,8 @@
 import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
-const projectSchema = new Schema({
+
+const ProjectSchema = new Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   starDate: { type: Date, required: true },
@@ -14,4 +15,5 @@ const projectSchema = new Schema({
   }],
   admins: { type: String, required: true },
 }, { timestamps: true });
-export default mongoose.model('project', projectSchema);
+
+export default mongoose.model('project', ProjectSchema);
