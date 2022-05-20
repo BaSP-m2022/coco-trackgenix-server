@@ -8,7 +8,11 @@ const taskSchema = new mongoose.Schema({
     maxlength: 120,
     lowercase: true,
   },
-  created: {
+  workedHours: {
+    type: Number,
+    required: true,
+  },
+  date: {
     type: Date,
     immutable: true,
     default: () => Date.now(),
