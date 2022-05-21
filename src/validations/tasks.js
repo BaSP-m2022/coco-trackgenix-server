@@ -9,6 +9,11 @@ const validationSchema = joi.object({
     .max(90)
     .required()
     .regex(/^[0-:A-Za-z ",-.]{1,90}$/),
+  workedHours: joi
+    .number()
+    .required(),
+  date: joi
+    .date(),
 });
 
 // Validations
@@ -41,7 +46,11 @@ const validateUpdate = async (req, res, next) => {
       error: true,
     });
   }
-  const existing = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
+  const existing = await Tasks.findOne({
+    description: req.body.description.toLowerCase().trim(),
+    workedHoures: req.body.workedHoures,
+    date: req.body.date,
+  });
   const found = await Tasks.findOne({ _id: req.params.id });
   if (!found) {
     return res.status(400).json({

@@ -46,7 +46,11 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const newTask = await Tasks.create({ description: req.body.description.toLowerCase() });
+    const newTask = await Tasks.create({
+      description: req.body.description.toLowerCase(),
+      workedHours: req.body.workedHours,
+      date: req.body.date,
+    });
     res.status(201).json({
       msg: 'Code 201: Task successfully created',
       data: newTask,
