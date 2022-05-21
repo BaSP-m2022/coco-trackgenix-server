@@ -1,27 +1,44 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const timesheetSchema = new mongoose.Schema({
-  description: {
-    type: String,
+  tasks: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'Task',
+  },
+  employeeId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Employee',
     required: true,
   },
-  date: {
+  projectId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Project',
+    required: true,
+    immutable: true,
+  },
+  startDate: {
+    type: Date,
+    min: () => Date.now(),
+  },
+  endDate: {
     type: Date,
     required: true,
+    min: () => Date.now(),
   },
-  task: String,
-  validate: {
-    type: Boolean,
-  },
-  projectId: String,
-  employee: {
-    name: String,
-    role: {
-      type: String,
-      required: true,
-      enum: ['DEV', 'TL', 'PM', 'QA'],
-    },
+  totalHours: {
+    type: Number,
+    default: 0,
   },
 });
 
-module.exports = mongoose.model('Timesheet', timesheetSchema);
+timesheetSchema.post(/^find/, async () => {
+  await this.populate('tasks');
+  const tasksContainer = this.tasks;
+  let total = 0;
+  // eslint-disable-next-line no-return-assign
+  tasksContainer.forEach((task) => total += task.workedHours);
+});
+
+const Timesheet = mongoose.model('Timesheet', timesheetSchema);
+
+export default Timesheet;
