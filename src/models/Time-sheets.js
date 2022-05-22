@@ -1,4 +1,11 @@
+/* eslint-disable no-return-assign */
+/* eslint-disable no-console */
 import mongoose from 'mongoose';
+
+function dateFormat(date) {
+  if (!date) return date;
+  return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
+}
 
 const timesheetSchema = new mongoose.Schema({
   tasks: {
@@ -19,26 +26,14 @@ const timesheetSchema = new mongoose.Schema({
   startDate: {
     type: Date,
     min: () => Date.now(),
+    get: dateFormat,
   },
   endDate: {
     type: Date,
     required: true,
     min: () => Date.now(),
-  },
-  totalHours: {
-    type: Number,
-    default: 0,
+    get: dateFormat,
   },
 });
 
-timesheetSchema.post(/^find/, async () => {
-  await this.populate('tasks');
-  const tasksContainer = this.tasks;
-  let total = 0;
-  // eslint-disable-next-line no-return-assign
-  tasksContainer.forEach((task) => total += task.workedHours);
-});
-
-const Timesheet = mongoose.model('Timesheet', timesheetSchema);
-
-export default Timesheet;
+export default mongoose.model('Timesheet', timesheetSchema);

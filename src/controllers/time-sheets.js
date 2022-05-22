@@ -1,5 +1,6 @@
-/* eslint-disable consistent-return */
 /* eslint-disable no-underscore-dangle */
+/* eslint-disable no-return-assign */
+/* eslint-disable consistent-return */
 import Timesheet from '../models/Time-sheets';
 import Employee from '../models/Employees';
 import Project from '../models/Projects';
@@ -7,7 +8,7 @@ import Task from '../models/Tasks';
 
 const getByOne = async (req, res) => {
   try {
-    const oneTimeSheet = await Timesheet.find({ _id: req.params.id });
+    const oneTimeSheet = await Timesheet.findById(req.params.id).populate('tasks');
     if (oneTimeSheet) {
       res.status(200).json({
         message: 'TimeSheet fetched successfully',
@@ -44,7 +45,7 @@ const getAll = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'There are no timeSheets',
+      message: 'internal server error',
       data: undefined,
       error: true,
       status: 500,
@@ -109,12 +110,14 @@ const createTimesheet = async (req, res) => {
     const taskIdChecker = req.body.tasks.forEach(async (task) => {
       const check = await Task.findById(task);
       if (!check) {
-        return [undefined, task];
+        return task;
       }
     });
-    if (taskIdChecker[0] === undefined) {
+    // eslint-disable-next-line no-console
+    console.log(taskIdChecker);
+    if (taskIdChecker !== undefined) {
       return res.status(400).json({
-        msg: `Code 400: No tasks with the id ${taskIdChecker[1]}`,
+        msg: `Code 400: No tasks with the id ${taskIdChecker}`,
         data: undefined,
         error: true,
       });
@@ -162,34 +165,40 @@ const updateTimesheet = async (req, res) => {
       });
     }
     // Check that the ID's provided are valid
-    const employee = await Employee.findById(req.body.employeeId);
-    if (!employee) {
-      return res.status(400).json({
-        msg: `Code 400: No employee with the id ${req.body.employeeId}`,
-        data: undefined,
-        error: true,
-      });
-    }
-    const project = await Project.findById(req.body.projectId);
-    if (!project) {
-      return res.status(400).json({
-        msg: `Code 400: No project with the id ${req.body.projectId}`,
-        data: undefined,
-        error: true,
-      });
-    }
-    const taskIdChecker = req.body.tasks.forEach(async (task) => {
-      const check = await Task.findById(task);
-      if (!check) {
-        return [undefined, task];
+    if (req.body.employeeId) {
+      const employee = await Employee.findById(req.body.employeeId);
+      if (!employee) {
+        return res.status(400).json({
+          msg: `Code 400: No employee with the id ${req.body.employeeId}`,
+          data: undefined,
+          error: true,
+        });
       }
-    });
-    if (taskIdChecker[0] === undefined) {
-      return res.status(400).json({
-        msg: `Code 400: No tasks with the id ${taskIdChecker[1]}`,
-        data: undefined,
-        error: true,
+    }
+    if (req.body.projectId) {
+      const project = await Project.findById(req.body.projectId);
+      if (!project) {
+        return res.status(400).json({
+          msg: `Code 400: No project with the id ${req.body.projectId}`,
+          data: undefined,
+          error: true,
+        });
+      }
+    }
+    if (req.body.tasks) {
+      const taskIdChecker = req.body.tasks.forEach(async (task) => {
+        const check = await Task.findById(task);
+        if (!check) {
+          return [undefined, task];
+        }
       });
+      if (taskIdChecker[0] === undefined) {
+        return res.status(400).json({
+          msg: `Code 400: No tasks with the id ${taskIdChecker[1]}`,
+          data: undefined,
+          error: true,
+        });
+      }
     }
     // validate that is not creating a duplicate
     if (req.body.employeeId) {
