@@ -11,9 +11,9 @@ const validationSchema = joi.object({
     .regex(/^[0-:A-Za-z ",-.]{1,90}$/),
   workedHours: joi
     .number()
+    .integer()
+    .positive()
     .required(),
-  date: joi
-    .date(),
 });
 
 // Validations
@@ -48,8 +48,6 @@ const validateUpdate = async (req, res, next) => {
   }
   const existing = await Tasks.findOne({
     description: req.body.description.toLowerCase().trim(),
-    workedHoures: req.body.workedHoures,
-    date: req.body.date,
   });
   const found = await Tasks.findOne({ _id: req.params.id });
   if (!found) {
