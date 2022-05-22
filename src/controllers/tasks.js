@@ -28,13 +28,13 @@ const getTaskById = async (req, res) => {
       });
     }
   } catch (error) {
-    if (error.value) { // the server recieved the data
+    if (error.value) {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
         error: false,
       });
-    } else { // the server did not receieve the data
+    } else {
       res.status(500).json({
         msg: 'Code 500: There was an error',
         data: error,
