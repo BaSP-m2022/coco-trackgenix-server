@@ -56,13 +56,13 @@ const addNewEmployee = async (req, res) => {
     });
     const Rta = await AddEmployee.save();
     return res.status(201).json({
-      msg: 'Status 200',
+      msg: 'Status 201',
       data: Rta,
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({
-      msg: 'Status 500: internal server error',
+    return res.status(400).json({
+      msg: 'Status 400: internal server error',
       data: undefined,
       error: true,
     });
