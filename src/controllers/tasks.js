@@ -46,7 +46,11 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const newTask = await Tasks.create({ description: req.body.description.toLowerCase() });
+    const newTask = await Tasks.create({
+      description: req.body.description.toLowerCase(),
+      workedHours: req.body.workedHours,
+      date: req.body.date,
+    });
     res.status(201).json({
       msg: 'Code 201: Task successfully created',
       data: newTask,
@@ -97,10 +101,13 @@ const deleteTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const targetTask = await Tasks.findById(req.params.id);
+    const targetTask = await Tasks.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
     if (targetTask) {
       targetTask.description = req.body.description.toLowerCase();
-      await targetTask.save();
       res.status(201).json({
         msg: 'Code 201: Task successfully updated',
         data: targetTask,
