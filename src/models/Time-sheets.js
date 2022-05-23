@@ -1,27 +1,39 @@
-const mongoose = require('mongoose');
+/* eslint-disable no-return-assign */
+/* eslint-disable no-console */
+import mongoose from 'mongoose';
+
+function dateFormat(date) {
+  if (!date) return date;
+  return (`${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`);
+}
 
 const timesheetSchema = new mongoose.Schema({
-  description: {
-    type: String,
+  tasks: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    ref: 'Task',
+  },
+  employeeId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Employee',
     required: true,
   },
-  date: {
+  projectId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Project',
+    required: true,
+    immutable: true,
+  },
+  startDate: {
+    type: Date,
+    min: () => Date.now(),
+    get: dateFormat,
+  },
+  endDate: {
     type: Date,
     required: true,
-  },
-  task: String,
-  validate: {
-    type: Boolean,
-  },
-  projectId: String,
-  employee: {
-    name: String,
-    role: {
-      type: String,
-      required: true,
-      enum: ['DEV', 'TL', 'PM', 'QA'],
-    },
+    min: () => Date.now(),
+    get: dateFormat,
   },
 });
 
-module.exports = mongoose.model('Timesheet', timesheetSchema);
+export default mongoose.model('Timesheet', timesheetSchema);
