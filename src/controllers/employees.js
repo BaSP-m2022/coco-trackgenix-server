@@ -30,7 +30,7 @@ const getEmployeeById = async (req, res) => {
       res.status(404).json({
         msg: 'Status 404: Employee not found with id',
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {
@@ -105,7 +105,7 @@ const deleteEmployee = async (req, res) => {
       res.status(404).json({
         msg: 'Status 404: Employee not found',
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {
