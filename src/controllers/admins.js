@@ -87,7 +87,7 @@ const createAdmin = async (req, res) => {
   } catch (error) {
     return res.json({
       msg: 'An error has occurred',
-      error: error.details[0].message,
+      error,
     });
   }
 };
@@ -105,9 +105,10 @@ const updateAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    res.json({
+    res.status(500).json({
       msg: 'There was an error',
-      error: error.details[0].message,
+      data: undefined,
+      error,
     });
   }
 };
