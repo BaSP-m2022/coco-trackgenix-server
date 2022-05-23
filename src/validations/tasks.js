@@ -52,7 +52,7 @@ const validateUpdate = async (req, res, next) => {
   const found = await Tasks.findOne({ _id: req.params.id });
   if (!found) {
     return res.status(400).json({
-      msg: 'Code 400: This task do not exists',
+      msg: 'Code 400: This task do not exist',
       data: undefined,
       error: true,
     });
