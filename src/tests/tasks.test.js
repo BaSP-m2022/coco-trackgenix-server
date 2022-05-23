@@ -5,6 +5,7 @@ import Tasks from '../models/Tasks';
 import tasksSeeds from '../seeds/tasks-seeds';
 
 const taskId = '62891835d4e286802a02756e';
+let newTask;
 
 beforeAll(async () => {
   await Tasks.collection.insertMany(tasksSeeds);
@@ -47,7 +48,7 @@ describe('POST /', () => {
       },
     );
     expect(response.status).toBe(201);
-    // newTask = response.body.data._id;
+    newTask = response.body.data._id;
   });
   test('should indicate that the task already exists', async () => {
     const response = await request(app).post('/tasks/').send(
@@ -118,5 +119,26 @@ describe('POST /', () => {
       },
     );
     expect(response.status).toBe(400);
+  });
+});
+
+const fakeId = '62891835d4e286802a756f';
+
+describe('DELETE, /:id', () => {
+  test('should delete a task', async () => {
+    const response = await request(app).delete(`/tasks/${newTask}`).send();
+    expect(response.status).toBe(204);
+  });
+  test('should not find the task id', async () => {
+    const response = await request(app).delete(`/tasks/${fakeId}`).send();
+    expect(response.status).toBe(404);
+  });
+  test('should indicate the task was not find', async () => {
+    const response = await request(app).delete(`/tasks/${fakeId}`).send();
+    expect(response.body.msg).toEqual(`Code 404: Task with id ${fakeId} not found`);
+  });
+  test('should return undefined because of 204 status', async () => {
+    const response = await request(app).delete(`/tasks/${newTask}`).send();
+    expect(response.body.msg).toBeUndefined();
   });
 });
