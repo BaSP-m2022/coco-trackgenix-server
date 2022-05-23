@@ -37,3 +37,86 @@ describe('GET /:id', () => {
     expect(response.body.data).toMatchObject(Task);
   });
 });
+
+describe('POST /', () => {
+  test('should create a new task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'Trying to figure test out',
+        workedHours: '10',
+      },
+    );
+    expect(response.status).toBe(201);
+    // newTask = response.body.data._id;
+  });
+  test('should indicate that the task already exists', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'Trying to figure test out',
+        workedHours: '10',
+      },
+    );
+    expect(response.body.msg).toEqual('Code 400: This task already exists');
+  });
+  test('should indicate the task creation', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'This is a new task',
+        workedHours: '10',
+      },
+    );
+    expect(response.body.msg).toEqual('Code 201: Task successfully created');
+  });
+  test('workedHours missing, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'This is a new task',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('description missing, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        workedHours: '10',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('workedHours must be integer numbers, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'Nice to meet you',
+        workedHours: '0.5',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('workedHours must be positive numbers, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'Nice to meet you',
+        workedHours: '-1',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('description must contain at least 1 character, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: '',
+        workedHours: '10',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('description should not contain symbols, should not create a task', async () => {
+    const response = await request(app).post('/tasks/').send(
+      {
+        description: 'Hi! How r u?',
+        workedHours: '10',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+});
