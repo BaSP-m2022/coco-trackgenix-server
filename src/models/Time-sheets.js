@@ -1,27 +1,33 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const timesheetSchema = new mongoose.Schema({
-  description: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    required: true,
-  },
-  task: String,
-  validate: {
-    type: Boolean,
-  },
-  projectId: String,
-  employee: {
-    name: String,
-    role: {
-      type: String,
-      required: true,
-      enum: ['DEV', 'TL', 'PM', 'QA'],
+    tasks: {
+        type: [mongoose.SchemaTypes.ObjectId],
+        ref: 'Task',
     },
-  },
+    employeeId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'Employee',
+        required: true,
+    },
+
+    projectId: {
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'project',
+        required: true,
+        immutable: true,
+    },
+    startDate: {
+        type: Date,
+        min: () => Date.now(),
+    },
+    endDate: {
+        type: Date,
+        required: true,
+        min: () => Date.now(),
+    },
 });
 
-module.exports = mongoose.model('Timesheet', timesheetSchema);
+
+
+export default mongoose.model('Timesheet', timesheetSchema);

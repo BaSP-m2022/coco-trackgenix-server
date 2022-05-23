@@ -14,6 +14,7 @@ const ProjectSchema = new Schema({
     rate: { type: String, required: true },
   }],
   admins: { type: String, required: true },
-}, { timestamps: true });
+},
+{ timestamps: true });
 
-export default mongoose.model('project', ProjectSchema);
+export default mongoose.model('Project', ProjectSchema);
