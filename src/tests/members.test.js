@@ -1,4 +1,5 @@
 /* import req from 'supertest';
+admin
 import app from '../app';
 import seeds from '../seeds/members-seeds';
 import models from '../models/Members';
@@ -28,8 +29,8 @@ describe('POST /members', () => {
     empId = response.body.data._id;
 
   });
-  test('Shold create a new admin', async () => {
-    const response = await req(app).post('/admins').send({
+  test('Shold create a new member', async () => {
+    const response = await req(app).post('/amembers').send({
         role: 'TL',
         rate: '1',
     });
@@ -51,7 +52,7 @@ describe('PUT /member', () => {
   });
 });
 describe('DELETE /members', () => {
-  test('Shold delete an admin', async () => {
+  test('Shold delete an member', async () => {
     const response = await req(app).get(`/members/${empId2}`).send();
     expect(response.status).toEqual(200);
   });

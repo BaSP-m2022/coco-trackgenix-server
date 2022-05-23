@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const employeeSchema = new Schema(
   {
-    name: { type: String },
+    firstName: { type: String },
     lastName: { type: String },
     phone: { type: Number },
     email: { type: String },
