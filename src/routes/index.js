@@ -6,6 +6,7 @@ import employeeRouter from './employees';
 import superAdminsRoutes from './super-admins';
 import adminsRoutes from './admins';
 import timesheetsRouter from './time-sheets';
+import membersRouter from './members';
 
 const router = express.Router();
 router
@@ -14,6 +15,7 @@ router
   .use('/employees', employeeRouter)
   .use('/Superadmins', superAdminsRoutes)
   .use('/admins', adminsRoutes)
-  .use('/timesheets', timesheetsRouter);
+  .use('/timesheets', timesheetsRouter)
+  .use('/members', membersRouter);
 
 export default router;
