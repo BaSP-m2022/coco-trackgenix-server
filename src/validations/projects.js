@@ -14,7 +14,7 @@ const validateCreation = (req, res, next) => {
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean().required(),
-    employees: Joi.array().items(employeePropSchema),
+    employees: Joi.array().items(employeePropSchema).required(),
     admins: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
   });

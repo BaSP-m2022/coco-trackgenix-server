@@ -2,10 +2,7 @@ import ProjectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const allProjects = await ProjectSchema.find({}).populate('employees', {
-      role: 1,
-      rate: 1,
-    });
+    const allProjects = await ProjectSchema.find({}).populate('employees');
     return res.status(200).json({
       msg: 'success',
       data: allProjects,
@@ -23,10 +20,7 @@ const getAllProjects = async (req, res) => {
 const getProjectById = async (req, res) => {
   try {
     if (req.params.id) {
-      const project = await ProjectSchema.findById({ _id: req.params.id }).populate('employees', {
-        role: 1,
-        rate: 1,
-      });
+      const project = await ProjectSchema.findById({ _id: req.params.id }).populate('employees');
       return res.status(200).json({
         msg: 'found',
         data: project,
