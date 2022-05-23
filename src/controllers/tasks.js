@@ -32,7 +32,7 @@ const getTaskById = async (req, res) => {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     } else {
       res.status(500).json({
@@ -49,7 +49,6 @@ const createTask = async (req, res) => {
     const newTask = await Tasks.create({
       description: req.body.description.toLowerCase(),
       workedHours: req.body.workedHours,
-      date: req.body.date,
     });
     res.status(201).json({
       msg: 'Code 201: Task successfully created',
@@ -87,7 +86,7 @@ const deleteTask = async (req, res) => {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     } else {
       res.status(500).json({
@@ -117,7 +116,7 @@ const updateTask = async (req, res) => {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {
