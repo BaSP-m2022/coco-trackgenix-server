@@ -142,3 +142,42 @@ describe('DELETE, /:id', () => {
     expect(response.body.msg).toBeUndefined();
   });
 });
+
+describe('PUT, /:id', () => {
+  test('should return a 200 status', async () => {
+    const response = await request(app).put(`/tasks/${taskId}`).send(
+      {
+        description: 'This is the modified task',
+        workedHours: '15',
+      },
+    );
+    expect(response.status).toBe(201);
+  });
+  test('should return a 400 status', async () => {
+    const response = await request(app).put(`/tasks/${taskId}`).send(
+      {
+        description: 'This is the modified task',
+        workedHours: '15',
+      },
+    );
+    expect(response.status).toBe(400);
+  });
+  test('should indicate that the task does not exist - because it was deleted', async () => {
+    const response = await request(app).put(`/tasks/${taskId}`).send(
+      {
+        description: 'This is the modified task',
+        workedHours: '15',
+      },
+    );
+    expect(response.body.msg).toEqual('Code 400: This task already exists');
+  });
+  test('should indicate that the task does not exist - because it was deleted', async () => {
+    const response = await request(app).put(`/tasks/${newTask}`).send(
+      {
+        description: 'Trying to figure test out',
+        workedHours: '10',
+      },
+    );
+    expect(response.body.msg).toEqual('Code 400: This task do not exist');
+  });
+});
