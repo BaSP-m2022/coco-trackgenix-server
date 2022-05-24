@@ -28,13 +28,13 @@ const getTaskById = async (req, res) => {
       });
     }
   } catch (error) {
-    if (error.value) { // the server recieved the data
+    if (error.value) {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
-    } else { // the server did not receieve the data
+    } else {
       res.status(500).json({
         msg: 'Code 500: There was an error',
         data: error,
@@ -46,7 +46,10 @@ const getTaskById = async (req, res) => {
 
 const createTask = async (req, res) => {
   try {
-    const newTask = await Tasks.create({ description: req.body.description.toLowerCase() });
+    const newTask = await Tasks.create({
+      description: req.body.description.toLowerCase(),
+      workedHours: req.body.workedHours,
+    });
     res.status(201).json({
       msg: 'Code 201: Task successfully created',
       data: newTask,
@@ -83,7 +86,7 @@ const deleteTask = async (req, res) => {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     } else {
       res.status(500).json({
@@ -97,10 +100,13 @@ const deleteTask = async (req, res) => {
 
 const updateTask = async (req, res) => {
   try {
-    const targetTask = await Tasks.findById(req.params.id);
+    const targetTask = await Tasks.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
     if (targetTask) {
       targetTask.description = req.body.description.toLowerCase();
-      await targetTask.save();
       res.status(201).json({
         msg: 'Code 201: Task successfully updated',
         data: targetTask,
@@ -110,7 +116,7 @@ const updateTask = async (req, res) => {
       res.status(404).json({
         msg: `Code 404: Task with id ${req.params.id} not found`,
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {

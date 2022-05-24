@@ -1,31 +1,17 @@
 import joi from 'joi';
-import timesheetModel from '../models/Time-sheets';
 
-const timesheetSchema = joi.object({
-  description: joi.string().min(1).max(50).required(),
-  date: joi.date(),
-  task: joi.string().min(1).max(20).required(),
-  validate: joi.boolean().valid(true),
-  projectId: joi.optional(),
-  employee: {
-    name: joi.string().min(1).max(20).required(),
-    role: joi.string().valid('QA', 'TL', 'PM', 'DEV').required(),
-  },
-});
-
-const validateCreation = async (req, res, next) => {
+const validateCreation = (req, res, next) => {
+  const timesheetSchema = joi.object({
+    tasks: joi.array().items(joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/)),
+    employeeId: joi.string().lowercase().required().regex(/^[0-9a-z]{24,24}$/),
+    projectId: joi.string().lowercase().required().regex(/^[0-9a-z]{24,24}$/),
+    startDate: joi.date().min(Date.now()),
+    endDate: joi.date().min(joi.ref('startDate')).required(),
+  });
   const validation = timesheetSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      msg: 'There was an error during the validation of the request.',
-      data: validation.error.details[0].message,
-      error: true,
-    });
-  }
-  const validateDuplicated = await timesheetModel.findOne({ description: req.body.description });
-  if (validateDuplicated) {
-    return res.status(400).json({
-      msg: 'Timesheet already exists. Status code: 400',
+      msg: `Code 400: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -34,12 +20,19 @@ const validateCreation = async (req, res, next) => {
 };
 
 const validateUpdate = (req, res, next) => {
-  const updateValidation = timesheetSchema.validate(req.body);
-  if (updateValidation.error) {
+  const timesheetSchema = joi.object({
+    tasks: joi.array().items(joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/)),
+    employeeId: joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/),
+    projectId: joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/),
+    startDate: joi.date().min(Date.now()),
+    endDate: joi.date().min(joi.ref('startDate')),
+  });
+  const validation = timesheetSchema.validate(req.body);
+  if (validation.error) {
     return res.status(400).json({
-      msg: 'There was an error during the validation of the request.',
+      msg: `Code 400: ${validation.error.details[0].message}`,
       data: undefined,
-      error: updateValidation.error.details[0].message,
+      error: true,
     });
   }
   return next();
