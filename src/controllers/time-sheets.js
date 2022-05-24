@@ -128,8 +128,6 @@ const createTimesheet = async (req, res) => {
         return task;
       }
     });
-    // eslint-disable-next-line no-console
-    console.log(taskIdChecker);
     if (taskIdChecker !== undefined) {
       return res.status(400).json({
         msg: `Code 400: No tasks with the id ${taskIdChecker}`,
