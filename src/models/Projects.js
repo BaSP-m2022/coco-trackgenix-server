@@ -16,4 +16,4 @@ const ProjectSchema = new Schema({
   admins: { type: String, required: true },
 }, { timestamps: true });
 
-export default mongoose.model('project', ProjectSchema);
+export default mongoose.model('Project', ProjectSchema);
