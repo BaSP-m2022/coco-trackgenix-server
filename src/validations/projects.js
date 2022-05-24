@@ -34,14 +34,14 @@ const updateValidate = (req, res, next) => {
     rate: Joi.string().required(),
   });
   const Schema = Joi.object({
-    name: Joi.string().min(3).max(50).required(),
-    description: Joi.string().min(10).max(130).required(),
-    starDate: Joi.string().required(),
+    name: Joi.string().min(3).max(50),
+    description: Joi.string().min(10).max(130),
+    starDate: Joi.string(),
     endDate: Joi.string().optional(),
-    clientName: Joi.string().min(3).max(50).required(),
-    active: Joi.boolean().required(),
+    clientName: Joi.string().min(3).max(50),
+    active: Joi.boolean(),
     employees: Joi.array().items(employeeSchema),
-    admins: Joi.string().min(3).max(50).required(),
+    admins: Joi.string().min(3).max(50),
   });
   const validation = Schema.validate(req.body);
   if (validation.error) {
