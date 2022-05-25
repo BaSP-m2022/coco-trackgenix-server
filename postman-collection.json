@@ -1,354 +1,14 @@
 {
 	"info": {
-		"_postman_id": "4e043bfb-236f-434c-85cb-401e3c17efc3",
-		"name": "Validations Copy",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"_postman_id": "64c607fb-6535-4f7a-a9f5-2f710513b01f",
+		"name": "Validations",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "20835108"
 	},
 	"item": [
 		{
 			"name": "Tasks testing",
 			"item": [
-				{
-					"name": "Errors",
-					"item": [
-						{
-							"name": "Get task by id - wrong id",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/tasks/5",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"5"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create task - empty description",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create task - over the max characters description",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"this is a waaaaaay too long description that should be shorter because descriptions can't be over 90 characters\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create task - empty body/description",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/tasks",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create task - characters not allowed",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"this description uses characters not allowed like &\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create task - duplicated task",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"create index\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete task - wrong id",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/tasks/5",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"5"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update task - empty description",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks/5",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"5"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update task - no body/description",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"url": {
-									"raw": "http://localhost:3000/tasks/5",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"5"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update task -wrong id",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"demo task\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks/627fc84cfed838430550981a",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"627fc84cfed838430550981a"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update task - over the max characters",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"this is a waaaaaay too long description that should be shorter because descriptions can't be over 90 characters\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks/627fc84cfed838430550981e",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"627fc84cfed838430550981e"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update tasks - characters not allowed",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"this character is not allowed: #\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks/627fc84cfed838430550981a",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"627fc84cfed838430550981a"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "update task - duplicate task",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"description\": \"create index\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3000/tasks/627fc84cfed838430550981e",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3000",
-									"path": [
-										"tasks",
-										"627fc84cfed838430550981e"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
 				{
 					"name": "Get tasks",
 					"protocolProfileBehavior": {
@@ -367,19 +27,83 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/tasks/",
+							"raw": "http://localhost:4000/tasks/",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"tasks",
 								""
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get tasks",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"first_name\":\"\",\r\n    \"last_name\":\"Doe\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/tasks/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"tasks",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1507"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5e3-BzrAuCdMCn5pQs+QugtQ1jbnnFA\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:15:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"code 200: List of tasks successfully fetched\",\n    \"data\": [\n        {\n            \"_id\": \"62894fba185b418d96264052\",\n            \"description\": \"other task\",\n            \"workedHours\": 15,\n            \"date\": \"2021-12-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62894fcf185b418d96264055\",\n            \"description\": \"making some coffee\",\n            \"workedHours\": 30,\n            \"date\": \"2021-12-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62894ff0185b418d96264058\",\n            \"description\": \"stopping by\",\n            \"workedHours\": 10,\n            \"date\": \"2021-12-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62895007185b418d9626405b\",\n            \"description\": \"create a happy life\",\n            \"workedHours\": 25,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6289501f185b418d9626405e\",\n            \"description\": \"study for master class\",\n            \"workedHours\": 35,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62895035185b418d96264061\",\n            \"description\": \"nocturno op.51, no. 1 - chopin\",\n            \"workedHours\": 40,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62895059185b418d96264064\",\n            \"description\": \"la danza de la mosa donosa\",\n            \"workedHours\": 10,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62895086185b418d96264067\",\n            \"description\": \"coffee machine\",\n            \"workedHours\": 12,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6289511f185b418d9626406a\",\n            \"description\": \"create some tasks for lucas\",\n            \"workedHours\": 10,\n            \"date\": \"2022-11-05T03:00:00.000Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628ae5d6243f26f95b0c27ef\",\n            \"description\": \"trying to figure test out\",\n            \"workedHours\": 10,\n            \"date\": \"2022-05-23T01:39:34.106Z\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628aebe06d81b722f3135f16\",\n            \"description\": \"hi, 123\",\n            \"workedHours\": 10,\n            \"date\": \"2022-05-23T02:05:20.682Z\",\n            \"__v\": 0\n        }\n    ],\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Get task by id",
@@ -393,19 +117,80 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:3000/tasks/627fc84cfed838430550981e",
+							"raw": "http://localhost:4000/tasks/62894fba185b418d96264052",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"tasks",
-								"627fc84cfed838430550981e"
+								"62894fba185b418d96264052"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get task by id",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "http://localhost:4000/tasks/62894fba185b418d96264052",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"tasks",
+										"62894fba185b418d96264052"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "220"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"dc-ahA2AcU+c26fwSm3j4nyuuyjGg8\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:15:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Code 200: Task with id 62894fba185b418d96264052 successfully fetched\",\n    \"data\": {\n        \"_id\": \"62894fba185b418d96264052\",\n        \"description\": \"other task\",\n        \"workedHours\": 15,\n        \"date\": \"2021-12-05T03:00:00.000Z\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Create task",
@@ -414,7 +199,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\"description\": \"Some task\"}",
+							"raw": "{\r\n    \"description\":\"mock task\",\r\n    \"workedHours\": \"5\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -422,18 +207,81 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/tasks",
+							"raw": "http://localhost:4000/tasks",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"tasks"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create task",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\":\"mock task\",\r\n    \"workedHours\": \"5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/tasks",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"tasks"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "185"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b9-IrK49Sr4LqdaR8auj9qlHdaXlGQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:18:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Code 201: Task successfully created\",\n    \"data\": {\n        \"description\": \"mock task\",\n        \"workedHours\": 5,\n        \"_id\": \"628eb9606eff99ead95ad25f\",\n        \"date\": \"2022-05-25T23:18:56.428Z\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Delete Task",
@@ -444,19 +292,66 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/tasks/628198de00fb10649893a766",
+							"raw": "http://localhost:4000/tasks/628eb9606eff99ead95ad25f",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"tasks",
-								"628198de00fb10649893a766"
+								"628eb9606eff99ead95ad25f"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Delete Task",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/tasks/628eb9606eff99ead95ad25f",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"tasks",
+										"628eb9606eff99ead95ad25f"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b9-J214sNTdsH/NrypJM1RZYd0iwZU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:21:23 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "Update task",
@@ -465,7 +360,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"description\": \"connect mongoDB and server\"\r\n}",
+							"raw": "{\r\n    \"description\": \"connect mongoDB and server\",\r\n    \"workedHours\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -473,19 +368,83 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/tasks/628199bca565e3029f5b5d10",
+							"raw": "http://localhost:4000/tasks/62894ff0185b418d96264058",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"tasks",
-								"628199bca565e3029f5b5d10"
+								"62894ff0185b418d96264058"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update task",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"description\": \"connect mongoDB and server\",\r\n    \"workedHours\": \"1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/tasks/62894ff0185b418d96264058",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"tasks",
+										"62894ff0185b418d96264058"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "202"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ca-r6bqjEn2L5io7jNC4jWN4t9nu+w\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:22:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Code 201: Task successfully updated\",\n    \"data\": {\n        \"_id\": \"62894ff0185b418d96264058\",\n        \"description\": \"connect mongodb and server\",\n        \"workedHours\": 1,\n        \"date\": \"2021-12-05T03:00:00.000Z\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
 				}
 			]
 		},
@@ -493,23 +452,77 @@
 			"name": "Timesheet",
 			"item": [
 				{
-					"name": "GetAllTimeSheet",
+					"name": "Get all",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/timesheets/",
+							"raw": "localhost:4000/timesheets/",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"timesheets",
 								""
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Get all",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/timesheets/",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"timesheets",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "988"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3dc-ntclz2jjzQwCE00qoY8/zq0wBNU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:12:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"TimeSheets fetched successfully\",\n    \"data\": [\n        {\n            \"_id\": \"628974188a9db559c45ac090\",\n            \"tasks\": [\n                {\n                    \"description\": \"other task\",\n                    \"workedHours\": 15,\n                    \"date\": \"2021-12-05T03:00:00.000Z\"\n                },\n                {\n                    \"description\": \"making some coffee\",\n                    \"workedHours\": 30,\n                    \"date\": \"2021-12-05T03:00:00.000Z\"\n                }\n            ],\n            \"employeeId\": {\n                \"firstName\": \"bruno\",\n                \"lastName\": \"ramirez\",\n                \"email\": \"esteban@gmail.com\"\n            },\n            \"projectId\": null,\n            \"startDate\": \"2022-12-05T00:00:00.000Z\",\n            \"endDate\": \"2022-07-07T00:00:00.000Z\",\n            \"totalHours\": 0,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628987511df2b8b0938616c4\",\n            \"tasks\": [\n                {\n                    \"description\": \"create some tasks for lucas\",\n                    \"workedHours\": 10,\n                    \"date\": \"2022-11-05T03:00:00.000Z\"\n                },\n                {\n                    \"description\": \"other task\",\n                    \"workedHours\": 15,\n                    \"date\": \"2021-12-05T03:00:00.000Z\"\n                },\n                {\n                    \"description\": \"coffee machine\",\n                    \"workedHours\": 12,\n                    \"date\": \"2022-11-05T03:00:00.000Z\"\n                }\n            ],\n            \"employeeId\": {\n                \"firstName\": \"german\",\n                \"lastName\": \"rivarola\",\n                \"email\": \"german@gmail.com\"\n            },\n            \"projectId\": null,\n            \"startDate\": \"2022-06-06T00:00:00.000Z\",\n            \"endDate\": \"2022-07-07T00:00:00.000Z\",\n            \"totalHours\": 0,\n            \"__v\": 0\n        }\n    ],\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "GetOneTimeSheet",
@@ -517,46 +530,72 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/timesheets/6280108bc02e633b33f9f",
+							"raw": "localhost:4000/timesheets/628974188a9db559c45ac090",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"timesheets",
-								"6280108bc02e633b33f9f"
+								"628974188a9db559c45ac090"
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "PostTimeSheet",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": " { \r\n  \"description\": \"La vida no es tan bella a esta hora\",\r\n  \"date\": \"2021-12-05T03:00:00.000+00:00\",\r\n  \"task\": \"Data Base System\",\r\n  \"validate\": true,\r\n  \"projectId\": \"project id\",\r\n  \"employee\": {\r\n    \"name\": \"Lucas Rendo\",\r\n    \"role\": \"PM\"\r\n  }\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"response": [
+						{
+							"name": "GetOneTimeSheet",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/timesheets/628974188a9db559c45ac090",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"timesheets",
+										"628974188a9db559c45ac090"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/timesheets/",
-							"host": [
-								"localhost"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "478"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1de-mXSs1gpNClNETTSLoQL2ykjRa+M\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:12:19 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
 							],
-							"port": "3000",
-							"path": [
-								"timesheets",
-								""
-							]
+							"cookie": [],
+							"body": "{\n    \"message\": \"TimeSheet fetched successfully\",\n    \"data\": {\n        \"_id\": \"628974188a9db559c45ac090\",\n        \"tasks\": [\n            {\n                \"description\": \"other task\",\n                \"workedHours\": 15,\n                \"date\": \"2021-12-05T03:00:00.000Z\"\n            },\n            {\n                \"description\": \"making some coffee\",\n                \"workedHours\": 30,\n                \"date\": \"2021-12-05T03:00:00.000Z\"\n            }\n        ],\n        \"employeeId\": {\n            \"firstName\": \"bruno\",\n            \"lastName\": \"ramirez\",\n            \"email\": \"esteban@gmail.com\"\n        },\n        \"projectId\": null,\n        \"startDate\": \"2022-12-05T00:00:00.000Z\",\n        \"endDate\": \"2022-07-07T00:00:00.000Z\",\n        \"totalHours\": 0,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
 						}
-					},
-					"response": []
+					]
 				},
 				{
 					"name": "DeleteTimeSheet",
@@ -564,18 +603,64 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/timesheets/62824e31663ab3b88c70d3e4",
+							"raw": "localhost:4000/timesheets/628eb7a06eff99ead95ad24b",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"timesheets",
-								"62824e31663ab3b88c70d3e4"
+								"628eb7a06eff99ead95ad24b"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "DeleteTimeSheet",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/timesheets/628eb7a06eff99ead95ad24b",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"timesheets",
+										"628eb7a06eff99ead95ad24b"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"163-Ec1r2zU4yuBa28HLnOwtrtomU1M\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:12:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
 				},
 				{
 					"name": "PutTimeSheet",
@@ -584,7 +669,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n\"description\": \"Trackgenix S.A.\",\r\n\"date\": \"2021-12-05T03:00:00.000+00:00\",\r\n\"validate\": true,\r\n\"task\": \"Data Base System\",\r\n\"projectId\": \"project id\",\r\n\"employee\": {\r\n    \"name\": \"Ariana Maldonado\",\r\n    \"role\": \"QA\"\r\n}\r\n}",
+							"raw": "{\r\n\"startDate\": \"2022-12-05\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -592,14 +677,291 @@
 							}
 						},
 						"url": {
-							"raw": "localhost:3000/timesheets/6281c500298706051b503fa4",
+							"raw": "localhost:4000/timesheets/628974188a9db559c45ac090",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"timesheets",
-								"6281c500298706051b503fa4"
+								"628974188a9db559c45ac090"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "PutTimeSheet",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"startDate\": \"2022-12-05\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/timesheets/628974188a9db559c45ac090",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"timesheets",
+										"628974188a9db559c45ac090"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "370"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"172-jZaQpjG5WWIpxoRi5Irkq5f45Gc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 22 May 2022 13:53:38 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Code 201: Task successfully updated\",\n    \"data\": {\n        \"_id\": \"628974188a9db559c45ac090\",\n        \"tasks\": [\n            \"62894fae185b418d9626404f\",\n            \"62894fba185b418d96264052\",\n            \"62894fcf185b418d96264055\"\n        ],\n        \"employeeId\": \"62829bb99a4848a298b128d8\",\n        \"projectId\": \"6281c03e12eea3082f4cf758\",\n        \"startDate\": \"2022-12-05T00:00:00.000Z\",\n        \"endDate\": \"2022-07-07T00:00:00.000Z\",\n        \"totalHours\": 0,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Create timesheet",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"tasks\": [\"6289511f185b418d9626406a\", \"62894fba185b418d96264052\", \"62895086185b418d96264067\"],\r\n    \"employeeId\": \"62829d90bf75f8b63576af30\",\r\n    \"projectId\": \"628d6d8798a9749e0a37c9bb\",\r\n    \"startDate\": \"2022-06-06\",\r\n    \"endDate\": \"6666-06-06\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/timesheets/",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"timesheets",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create timesheet",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"tasks\": [\"6289511f185b418d9626406a\", \"62894fba185b418d96264052\", \"62895086185b418d96264067\"],\r\n    \"employeeId\": \"6283c31175a4239221987181\",\r\n    \"projectId\": \"6281c03e12eea3082f4cf758\",\r\n    \"startDate\": \"2022-06-06\",\r\n    \"endDate\": \"2022-07-07\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/timesheets/",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"timesheets",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "379"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"17b-LbuXlZYmgADcsX74xKLk2mPPfZg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 22 May 2022 00:44:05 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Code 201: Timesheet successfully created\",\n    \"data\": {\n        \"tasks\": [\n            \"6289511f185b418d9626406a\",\n            \"62894fba185b418d96264052\",\n            \"62895086185b418d96264067\"\n        ],\n        \"employeeId\": \"6283c31175a4239221987181\",\n        \"projectId\": \"6281c03e12eea3082f4cf758\",\n        \"startDate\": \"2022-06-06T00:00:00.000Z\",\n        \"endDate\": \"2022-07-07T00:00:00.000Z\",\n        \"totalHours\": 0,\n        \"_id\": \"628987511df2b8b0938616c4\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Members",
+			"item": [
+				{
+					"name": "get all members",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4000/members",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "post members",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employee\":\"628c54d0f6f478be0cdd5707\",\r\n    \"role\":\"DEV\",\r\n    \"rate\":10\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/members",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"members"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/members/6289558814ac09a7c65a7c58",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"members",
+								"6289558814ac09a7c65a7c58"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete member",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/members/628962840f45975ac3465c4f",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"members",
+								"628962840f45975ac3465c4f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Put member",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"employee\":\"628d65f64624aebf8a2f0362\",\r\n    \"rate\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/members/628962840f45975ac3465c4f",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"members",
+								"628962840f45975ac3465c4f"
 							]
 						}
 					},
@@ -616,17 +978,70 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/admins",
+							"raw": "localhost:4000/admins",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"admins"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "GetAll",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/admins",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"admins"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "598"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"256-734YWYJUTYfq0XimgQvoqyqlleU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:23:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Status 200\",\n    \"data\": [\n        {\n            \"_id\": \"627fd6c931822e1e4682eb57\",\n            \"name\": \"roberto\",\n            \"lastName\": \"Maldonado\",\n            \"email\": \"ariana@gmail.com\",\n            \"password\": \"assdgdgdfgdgf\",\n            \"active\": false\n        },\n        {\n            \"_id\": \"628158b29a6bd051d86bf37f\",\n            \"name\": \"Ezequiel\",\n            \"lastName\": \"Rocco\",\n            \"email\": \"eze@gmail.com\",\n            \"password\": \"asdwdwedj\",\n            \"active\": false,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628259550f835cd36c583c11\",\n            \"name\": \"Axel\",\n            \"lastName\": \"Fiol\",\n            \"email\": \"axel@gmail.com\",\n            \"password\": \"jsdhdsiooe\",\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6282ecea90bb413ce1a5d012\",\n            \"name\": \"Ricardo\",\n            \"lastName\": \"Dosko\",\n            \"email\": \"dosko@gmail.com\",\n            \"password\": \"jsdhdsds343\",\n            \"active\": false,\n            \"__v\": 0\n        }\n    ],\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "getById",
@@ -634,41 +1049,163 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "localhost:3000/admins/628158b29a6bd051d86bf3",
+							"raw": "localhost:4000/admins/627fd6c931822e1e4682eb57",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"admins",
-								"628158b29a6bd051d86bf3"
+								"627fd6c931822e1e4682eb57"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "getById",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/admins/627fd6c931822e1e4682eb57",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"admins",
+										"627fd6c931822e1e4682eb57"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "182"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b6-2PeWPIkG0jGQfRA4cmnZHY2qYXk\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:25:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Success\",\n    \"data\": {\n        \"_id\": \"627fd6c931822e1e4682eb57\",\n        \"name\": \"roberto\",\n        \"lastName\": \"Maldonado\",\n        \"email\": \"ariana@gmail.com\",\n        \"password\": \"assdgdgdfgdgf\",\n        \"active\": false\n    },\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
-					"name": "delete",
+					"name": "Create",
 					"request": {
-						"method": "DELETE",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "default"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\r\n    \"name\": \"Fernando\",\r\n    \"lastName\": \"Carbone\",\r\n    \"email\": \"carb@gmail.com\",\r\n    \"password\": \"jsdhdsds343\",\r\n    \"active\": true\r\n}\r\n"
 						},
 						"url": {
-							"raw": "localhost:3000/admins/628158b29a6bd051d86bf3",
+							"raw": "localhost:4000/admins",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
-								"admins",
-								"628158b29a6bd051d86bf3"
+								"admins"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Fernando\",\r\n    \"lastName\": \"Carbone\",\r\n    \"email\": \"carb@gmail.com\",\r\n    \"password\": \"jsdhdsds343\",\r\n    \"active\": true\r\n}\r\n"
+								},
+								"url": {
+									"raw": "localhost:4000/admins",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"admins"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "212"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d4-8iwph5psMP3KFTKiXr0fnGagk74\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:26:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Admin has been successfully created\",\n    \"data\": {\n        \"name\": \"Fernando\",\n        \"lastName\": \"Carbone\",\n        \"email\": \"carb@gmail.com\",\n        \"password\": \"jsdhdsds343\",\n        \"active\": true,\n        \"_id\": \"628ebb176eff99ead95ad269\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Update",
@@ -686,46 +1223,973 @@
 							"raw": "{\r\n    \"active\": false\r\n}"
 						},
 						"url": {
-							"raw": "localhost:3000/admins/6282ecea90bb413ce1a5d012",
+							"raw": "localhost:4000/admins/628ebb176eff99ead95ad269",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"admins",
-								"6282ecea90bb413ce1a5d012"
+								"628ebb176eff99ead95ad269"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "default"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"active\": false\r\n}"
+								},
+								"url": {
+									"raw": "localhost:4000/admins/628ebb176eff99ead95ad269",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"admins",
+										"628ebb176eff99ead95ad269"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "204"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cc-g9XkPrZ27Wh8pIJv4GerywLNE/A\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:26:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Admin successfully updated\",\n    \"data\": {\n        \"_id\": \"628ebb176eff99ead95ad269\",\n        \"name\": \"Fernando\",\n        \"lastName\": \"Carbone\",\n        \"email\": \"carb@gmail.com\",\n        \"password\": \"jsdhdsds343\",\n        \"active\": false,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:4000/admins/628ebb176eff99ead95ad269",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"admins",
+								"628ebb176eff99ead95ad269"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "localhost:4000/admins/628ebb176eff99ead95ad269",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"admins",
+										"628ebb176eff99ead95ad269"
+									]
+								}
+							},
+							"status": "No Content",
+							"code": 204,
+							"_postman_previewlanguage": "plain",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d9-C7qHW2vHlxavKOCUyRzov49ckWw\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:27:06 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": null
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SuperAdmins",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"superadmins",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/superadmins/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"superadmins",
+										""
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "589"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"24d-dYzR+zBYbNu1Ldp+pruLnYBNuJk\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:28:01 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"success\",\n    \"data\": [\n        {\n            \"_id\": \"6281d4fdfef4e493b3e7d423\",\n            \"name\": \"Luciano\",\n            \"email\": \"luciano@gmail.com\",\n            \"password\": \"djskfjhf\",\n            \"active\": true,\n            \"lastName\": \"Fraile\"\n        },\n        {\n            \"_id\": \"6281d5adfef4e493b3e7d424\",\n            \"name\": \"Ricardo\",\n            \"email\": \"ricardo@gmail.com\",\n            \"password\": \"dsl3452\",\n            \"active\": false,\n            \"lastName\": \"Dosko\"\n        },\n        {\n            \"_id\": \"6281d63efef4e493b3e7d425\",\n            \"name\": \"Lucas\",\n            \"email\": \"lucas@gmail.com\",\n            \"password\": \"jglkf9034\",\n            \"active\": true,\n            \"lastName\": \"Rendo\"\n        },\n        {\n            \"_id\": \"6282a3114b903e05741fe4b7\",\n            \"name\": \"Ariana\",\n            \"lastName\": \"Maldonado\",\n            \"email\": \"ariana@gmail.com\",\n            \"password\": \"djskfjhf\",\n            \"active\": false,\n            \"__v\": 0\n        }\n    ],\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/superadmins/6281d4fdfef4e493b3e7d423",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"superadmins",
+								"6281d4fdfef4e493b3e7d423"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/superadmins/6281d4fdfef4e493b3e7d423",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"superadmins",
+										"6281d4fdfef4e493b3e7d423"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "174"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"ae-S3MZChkioMqfuTSEompT6TzecuE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:28:27 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"success\",\n    \"data\": {\n        \"_id\": \"6281d4fdfef4e493b3e7d423\",\n        \"name\": \"Luciano\",\n        \"email\": \"luciano@gmail.com\",\n        \"password\": \"djskfjhf\",\n        \"active\": true,\n        \"lastName\": \"Fraile\"\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Create superAdmin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Martin\",\n    \"lastName\": \"Didoldi\",\n    \"email\": \"tincho@gmail.com\",\n    \"password\": \"djskfjhf\",\n    \"active\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/Superadmins/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"Superadmins",
+								""
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create superAdmin",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Martin\",\n    \"lastName\": \"Didoldi\",\n    \"email\": \"tincho@gmail.com\",\n    \"password\": \"djskfjhf\",\n    \"active\": false\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/Superadmins/",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"Superadmins",
+										""
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "205"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cd-kpVKuw1in57KlxMwl4F6X6bq1Eg\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:29:49 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"a Super-Admin has been created\",\n    \"data\": {\n        \"name\": \"Martin\",\n        \"lastName\": \"Didoldi\",\n        \"email\": \"tincho@gmail.com\",\n        \"password\": \"djskfjhf\",\n        \"active\": false,\n        \"_id\": \"628ebbed6eff99ead95ad271\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Update superAdmin",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"tincho\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:4000/superAdmins/628ebbed6eff99ead95ad271",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"superAdmins",
+								"628ebbed6eff99ead95ad271"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update superAdmin",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"tincho\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:4000/superAdmins/628ebbed6eff99ead95ad271",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"superAdmins",
+										"628ebbed6eff99ead95ad271"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "194"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c2-dgZD0hNzseWEk9L6CwzOFC1mmdk\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:30:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Super-Admin updated\",\n    \"data\": {\n        \"_id\": \"628ebbed6eff99ead95ad271\",\n        \"name\": \"tincho\",\n        \"lastName\": \"Didoldi\",\n        \"email\": \"tincho@gmail.com\",\n        \"password\": \"djskfjhf\",\n        \"active\": false,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete superAdmin",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/superadmins/628ebbed6eff99ead95ad271",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"superadmins",
+								"628ebbed6eff99ead95ad271"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete superAdmin",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/superadmins/628ebbed6eff99ead95ad271",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"superadmins",
+										"628ebbed6eff99ead95ad271"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "220"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"dc-O7bo/9Lfr8ch5BOU2kTcZVCN4eI\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:31:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"The Super-Admin has been successfully deleted\",\n    \"data\": {\n        \"_id\": \"628ebbed6eff99ead95ad271\",\n        \"name\": \"tincho\",\n        \"lastName\": \"Didoldi\",\n        \"email\": \"tincho@gmail.com\",\n        \"password\": \"djskfjhf\",\n        \"active\": false,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Employee",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/employees",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"employees"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get all",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/employees",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"employees"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1211"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4bb-ICqgQ7LH3d1vrErDSsSq1eMPzVU\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:31:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"status 200\",\n    \"data\": [\n        {\n            \"_id\": \"62829bb99a4848a298b128d8\",\n            \"firstName\": \"bruno\",\n            \"lastName\": \"ramirez\",\n            \"phone\": 2981726,\n            \"email\": \"esteban@gmail.com\",\n            \"password\": \"esteban123\",\n            \"active\": false,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62829d90bf75f8b63576af30\",\n            \"firstName\": \"Gustavo\",\n            \"lastName\": \"raldes\",\n            \"phone\": 1726782,\n            \"email\": \"esteban@gmail.com\",\n            \"password\": \"esteban123\",\n            \"active\": false,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"62829f2c70298d2e5168f1e2\",\n            \"firstName\": \"Esteban\",\n            \"lastName\": \"raldes\",\n            \"phone\": 1726782,\n            \"email\": \"esteban@gmail.com\",\n            \"password\": \"esteban123\",\n            \"active\": false,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6282b2f1d737541cea358a26\",\n            \"firstName\": \"Jose\",\n            \"lastName\": \"Perez\",\n            \"phone\": 172678222,\n            \"email\": \"josesito@gmail.com\",\n            \"password\": \"perez1234\",\n            \"active\": true,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628308bae48988568f4936b0\",\n            \"firstName\": \"Maria\",\n            \"lastName\": \"martinez\",\n            \"phone\": 232332,\n            \"email\": \"mari@gmail.com\",\n            \"password\": \"mariamartinez123\",\n            \"active\": true,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"6283c31175a4239221987181\",\n            \"firstName\": \"german\",\n            \"lastName\": \"rivarola\",\n            \"phone\": 22198126,\n            \"email\": \"german@gmail.com\",\n            \"password\": \"german123\",\n            \"active\": true,\n            \"__v\": 0\n        },\n        {\n            \"_id\": \"628d65f64624aebf8a2f036b\",\n            \"firstName\": \"nuevo\",\n            \"lastName\": \"prueba\",\n            \"phone\": 2981726,\n            \"email\": \"nuevo@gmail.com\",\n            \"password\": \"esteban123\",\n            \"active\": false,\n            \"__v\": 0\n        }\n    ],\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Get one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/employees/62829bb99a4848a298b128d8",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"employees",
+								"62829bb99a4848a298b128d8"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get one",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/employees/62829bb99a4848a298b128d8",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"employees",
+										"62829bb99a4848a298b128d8"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "208"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d0-vZSX0DW8K7NXamFfP/pDP7D5HoE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:31:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Status 200\",\n    \"data\": {\n        \"_id\": \"62829bb99a4848a298b128d8\",\n        \"firstName\": \"bruno\",\n        \"lastName\": \"ramirez\",\n        \"phone\": 2981726,\n        \"email\": \"esteban@gmail.com\",\n        \"password\": \"esteban123\",\n        \"active\": false,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
 				},
 				{
 					"name": "Create",
 					"request": {
 						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "default"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Ricardo\",\r\n    \"lastName\": \"Dosko\",\r\n    \"email\": \"dosko@gmail.com\",\r\n    \"password\": \"jsdhdsds343\",\r\n    \"active\": true\r\n}\r\n"
+							"raw": "{\r\n    \"firstName\": \"nuevo\",\r\n    \"lastName\": \"prueba\",\r\n    \"phone\": 2981726,\r\n    \"email\": \"mock@gmail.com\",\r\n    \"password\": \"esteban123\",\r\n    \"active\": false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
 						"url": {
-							"raw": "localhost:3000/admins",
+							"raw": "localhost:4000/employees",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
-								"admins"
+								"employees"
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "Create",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"firstName\": \"nuevo\",\r\n    \"lastName\": \"prueba\",\r\n    \"phone\": 2981726,\r\n    \"email\": \"mock@gmail.com\",\r\n    \"password\": \"esteban123\",\r\n    \"active\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/employees",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"employees"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "204"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cc-SPv/b3qXCs7ZP7TUvIM6kBKcNfE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:32:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Status 201\",\n    \"data\": {\n        \"firstName\": \"nuevo\",\n        \"lastName\": \"prueba\",\n        \"phone\": 2981726,\n        \"email\": \"mock@gmail.com\",\n        \"password\": \"esteban123\",\n        \"active\": false,\n        \"_id\": \"628ebc9f6eff99ead95ad27b\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"lastName\": \"mocker\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:4000/employees/628ebc9f6eff99ead95ad27b",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"employees",
+								"628ebc9f6eff99ead95ad27b"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Update",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"lastName\": \"mocker\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "localhost:4000/employees/628ebc9f6eff99ead95ad27b",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"employees",
+										"628ebc9f6eff99ead95ad27b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "204"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"cc-YlR8AkpRxEjVv821/1+400iOs9o\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:33:25 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Status 200\",\n    \"data\": {\n        \"_id\": \"628ebc9f6eff99ead95ad27b\",\n        \"firstName\": \"nuevo\",\n        \"lastName\": \"mocker\",\n        \"phone\": 2981726,\n        \"email\": \"mock@gmail.com\",\n        \"password\": \"esteban123\",\n        \"active\": false,\n        \"__v\": 0\n    },\n    \"error\": false\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:4000/employees/628ebc9f6eff99ead95ad27b",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"employees",
+								"628ebc9f6eff99ead95ad27b"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Delete",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "localhost:4000/employees/628ebc9f6eff99ead95ad27b",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"employees",
+										"628ebc9f6eff99ead95ad27b"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "89"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"59-1WLV9D1g0n9eH98wK1nK7XZqrSg\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:33:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"msg\": \"Status 200: employee with 628ebc9f6eff99ead95ad27b id was deleted\",\n    \"error\": false\n}"
+						}
+					]
 				}
 			]
 		},
@@ -733,94 +2197,39 @@
 			"name": "Projects",
 			"item": [
 				{
-					"name": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json",
-								"type": "text"
-							},
-							{
-								"key": "",
-								"value": "aplication/json",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Ricardo Nery Dosko\",\n    \"description\": \"this is the description\",\n    \"starDate\": \"2022-05-16T02:19:28.653Z\",\n    \"clientName\": \"Fernando\",\n    \"active\": true,\n    \"employees\": [\n        {\n            \"role\": \"QA\",\n            \"rate\": \"20\"\n        },\n        {\n            \"role\": \"QA\",\n            \"rate\": \"50\"\n        },\n        {\n            \"role\": \"PM\",\n            \"rate\": \"63\"\n        }\n    ],\n    \"admins\": \"Lucas Rendo\"\n\n}\n"
-						},
-						"url": {
-							"raw": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"projects",
-								"6281c03e12eea3082f4cf758"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/projects",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/projects",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"projects"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/projects/6281c03e12eea3082f4cf758",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"projects",
-								"6281c03e12eea3082f4cf758"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "getAll",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/projects",
+							"raw": "http://localhost:4000/projects",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"projects"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:4000/projects/628d6d8798a9749e0a37c9bb",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"projects",
+								"628d6d8798a9749e0a37c9bb"
 							]
 						}
 					},
@@ -839,7 +2248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Ezequiel Rocco\",\r\n    \"description\": \"this is the description\",\r\n    \"starDate\": \"2022-05-16T02:19:28.653Z\",\r\n    \"clientName\": \"Ramon\",\r\n    \"active\": true,\r\n    \"admins\": \"Ricardo Dosko\",\r\n    \"employees\": [{\"id\": 7,\"role\": \"TL\",\"rate\": 4},{\"id\": 5,\"role\": \"QA\",\"rate\": 6},{\"id\": 1,\"role\": \"TL\",\"rate\": 9}]\r\n}",
+							"raw": "{\r\n    \"name\": \"Mock\",\r\n    \"description\": \"this is the description\",\r\n    \"startDate\": \"2022-05-16T02:19:28.653Z\",\r\n    \"endDate\": \"2022-08-16T02:19:28.653Z\",\r\n    \"clientName\": \"Ramon\",\r\n    \"active\": true,\r\n    \"admins\": \"Ricardo\",\r\n    \"employees\": [{ \"name\": \"62829f2c70298d2e5168f1e2\" }]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -847,257 +2256,129 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/projects",
+							"raw": "http://localhost:4000/projects",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
 								"projects"
 							]
 						}
 					},
 					"response": []
-				}
-			]
-		},
-		{
-			"name": "SuperAdmins",
-			"item": [
+				},
 				{
-					"name": "http://localhost:3000/superAdmins/",
+					"name": "Update project",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "aplication/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"admins\": \"Coco\"\n\n}\n"
+						},
 						"url": {
-							"raw": "http://localhost:3000/superadmins/",
+							"raw": "http://localhost:4000/projects/628ebe6b6eff99ead95ad284",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
-								"superadmins",
-								""
+								"projects",
+								"628ebe6b6eff99ead95ad284"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:3000/superadmins/6281d4fdfef4e493b3e7d423",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"superadmins",
-								"6281d4fdfef4e493b3e7d423"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+					"name": "Delete project",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/superadmins/6281e61efef4e493b3e7d426",
+							"raw": "http://localhost:4000/projects/628ebe6b6eff99ead95ad284",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
-							"port": "3000",
+							"port": "4000",
 							"path": [
-								"superadmins",
-								"6281e61efef4e493b3e7d426"
+								"projects",
+								"628ebe6b6eff99ead95ad284"
 							]
 						}
 					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/Superadmins/",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"Ariana\",\n    \"lastName\": \"Maldonado\",\n    \"email\": \"ariana@gmail.com\",\n    \"password\": \"djskfjhf\",\n    \"active\": false\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+					"response": [
+						{
+							"name": "Delete project",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:4000/projects/628ebe6b6eff99ead95ad284",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "4000",
+									"path": [
+										"projects",
+										"628ebe6b6eff99ead95ad284"
+									]
 								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/Superadmins/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"Superadmins",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"name\": \"luciano\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "458"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1ca-7wyWifWMZjjAj6CyDOMwbmm3NQE\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 25 May 2022 23:42:09 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
 								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:3000/superAdmins/6281d4fdfef4e493b3e7d423",
-							"protocol": "http",
-							"host": [
-								"localhost"
 							],
-							"port": "3000",
-							"path": [
-								"superAdmins",
-								"6281d4fdfef4e493b3e7d423"
-							]
+							"cookie": [],
+							"body": "{\n    \"msg\": \"the project has been susccessfully deleted\",\n    \"data\": {\n        \"_id\": \"628ebe6b6eff99ead95ad284\",\n        \"name\": \"Mock\",\n        \"description\": \"this is the description\",\n        \"startDate\": \"2022-05-16T02:19:28.653Z\",\n        \"endDate\": \"2022-08-16T02:19:28.653Z\",\n        \"clientName\": \"Ramon\",\n        \"active\": true,\n        \"employees\": [\n            {\n                \"name\": \"62829f2c70298d2e5168f1e2\",\n                \"_id\": \"628ebe6b6eff99ead95ad285\"\n            }\n        ],\n        \"admins\": \"Coco\",\n        \"createdAt\": \"2022-05-25T23:40:27.876Z\",\n        \"updatedAt\": \"2022-05-25T23:41:35.507Z\",\n        \"__v\": 0\n    },\n    \"error\": false\n}"
 						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Employee",
-			"item": [
-				{
-					"name": "Get all",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/employees",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employees"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get one",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/employees/62829bb99a4848a298b128d8",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employees",
-								"62829bb99a4848a298b128d8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"lastName\": \"ramirez\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/employees/62829bb99a4848a298b128d8",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employees",
-								"62829bb99a4848a298b128d8"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Create",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"firstName\": \"nuevo\",\r\n        \"lastName\": \"prueba\",\r\n        \"phone\": 2981726,\r\n        \"email\": \"nuevo@gmail.com\",\r\n        \"password\": \"esteban123\",\r\n        \"active\": false\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "localhost:3000/employees",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employees"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Delete",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "localhost:3000/employees/6283c5e975a4239221987190",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"employees",
-								"6283c5e975a4239221987190"
-							]
-						}
-					},
-					"response": []
+					]
 				}
 			]
 		}
