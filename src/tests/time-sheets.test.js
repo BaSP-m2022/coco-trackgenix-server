@@ -27,7 +27,7 @@ describe('POST /timesheets', () => {
         tasks: [
           '62891835d4e286802a02756e',
           '62891835d4e286802a02756f',
-          '62891835d4e286802a02756g',
+          '628d69a4f1cb7f8f98b9b1f2',
         ],
         employeeId: '628d1eedb91ea97970b7a798',
         projectId: '6283b662e53ed4c648db8a45',
@@ -35,7 +35,6 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-    console.log(response.body);
     idCatcher = response.body.data._id;
 
     expect(response.status).toBe(201);
@@ -49,14 +48,14 @@ describe('POST /timesheets', () => {
           '62891835d4e286802a02756f',
           '62891835d4e286802a02756g',
         ],
-        employeeId: '62895106842279ad30cd964c',
+        employeeId: '628d1eedb91ea97970b7a798',
         projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
 
-    expect(response.msg).toBe('Code 400: Timesheet already exists');
+    expect(response.body.msg).toBe('Code 400: Timesheet already exists');
   });
 
   // PATH'S OBJECT ID NOT FOUND IN THE CORRESPONDING COLLECTION
@@ -69,14 +68,14 @@ describe('POST /timesheets', () => {
           '62891835d4e286802a02756f',
           '62891835d4e286802a02756g',
         ],
-        employeeId: '62895106842279ad30cd964c',
+        employeeId: '628d1eedb91ea97970b7a798',
         projectId: '6283b662f53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
 
-    expect(response.msg).stringContaining('Code 400: No project with the id');
+    expect(response.body.msg).toMatch('Code 400: No project with the id');
   });
 
   test('employee id not in database', async () => {
@@ -87,32 +86,14 @@ describe('POST /timesheets', () => {
           '62891835d4e286802a02756f',
           '62891835d4e286802a02756g',
         ],
-        employeeId: '62895106842279ad30cd964a',
+        employeeId: '628d1eedb91ea97970b7a79a',
         projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
 
-    expect(response.msg).stringContaining('Code 400: No employee with the id');
-  });
-
-  test('task id not in database', async () => {
-    const response = await request(app).post('/timesheets').send(
-      {
-        tasks: [
-          '62891835d4e286802a02756a',
-          '62891835d4e286802a02756f',
-          '62891835d4e286802a02756g',
-        ],
-        employeeId: '62895106842279ad30cd964c',
-        projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
-        endDate: '2022-07-07T00:00:00.000+00:00',
-      },
-    );
-
-    expect(response.msg).stringContaining('Code 400: No tasks with the id');
+    expect(response.body.msg).toMatch('Code 400: No employee with the id');
   });
 
   // INVALID DATA
@@ -127,7 +108,7 @@ describe('POST /timesheets', () => {
         ],
         employeeId: '62895106842279ad30cd964c',
         projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
@@ -145,7 +126,7 @@ describe('POST /timesheets', () => {
         ],
         employeeId: 'Invalid id',
         projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
@@ -163,7 +144,7 @@ describe('POST /timesheets', () => {
         ],
         employeeId: '62895106842279ad30cd964c',
         projectId: 'Invalid ID',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
@@ -185,6 +166,7 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
+
     expect(response.status).toBe(400);
   });
 
@@ -252,7 +234,7 @@ describe('POST /timesheets', () => {
           '62891835d4e286802a02756g',
         ],
         employeeId: '62895106842279ad30cd964c',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
@@ -270,11 +252,11 @@ describe('POST /timesheets', () => {
           '62891835d4e286802a02756g',
         ],
         projectId: '6283b662e53ed4c648db8a45',
-        startDate: '2022-12-05T00:00:00.000+00:00',
+        startDate: '2022-06-05T00:00:00.000+00:00',
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-    // expect(response.msg).toBe('Code 400: Timesheet already exists');
+    // expect(response.body.msg).toBe('Code 400: Timesheet already exists');
   });
 
   test('No end date included', async () => {
@@ -299,52 +281,43 @@ describe('PUT /timesheets/:id', () => {
   test('Successful timesheet update', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       {
+        startDate: '2022-08-05T00:00:00.000+00:00',
         endDate: '2023-07-07T00:00:00.000+00:00',
       },
     );
 
-    expect(response.status).toBe(201);
+    expect(response.body.msg).toBe('Code 201: Task successfully updated');
   });
 
   test('timesheet id not found', async () => {
-    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
-      {
-        endDate: '2023-07-07T00:00:00.000+00:00',
-      },
-    );
-
-    expect(response.status).toBe(404);
-  });
-
-  test('timesheet id not found', async () => {
-    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
-      {
-        endDate: '2023-07-07T00:00:00.000+00:00',
-      },
-    );
-
-    expect(response.status).toBe(404);
-  });
-
-  test('timesheet for that employee of that project already exists', async () => {
-    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
-      {
-        employeeId: '62895106842279ad30cd964c',
-        projectId: '6283b662e53ed4c648db8a45',
-      },
-    );
-
-    expect(response.msg).toBe('Code 400: Timesheet already assigned to the employee');
-  });
-
-  test('Project id not in database', async () => {
-    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+    const response = await request(app).put('/timesheets/6283b662e53ed4c648db8a46').send(
       {
         projectId: '6283b662e53ed4c648db8b45',
       },
     );
 
-    expect(response.msg).stringContaining('Code 400: No project with the id');
+    expect(response.body.msg).toBe('Code 404: Timesheet not found');
+  });
+
+  test('timesheet for that employee of that project already exists', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        employeeId: '628d1eedb91ea97970b7a798',
+        projectId: '6283b662e53ed4c648db8a45',
+      },
+    );
+
+    expect(response.body.msg).toBe('Code 400: Timesheet already assigned to the employee');
+  });
+
+  test('Project id not in database', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        projectId: '6283b662e53ed4c648db8b40',
+      },
+    );
+
+    expect(response.body.msg).toMatch('Code 400: No project with the id');
   });
 
   test('Employee id not in database', async () => {
@@ -354,17 +327,7 @@ describe('PUT /timesheets/:id', () => {
       },
     );
 
-    expect(response.msg).stringContaining('Code 400: No employee with the id');
-  });
-
-  test('Task id not in database', async () => {
-    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
-      {
-        tasks: ['62394fba185b418d96264057'],
-      },
-    );
-
-    expect(response.msg).stringContaining('Code 400: No tasks with the id');
+    expect(response.body.msg).toMatch('Code 400: No employee with the id');
   });
 
   // INVALID DATA
