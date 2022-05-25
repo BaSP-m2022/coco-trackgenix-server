@@ -12,12 +12,12 @@ beforeAll(async () => {
 let projectId;
 let projectId2;
 
-describe('projects endpoints', () => {
+describe('POST /projects endpoints', () => {
   test('should create new project', async () => {
     const response = await request(app).post('/projects/').send({
       name: 'Alfonso',
       description: 'this is the description',
-      starDate: '2022',
+      startDate: '2022',
       clientName: 'coco',
       active: true,
       admins: 'Ricardo',
@@ -34,7 +34,7 @@ describe('projects endpoints', () => {
     const response = await request(app).post('/projects/').send({
       name: 'Ezequiel',
       description: 'this is the description',
-      starDate: '2022',
+      startDate: '2022',
       clientName: 'Alfonso',
       active: true,
       admins: 'Day',
@@ -47,7 +47,7 @@ describe('projects endpoints', () => {
     expect(response.body.msg).toEqual('success');
     projectId2 = response.body.data._id;
   });
-  test('msg is equal to status success', async () => {
+  test('msg is an error has ocurred', async () => {
     const response = await request(app).post('/projects/').send();
     expect(response.status).toBe(400);
   });
@@ -83,7 +83,7 @@ describe('PUT /projects/:id', () => {
     expect(response.status).toBe(200);
   });
 
-  test('status should be 400', async () => {
+  test('status should be 400 because the name field must contain letters only', async () => {
     const response = await request(app).put(`/projects/${projectId}`).send({
       name: '@@@@@@@@',
     });
@@ -96,11 +96,11 @@ describe('DELETE /projects/:id', () => {
     const response = await request(app).delete(`/projects/${projectId}`).send();
     expect(response.status).toBe(200);
   });
-  test('Response should return 404 status error', async () => {
+  test('Response should return 404 status error, because the id parameter is missing', async () => {
     const response = await request(app).delete('/projects/').send();
     expect(response.status).toEqual(404);
   });
-  test('Should return error: false', async () => {
+  test('Should return error: false, because projectId2 is missing', async () => {
     const response = await request(app).delete(`/projects/${projectId2}`).send();
     expect(response.error).toBeFalsy();
   });

@@ -29,7 +29,7 @@ const updateValidate = (req, res, next) => {
     name: Joi.string().min(3).max(50)
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(10).max(130),
-    starDate: Joi.string(),
+    startDate: Joi.string(),
     endDate: Joi.string().optional(),
     clientName: Joi.string().min(3).max(50)
       .regex(/^[a-zA-Z]+$/),
