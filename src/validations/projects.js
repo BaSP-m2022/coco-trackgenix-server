@@ -26,14 +26,17 @@ const validateCreation = (req, res, next) => {
 
 const updateValidate = (req, res, next) => {
   const Schema = Joi.object({
-    name: Joi.string().min(3).max(50),
+    name: Joi.string().min(3).max(50)
+      .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(10).max(130),
     starDate: Joi.string(),
     endDate: Joi.string().optional(),
-    clientName: Joi.string().min(3).max(50),
+    clientName: Joi.string().min(3).max(50)
+      .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean(),
     employees: Joi.array(),
-    admins: Joi.string().min(3).max(50),
+    admins: Joi.string().min(3).max(50)
+      .regex(/^[a-zA-Z]+$/),
   });
   const validation = Schema.validate(req.body);
   if (validation.error) {

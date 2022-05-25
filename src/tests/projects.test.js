@@ -9,8 +9,8 @@ beforeAll(async () => {
   await Projects.collection.insertMany(projectsSeed);
 });
 
-// let projectId;
-// let projectId2;
+let projectId;
+let projectId2;
 
 describe('projects endpoints', () => {
   test('should create new project', async () => {
@@ -28,7 +28,7 @@ describe('projects endpoints', () => {
       ],
     });
     expect(response.status).toBe(201);
-    // projectId = response.body.data._id;
+    projectId = response.body.data._id;
   });
   test('msg is equal to status success', async () => {
     const response = await request(app).post('/projects/').send({
@@ -45,7 +45,7 @@ describe('projects endpoints', () => {
       ],
     });
     expect(response.body.msg).toEqual('success');
-    // projectId2 = response.body.data._id;
+    projectId2 = response.body.data._id;
   });
   test('msg is equal to status success', async () => {
     const response = await request(app).post('/projects/').send();
@@ -53,21 +53,33 @@ describe('projects endpoints', () => {
   });
 });
 
-// describe('PUT /projects/:id', () => {
-//     test('Project was successfully modified', async() => {
-//         const response = await request(app).put(`/employees/${projectId2}`).send({
-//             name: 'axelito',
-//         });
-//         expect(response.status).toBe(200);
-//     });
-// });
-// describe('DELETE /projects/:id', () => {
-//     test('The project was deleted', async () => {
-//         const response = await request(app).delete(`/projects/${projectId}`).send();
-//         expect(response.status).toBe(200);
-//     });
-//     test('Response should return 404 status error', async() => {
-//         const response = await request(app).delete('/projects/').send();
-//         expect(response.status).toEqual(404);
-//     });
-// });
+describe('PUT /projects/:id', () => {
+  test('Project was successfully modified', async () => {
+    const response = await request(app).put(`/projects/${projectId}`).send({
+      active: false,
+    });
+    expect(response.status).toBe(200);
+  });
+
+  test('status should be 400', async () => {
+    const response = await request(app).put(`/projects/${projectId}`).send({
+      name: '@@@@@@@@',
+    });
+    expect(response.status).toBe(400);
+  });
+});
+
+describe('DELETE /projects/:id', () => {
+  test('The project was deleted', async () => {
+    const response = await request(app).delete(`/projects/${projectId}`).send();
+    expect(response.status).toBe(200);
+  });
+  test('Response should return 404 status error', async () => {
+    const response = await request(app).delete('/projects/').send();
+    expect(response.status).toEqual(404);
+  });
+  test('Should return error: false', async () => {
+    const response = await request(app).delete(`/projects/${projectId2}`).send();
+    expect(response.error).toBeFalsy();
+  });
+});
