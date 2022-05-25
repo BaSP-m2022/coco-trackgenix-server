@@ -98,6 +98,7 @@ const deleteProject = async (req, res) => {
     });
   }
 };
+
 const updateProject = async (req, res) => {
   try {
     if (!req.params) {

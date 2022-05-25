@@ -1,5 +1,4 @@
 /* eslint-disable no-underscore-dangle */
-
 import request from 'supertest';
 import app from '../app';
 import projectsSeed from '../seeds/projects-seeds';
@@ -54,24 +53,39 @@ describe('POST /projects endpoints', () => {
 });
 
 describe('GET /projects', () => {
-  test('response should return a 200 status', async () => {
+  test('Response should return a 200 status', async () => {
     const response = await request(app).get('/projects').send();
     expect(response.status).toBe(200);
   });
 
-  test('response should return error:false', async () => {
+  test('Response should return error:false', async () => {
     const response = await request(app).get('/projects').send();
     expect(response.error).toBe(false);
   });
 
-  test('should load data', async () => {
+  test('Should load data', async () => {
     const data = await request(app).get('/projects').send();
     expect(data).toBeDefined();
   });
 
-  test('response should not be empty', async () => {
+  test('Response should not be empty', async () => {
     const response = await request(app).get('/projects').send();
     expect(response.body.data.length).toBeGreaterThan(0);
+  });
+});
+
+describe('GET /projects/:id', () => {
+  test('Response should return a 200 status', async () => {
+    const response = await request(app).get(`/projects/${projectId}`).send();
+    expect(response.status).toBe(200);
+  });
+  test('Response should return data undefined if ID is not provided', async () => {
+    const response = await request(app).get('/projects').send();
+    expect(response.data).toBeUndefined();
+  });
+  test('Response should return status 500', async () => {
+    const response = await request(app).get('/projects/10.;l').send();
+    expect(response.status).toBe(500);
   });
 });
 
