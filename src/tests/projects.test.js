@@ -37,8 +37,12 @@ describe('GET /projects/:id', () => {
     const response = await request(app).get(`/projects/${projectId}`).send();
     expect(response.status).toBe(200);
   });
-  test('Response should return error if ID is not provided', async () => {
-    const response = await request(app).get('/projects/').send();
-    expect(response.error).toBeFalsy();
+  test('Response should return data undefined if ID is not provided', async () => {
+    const response = await request(app).get('/projects').send();
+    expect(response.data).toBeUndefined();
+  });
+  test('Response should return status 500', async () => {
+    const response = await request(app).get('/projects/10.;l').send();
+    expect(response.status).toBe(500);
   });
 });

@@ -5,7 +5,7 @@ const validateCreation = (req, res, next) => {
     name: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(1).max(130).required(),
-    starDate: Joi.date().required(),
+    startDate: Joi.date().required(),
     endDate: Joi.date().optional(),
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
@@ -28,7 +28,7 @@ const updateValidate = (req, res, next) => {
   const Schema = Joi.object({
     name: Joi.string().min(3).max(50),
     description: Joi.string().min(10).max(130),
-    starDate: Joi.string(),
+    startDate: Joi.string(),
     endDate: Joi.string().optional(),
     clientName: Joi.string().min(3).max(50),
     active: Joi.boolean(),

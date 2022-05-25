@@ -46,7 +46,7 @@ const createProject = async (req, res) => {
     const project = await ProjectSchema.create({
       name: req.body.name,
       description: req.body.description,
-      starDate: req.body.starDate,
+      startDate: req.body.starDate,
       endDate: req.body.endDate,
       clientName: req.body.clientName,
       active: req.body.active,
