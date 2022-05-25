@@ -255,7 +255,8 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-    expect(response.body.msg).toBe('Code 400: Timesheet already exists');
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.msg).toBe('Code 400: \"employeeId\" is required');
   });
 
   test('No end date included', async () => {
