@@ -98,7 +98,7 @@ describe('POST /timesheets', () => {
 
   // INVALID DATA
 
-  test('Ivalid task id', async () => {
+  test('Invalid task id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -116,7 +116,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid employee id', async () => {
+  test('Invalid employee id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -134,7 +134,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid project id', async () => {
+  test('Invalid project id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -206,7 +206,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid end date', async () => {
+  test('Invalid end date', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -243,7 +243,6 @@ describe('POST /timesheets', () => {
   });
 
   test('No employee included', async () => {
-    // eslint-disable-next-line no-unused-vars
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -256,7 +255,7 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-    // expect(response.body.msg).toBe('Code 400: Timesheet already exists');
+    expect(response.body.msg).toBe('Code 400: Timesheet already exists');
   });
 
   test('No end date included', async () => {
@@ -332,7 +331,7 @@ describe('PUT /timesheets/:id', () => {
 
   // INVALID DATA
 
-  test('Ivalid task id', async () => {
+  test('Invalid task id', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       { tasks: ['this is an invalid ID'] },
     );
@@ -340,7 +339,7 @@ describe('PUT /timesheets/:id', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid employee id', async () => {
+  test('Invalid employee id', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       { employeeId: 'Invalid id' },
     );
@@ -348,7 +347,7 @@ describe('PUT /timesheets/:id', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid project id', async () => {
+  test('Invalid project id', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       { projectId: 'Invalid ID' },
     );
@@ -383,7 +382,7 @@ describe('PUT /timesheets/:id', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid end date', async () => {
+  test('Invalid end date', async () => {
     const response = await request(app).post('/timesheets').send(
       { endDate: '205102' },
     );
