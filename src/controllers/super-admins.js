@@ -82,10 +82,7 @@ const createSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({
-      msg: 'An error has occurred',
-      error: error.details[0].message,
-    });
+    return res.status(400);
   }
 };
 
@@ -114,7 +111,6 @@ const updateSuperAdmin = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       msg: 'There was an error',
-      error: error.details[0].message,
     });
   }
 };

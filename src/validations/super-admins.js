@@ -3,8 +3,10 @@ import superAdminsModel from '../models/Super-admins';
 
 const validateSuperAdminCreation = (req, res, next) => {
   const superAdminPropSchema = Joi.object({
-    name: Joi.string().min(1).max(50).required().regex(/^[a-zA-Z]+$/),
-    lastName: Joi.string().min(1).max(50).required().regex(/^[a-zA-Z]+$/),
+    name: Joi.string().min(1).max(50).required()
+      .regex(/^[a-zA-Z]+$/),
+    lastName: Joi.string().min(1).max(50).required()
+      .regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase().required(),
     password: Joi.string().min(4).max(20),
     active: Joi.boolean(),

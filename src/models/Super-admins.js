@@ -25,7 +25,6 @@ const superAdminModel = new Schema({
     type: Boolean,
     required: false,
   },
-
 });
 
 export default mongoose.model('Superadmin', superAdminModel);
