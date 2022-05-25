@@ -10,9 +10,11 @@ const ProjectSchema = new Schema({
   clientName: { type: String, required: true },
   active: { type: Boolean, required: true },
   employees: [{
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'Members',
+    name: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'Members',
+    },
   }],
   admins: { type: String, required: true },
 }, { timestamps: true });

@@ -62,7 +62,7 @@ const createProject = async (req, res) => {
   } catch (error) {
     return res.json({
       msg: 'an error has ocurred',
-      data: undefined,
+      data: error,
       error: true,
     });
   }
@@ -114,7 +114,7 @@ const updateProject = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        msg: 'the project jas not been found',
+        msg: 'the project has not been found',
         data: undefined,
         error: true,
       });
@@ -123,7 +123,7 @@ const updateProject = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       msg: 'An error has ocurred',
-      data: error.details[0].message,
+      data: error,
       error: true,
     });
   }
