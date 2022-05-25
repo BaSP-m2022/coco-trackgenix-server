@@ -52,22 +52,7 @@ const getByOne = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const allTimeSheets = await Timesheet.find({}).populate('projectId', {
-      _id: 0,
-      name: 1,
-      client: 1,
-      admins: 1,
-    }).populate('tasks', {
-      _id: 0,
-      description: 1,
-      workedHours: 1,
-      date: 1,
-    }).populate('employeeId', {
-      _id: 0,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-    });
+    const allTimeSheets = await Timesheet.find({});
     res.status(200).json({
       message: 'TimeSheets fetched successfully',
       data: allTimeSheets,
@@ -143,7 +128,8 @@ const createTimesheet = async (req, res) => {
         return task;
       }
     });
-
+    // eslint-disable-next-line no-console
+    console.log(taskIdChecker);
     if (taskIdChecker !== undefined) {
       return res.status(400).json({
         msg: `Code 400: No tasks with the id ${taskIdChecker}`,
