@@ -96,7 +96,7 @@ describe('POST /timesheets', () => {
 
   // INVALID DATA
 
-  test('Ivalid task id', async () => {
+  test('Invalid task id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -114,7 +114,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid employee id', async () => {
+  test('Invalid employee id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -132,7 +132,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid project id', async () => {
+  test('Invalid project id', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -204,7 +204,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(400);
   });
 
-  test('Ivalid end date', async () => {
+  test('Invalid end date', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -218,11 +218,8 @@ describe('POST /timesheets', () => {
         endDate: '205102',
       },
     );
-
     expect(response.status).toBe(400);
   });
-
-  // OMMIT REQUIRED FIELDS
   test('No project included', async () => {
     const response = await request(app).post('/timesheets').send(
       {
@@ -236,10 +233,8 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-
     expect(response.status).toBe(400);
   });
-
   test('No employee included', async () => {
     // eslint-disable-next-line no-unused-vars
     const response = await request(app).post('/timesheets').send(
@@ -254,9 +249,7 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
-    // expect(response.body.msg).toBe('Code 400: Timesheet already exists');
   });
-
   test('No end date included', async () => {
     const response = await request(app).post('/timesheets').send(
       {
@@ -270,7 +263,6 @@ describe('POST /timesheets', () => {
         startDate: '2022-12-05T00:00:00.000+00:00',
       },
     );
-
     expect(response.status).toBe(400);
   });
 });
@@ -288,16 +280,15 @@ describe('GET /timesheets', () => {
     const response = await request(app).get('/time/sheets').send();
     await expect(response.status).toBe(404);
   });
-  test('The path is wrong', async () => {
-    const response = await request(app).get('/time-sheets').send();
-    await expect(response.status).toBe(404);
+  test('Should load data', async () => {
+    const response = await request(app).get('/timesheets').send();
+    expect(response).toBeDefined();
   });
   test('The path is wrong', async () => {
     const response = await request(app).get('/api').send();
-    await expect(response.status).toBe(404);
+    await expect(response.error).toBeTruthy();
   });
 });
-
 describe('GetById /timesheets/_id', () => {
   test('get by Id', async () => {
     const response = await request(app).get(`/timesheets/${idCatcher}`).send();
@@ -324,7 +315,6 @@ describe('GetById /timesheets/_id', () => {
     expect(response.body.error).toBeTruthy();
   });
 });
-
 describe('DELETE /timesheets', () => {
   test('Should delete a timesheet', async () => {
     const response = await request(app).delete(`/timesheets/${idCatcher}`).send();
@@ -335,5 +325,3 @@ describe('DELETE /timesheets', () => {
     expect(response.status).toEqual(404);
   });
 });
-
-// expect(response.body.msg).toBe('There is no timesheet with this Id 6274613d5f1b9c4131f527e4');
