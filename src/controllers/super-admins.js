@@ -82,7 +82,7 @@ const createSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400);
+    return res.status(500);
   }
 };
 

@@ -69,9 +69,9 @@ describe('GET /superadmins/:id', () => {
     expect(response.status).toBe(200);
   });
 
-  test('response should return a true error if not id', async () => {
-    const response = await request(app).get('/superadmins/').send();
-    expect(response.status).toBeTruthy();
+  test('response should return a status 500 if not id', async () => {
+    const response = await request(app).get('/superadmins/1').send();
+    expect(response.status).toEqual(500);
   });
 });
 
@@ -94,11 +94,11 @@ describe('PUT /superadmins', () => {
     const response = await request(app).put(`/superadmins/${sAdmin}`).send({
       lastName: 'pere*zz',
     });
-    expect(response.status).toBe(400);
+    expect(response.body.msg).toEqual(undefined);
   });
 
-  test('response should return a true error if not id', async () => {
-    const response = await request(app).put('/superadmins/').send();
+  test('response should return a status 404 if not id', async () => {
+    const response = await request(app).put('/superadmins/628e7250b6e128926648e604').send();
     expect(response.status).toBe(404);
   });
 });

@@ -32,7 +32,6 @@ const validateSuperAdminUpdate = async (req, res, next) => {
   const validation = SuperAdminPropSchema.validate(req.body);
   if (validation.error) {
     res.status(400).json({
-      msg: 'There was an error during the validation of the request',
       error: validation.error.details[0].message,
     });
   }
