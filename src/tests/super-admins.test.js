@@ -68,6 +68,11 @@ describe('GET /superadmins/:id', () => {
     const response = await request(app).get(`/superadmins/${sAdmin}`).send();
     expect(response.status).toBe(200);
   });
+
+  test('response should return a true error if not id', async () => {
+    const response = await request(app).get('/superadmins/').send();
+    expect(response.status).toBeTruthy();
+  });
 });
 
 describe('PUT /superadmins', () => {
@@ -76,12 +81,39 @@ describe('PUT /superadmins', () => {
       email: 'PabloPerez@gmail.com',
     });
     expect(response.status).toEqual(200);
+    sAdmin = response.body.data._id;
+  });
+  test('if the name is spelled wrong, it returns a status 400', async () => {
+    const response = await request(app).put(`/superadmins/${sAdmin}`).send({
+      name: 'pab_lo',
+    });
+    expect(response.status).toBe(400);
+  });
+
+  test('if the last name is spelled wrong, it returns me an undefined data', async () => {
+    const response = await request(app).put(`/superadmins/${sAdmin}`).send({
+      lastName: 'pere*zz',
+    });
+    expect(response.status).toBe(400);
+  });
+
+  test('response should return a true error if not id', async () => {
+    const response = await request(app).put('/superadmins/').send();
+    expect(response.status).toBe(404);
   });
 });
 
 describe('DELETE /superadmins/:id', () => {
   test('The Super-Admin was deleted', async () => {
-    const response = await request(app).get(`/superadmins/${sAdmin2}`).send();
+    const response = await request(app).get(`/superadmins/${sAdmin}`).send();
     expect(response.status).toEqual(200);
+  });
+  test('response should return a false error', async () => {
+    const response = await request(app).delete(`/superadmins/${sAdmin2}`).send();
+    expect(response.error).toBeFalsy();
+  });
+  test('status 404 if the Super-Admin does not exist', async () => {
+    const response = await request(app).delete('/superadmins/').send();
+    expect(response.status).toEqual(404);
   });
 });

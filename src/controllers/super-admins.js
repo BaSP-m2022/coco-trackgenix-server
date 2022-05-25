@@ -109,9 +109,7 @@ const updateSuperAdmin = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({
-      msg: 'There was an error',
-    });
+    return res.status(500);
   }
 };
 
