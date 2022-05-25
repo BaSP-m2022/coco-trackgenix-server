@@ -61,8 +61,8 @@ const addNewEmployee = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.status(400).json({
-      msg: 'Status 400: internal server error',
+    return res.status(500).json({
+      msg: 'Status 500: internal server error',
       data: undefined,
       error: true,
     });

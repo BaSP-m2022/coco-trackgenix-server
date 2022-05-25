@@ -117,9 +117,9 @@ describe('GETBYID /employees/:id', () => {
     const response = await request(app).get(`/employees/${employeeId}`).send();
     expect(response.status).toBe(200);
   });
-  test('response should return a true error if not id', async () => {
-    const response = await request(app).get('/employees/').send();
-    expect(response.status).toBeTruthy();
+  test('response should return a status 404 if the id does not exist', async () => {
+    const response = await request(app).get('/employees/628e3acafb848cdc505426a5').send();
+    expect(response.status).toEqual(404);
   });
 });
 
@@ -145,7 +145,7 @@ describe('PUT /employees/:id', () => {
     expect(response.body.msg).toEqual(undefined);
   });
 
-  test('response should return a true error if not id', async () => {
+  test('response should return a status 404 if not id', async () => {
     const response = await request(app).put('/employees/').send();
     expect(response.status).toBe(404);
   });
