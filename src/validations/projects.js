@@ -5,7 +5,7 @@ const validateCreation = (req, res, next) => {
     name: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(1).max(130).required(),
-    starDate: Joi.date().required(),
+    startDate: Joi.date().required(),
     endDate: Joi.date().optional(),
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
