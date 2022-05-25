@@ -46,7 +46,7 @@ describe('POST /superadmins', () => {
     expect(response.status).toBe(201);
     sAdmin = response.body.data._id;
   });
-  test('Shold create a new Super-Admin', async () => {
+  test('Should create a new Super-Admin', async () => {
     const response = await request(app).post('/superadmins').send({
       name: 'Martin',
       lastName: 'disalvo',
@@ -71,7 +71,7 @@ describe('GET /superadmins/:id', () => {
 });
 
 describe('PUT /superadmins', () => {
-  test('Shold put an SuperAdmin', async () => {
+  test('Should put an SuperAdmin', async () => {
     const response = await request(app).put(`/superadmins/${sAdmin}`).send({
       email: 'PabloPerez@gmail.com',
     });
@@ -80,7 +80,7 @@ describe('PUT /superadmins', () => {
 });
 
 describe('DELETE /superadmins/:id', () => {
-  test('The project was deleted', async () => {
+  test('The Super-Admin was deleted', async () => {
     const response = await request(app).get(`/superadmins/${sAdmin2}`).send();
     expect(response.status).toEqual(200);
   });
