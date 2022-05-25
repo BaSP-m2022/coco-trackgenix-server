@@ -4,6 +4,8 @@ const getAllMembers = async (req, res) => {
   try {
     const allMembers = await Members.find({}).populate('employee', {
       _id: 1,
+      firstName: 1,
+      lastName: 1,
     });
 
     return res.status(200).json({
@@ -23,6 +25,8 @@ const getByIdMembers = async (req, res) => {
   try {
     const oneMember = await Members.findById(req.params.id).populate('employee', {
       _id: 1,
+      firstName: 1,
+      lastName: 1,
     });
     if (oneMember) {
       res.status(200).json({
