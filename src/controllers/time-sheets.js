@@ -8,30 +8,45 @@ import Task from '../models/Tasks';
 
 const getByOne = async (req, res) => {
   try {
-    const oneTimeSheet = await Timesheet.findById(req.params.id).populate('tasks');
+    const oneTimeSheet = await Timesheet.findById(req.params.id).populate('projectId', {
+      _id: 0,
+      name: 1,
+      clientName: 1,
+      admins: 1,
+    }).populate('tasks', {
+      _id: 0,
+      description: 1,
+      workedHours: 1,
+      date: 1,
+    }).populate('employeeId', {
+      _id: 0,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+    });
+
     if (oneTimeSheet) {
-      res.status(200).json({
+      return res.status(200).json({
         message: 'TimeSheet fetched successfully',
         data: oneTimeSheet,
         error: false,
       });
     }
-  } catch (error) {
-    if (error.value) {
+    if (!oneTimeSheet) {
       res.status(404).json({
         message: `TimeSheets with id ${req.params.id} not found`,
         data: undefined,
         error: false,
         status: 404,
       });
-    } else {
-      res.status(500).json({
-        message: 'Internal server error',
-        data: error,
-        error: true,
-        status: 500,
-      });
     }
+  } catch (error) {
+    res.status(500).json({
+      message: 'Internal server error',
+      data: error,
+      error: true,
+      status: 500,
+    });
   }
 };
 

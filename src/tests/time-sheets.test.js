@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import request from 'supertest';
 import app from '../app';
@@ -389,5 +388,65 @@ describe('PUT /timesheets/:id', () => {
     );
 
     expect(response.status).toBe(400);
+    expect(response.status).toBe(400);
+  });
+});
+describe('GET /timesheets', () => {
+  test('Response should return a 200 status', async () => {
+    const response = await request(app).get('/timesheets').send();
+    await expect(response.status).toBe(200);
+  });
+
+  test('Response should return a 200 status', async () => {
+    const response = await request(app).get('/timesheets').send();
+    await expect(response.body.data.length).toBeGreaterThan(0);
+  });
+  test('The path is wrong', async () => {
+    const response = await request(app).get('/time/sheets').send();
+    await expect(response.status).toBe(404);
+  });
+  test('Should load data', async () => {
+    const response = await request(app).get('/timesheets').send();
+    expect(response).toBeDefined();
+  });
+  test('The path is wrong', async () => {
+    const response = await request(app).get('/api').send();
+    await expect(response.error).toBeTruthy();
+  });
+});
+describe('GetById /timesheets/_id', () => {
+  test('get by Id', async () => {
+    const response = await request(app).get(`/timesheets/${idCatcher}`).send();
+    expect(response.status).toBe(200);
+  });
+  test('get by Id', async () => {
+    const response = await request(app).get(`/timesheets/${idCatcher}`).send();
+    expect(response.body.error).toBeFalsy();
+  });
+  test('get incorret id', async () => {
+    const response = await request(app).get('/timesheets/628d84082c6e84a4e44b4cad').send();
+    expect(response.status).toBe(404);
+  });
+  test('get incorret id', async () => {
+    const response = await request(app).get('/timesheets/628d84082c6e84a4e44b4cad').send();
+    expect(response.body.message).toBe('TimeSheets with id 628d84082c6e84a4e44b4cad not found');
+  });
+  test('get incorret id format', async () => {
+    const response = await request(app).get('/timesheets/628').send();
+    expect(response.status).toBe(500);
+  });
+  test('get incorret id format', async () => {
+    const response = await request(app).get('/timesheets/628').send();
+    expect(response.body.error).toBeTruthy();
+  });
+});
+describe('DELETE /timesheets', () => {
+  test('Should delete a timesheet', async () => {
+    const response = await request(app).delete(`/timesheets/${idCatcher}`).send();
+    expect(response.status).toEqual(204);
+  });
+  test('Should not delete a proyect ', async () => {
+    const response = await request(app).delete('/timesheets/6274613d5f1b9c4131f527e4').send();
+    expect(response.status).toEqual(404);
   });
 });
