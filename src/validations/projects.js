@@ -1,20 +1,16 @@
 import Joi from 'joi';
 
 const validateCreation = (req, res, next) => {
-  const employeePropSchema = Joi.object({
-    role: Joi.string().valid('QA', 'DEV', 'TL', 'PM').required(),
-    rate: Joi.string().required(),
-  });
   const projectValidation = Joi.object({
     name: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(1).max(130).required(),
-    startDate: Joi.date().required(),
+    starDate: Joi.date().required(),
     endDate: Joi.date().optional(),
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean().required(),
-    employees: Joi.array().items(employeePropSchema).required(),
+    employees: Joi.array(),
     admins: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
   });
@@ -29,18 +25,14 @@ const validateCreation = (req, res, next) => {
 };
 
 const updateValidate = (req, res, next) => {
-  const employeeSchema = Joi.object({
-    role: Joi.string().valid('QA', 'DEV', 'TL', 'PM'),
-    rate: Joi.string(),
-  });
   const Schema = Joi.object({
     name: Joi.string().min(3).max(50),
     description: Joi.string().min(10).max(130),
-    startDate: Joi.string(),
+    starDate: Joi.string(),
     endDate: Joi.string().optional(),
     clientName: Joi.string().min(3).max(50),
     active: Joi.boolean(),
-    employees: Joi.array().items(employeeSchema),
+    employees: Joi.array(),
     admins: Joi.string().min(3).max(50),
   });
   const validation = Schema.validate(req.body);
