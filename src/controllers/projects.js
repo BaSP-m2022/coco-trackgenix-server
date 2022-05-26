@@ -2,7 +2,7 @@ import ProjectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const allProjects = await ProjectSchema.find({});
+    const allProjects = await ProjectSchema.find({}).populate('employees');
     return res.status(200).json({
       msg: 'success',
       data: allProjects,
@@ -20,7 +20,7 @@ const getAllProjects = async (req, res) => {
 const getProjectById = async (req, res) => {
   try {
     if (req.params.id) {
-      const project = await ProjectSchema.findById({ _id: req.params.id });
+      const project = await ProjectSchema.findById({ _id: req.params.id }).populate('employees');
       return res.status(200).json({
         msg: 'found',
         data: project,
@@ -46,7 +46,7 @@ const createProject = async (req, res) => {
     const project = await ProjectSchema.create({
       name: req.body.name,
       description: req.body.description,
-      starDate: req.body.starDate,
+      startDate: req.body.startDate,
       endDate: req.body.endDate,
       clientName: req.body.clientName,
       active: req.body.active,
@@ -60,9 +60,9 @@ const createProject = async (req, res) => {
       error: false,
     });
   } catch (error) {
-    return res.json({
+    return res.status(400).json({
       msg: 'an error has ocurred',
-      data: undefined,
+      data: error,
       error: true,
     });
   }
@@ -98,6 +98,7 @@ const deleteProject = async (req, res) => {
     });
   }
 };
+
 const updateProject = async (req, res) => {
   try {
     if (!req.params) {
@@ -114,7 +115,7 @@ const updateProject = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        msg: 'the project jas not been found',
+        msg: 'the project has not been found',
         data: undefined,
         error: true,
       });
@@ -123,7 +124,7 @@ const updateProject = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       msg: 'An error has ocurred',
-      data: error.details[0].message,
+      data: error,
       error: true,
     });
   }
