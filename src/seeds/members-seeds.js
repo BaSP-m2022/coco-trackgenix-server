@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
 
 export default [{
-  _id: mongoose.Types.ObjectId('628afd765745f82367561b25'),
-  _employee: mongoose.Types.ObjectId('628b075bc3ab0a4a2700159d'),
+  _id: mongoose.Types.ObjectId('6289558814ac09a7c65a7c58'),
+  employee: [{
+    _id: mongoose.Types.ObjectId('62829d90bf75f8b63576af30'),
+  }],
   role: 'PM',
   rate: '8',
 }];
