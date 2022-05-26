@@ -2,20 +2,21 @@
 import request from 'supertest';
 import app from '../app';
 import Timesheet from '../models/Time-sheets';
-import timesheetSeed from '../seeds/time-sheets-seeds';
+import timesheetsSeed from '../seeds/time-sheets-seeds';
 import Employee from '../models/Employees';
-import employeeSeed from '../seeds/employees-seeds';
+import employeesSeed from '../seeds/employees-seeds';
 import Project from '../models/Projects';
-import projectsSeeds from '../seeds/projects-seeds';
+import projectsSeed from '../seeds/projects-seeds';
 import Task from '../models/Tasks';
 import tasksSeed from '../seeds/tasks-seeds';
 
 beforeAll(async () => {
-  Timesheet.collection.insertMany(timesheetSeed);
-  Employee.collection.insertMany(employeeSeed);
-  Project.collection.insertMany(projectsSeeds);
-  Task.collection.insertMany(tasksSeed);
+  await Timesheet.collection.insertMany(timesheetsSeed);
+  await Employee.collection.insertMany(employeesSeed);
+  await Project.collection.insertMany(projectsSeed);
+  await Task.collection.insertMany(tasksSeed);
 });
+
 let idCatcher;
 
 describe('POST /timesheets', () => {
@@ -218,8 +219,11 @@ describe('POST /timesheets', () => {
         endDate: '205102',
       },
     );
+
     expect(response.status).toBe(400);
   });
+
+  // OMMIT REQUIRED FIELDS
   test('No project included', async () => {
     const response = await request(app).post('/timesheets').send(
       {
@@ -233,10 +237,11 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
+
     expect(response.status).toBe(400);
   });
+
   test('No employee included', async () => {
-    // eslint-disable-next-line no-unused-vars
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -249,7 +254,10 @@ describe('POST /timesheets', () => {
         endDate: '2022-07-07T00:00:00.000+00:00',
       },
     );
+    // eslint-disable-next-line no-useless-escape
+    expect(response.body.msg).toBe('Code 400: \"employeeId\" is required');
   });
+
   test('No end date included', async () => {
     const response = await request(app).post('/timesheets').send(
       {
@@ -263,6 +271,123 @@ describe('POST /timesheets', () => {
         startDate: '2022-12-05T00:00:00.000+00:00',
       },
     );
+
+    expect(response.status).toBe(400);
+  });
+});
+
+describe('PUT /timesheets/:id', () => {
+  test('Successful timesheet update', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        startDate: '2022-08-05T00:00:00.000+00:00',
+        endDate: '2023-07-07T00:00:00.000+00:00',
+      },
+    );
+
+    expect(response.body.msg).toBe('Code 201: Task successfully updated');
+  });
+
+  test('timesheet id not found', async () => {
+    const response = await request(app).put('/timesheets/6283b662e53ed4c648db8a46').send(
+      {
+        projectId: '6283b662e53ed4c648db8b45',
+      },
+    );
+
+    expect(response.body.msg).toBe('Code 404: Timesheet not found');
+  });
+
+  test('timesheet for that employee of that project already exists', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        employeeId: '628d1eedb91ea97970b7a798',
+        projectId: '6283b662e53ed4c648db8a45',
+      },
+    );
+
+    expect(response.body.msg).toBe('Code 400: Timesheet already assigned to the employee');
+  });
+
+  test('Project id not in database', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        projectId: '6283b662e53ed4c648db8b40',
+      },
+    );
+
+    expect(response.body.msg).toMatch('Code 400: No project with the id');
+  });
+
+  test('Employee id not in database', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      {
+        employeeId: '62894106842279ad30cd964c',
+      },
+    );
+
+    expect(response.body.msg).toMatch('Code 400: No employee with the id');
+  });
+
+  // INVALID DATA
+
+  test('Invalid task id', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      { tasks: ['this is an invalid ID'] },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Invalid employee id', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      { employeeId: 'Invalid id' },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Invalid project id', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      { projectId: 'Invalid ID' },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Start date before current time', async () => {
+    const response = await request(app).put(`/timesheets/${idCatcher}`).send(
+      { startDate: '2021-12-05T00:00:00.000+00:00' },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Invalid start date', async () => {
+    const response = await request(app).post('/timesheets').send(
+      { startDate: '202' },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('End date before start date', async () => {
+    const response = await request(app).post('/timesheets').send(
+      {
+        startDate: '2022-12-05T00:00:00.000+00:00',
+        endDate: '2021-07-07T00:00:00.000+00:00',
+      },
+    );
+
+    expect(response.status).toBe(400);
+  });
+
+  test('Invalid end date', async () => {
+    const response = await request(app).post('/timesheets').send(
+      { endDate: '205102' },
+    );
+
+    expect(response.status).toBe(400);
     expect(response.status).toBe(400);
   });
 });

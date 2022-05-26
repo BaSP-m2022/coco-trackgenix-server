@@ -52,7 +52,22 @@ const getByOne = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const allTimeSheets = await Timesheet.find({});
+    const allTimeSheets = await Timesheet.find({}).populate('projectId', {
+      _id: 0,
+      name: 1,
+      client: 1,
+      admins: 1,
+    }).populate('tasks', {
+      _id: 0,
+      description: 1,
+      workedHours: 1,
+      date: 1,
+    }).populate('employeeId', {
+      _id: 0,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+    });
     res.status(200).json({
       message: 'TimeSheets fetched successfully',
       data: allTimeSheets,
@@ -128,8 +143,6 @@ const createTimesheet = async (req, res) => {
         return task;
       }
     });
-    // eslint-disable-next-line no-console
-    console.log(taskIdChecker);
     if (taskIdChecker !== undefined) {
       return res.status(400).json({
         msg: `Code 400: No tasks with the id ${taskIdChecker}`,
@@ -244,7 +257,7 @@ const updateTimesheet = async (req, res) => {
       }
     }
     // if everything passes check what is provided and update it
-    if (req.body.tasks) found.tasks = [...found.tasks, ...req.body.tasks];
+    if (req.body.tasks) found.tasks = found.tasks.concat(req.body.tasks);
     if (req.body.employeeId) found.employeeId = req.body.employeeId;
     if (req.body.projectId) found.projectId = req.body.projectId;
     if (req.body.startDate) found.startDate = req.body.startDate;
