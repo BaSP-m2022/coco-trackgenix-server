@@ -32,8 +32,10 @@ describe('GET /:id', () => {
   test('should return an specific task', async () => {
     const response = await request(app).get(`/tasks/${taskId}`).send();
     const Task = {
-      description: 'task description',
-      workedHours: 20,
+      _id: '62891835d4e286802a02756e',
+      decription: 'task 1',
+      workedHours: 10,
+      date: '2021-11-05T00:00:00.000Z',
     };
     expect(response.body.data).toMatchObject(Task);
   });

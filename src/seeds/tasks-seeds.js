@@ -3,8 +3,8 @@ import mongoose from 'mongoose';
 export default [
   {
     _id: mongoose.Types.ObjectId('62891835d4e286802a02756e'),
-    description: 'task description',
-    workedHours: '20',
+    decription: 'task 1',
+    workedHours: '10',
     date: '2021-11-05',
   },
   {
