@@ -9,17 +9,17 @@ import Task from '../models/Tasks';
 const getByOne = async (req, res) => {
   try {
     const oneTimeSheet = await Timesheet.findById(req.params.id).populate('projectId', {
-      _id: 0,
+      _id: 1,
       name: 1,
       clientName: 1,
       admins: 1,
     }).populate('tasks', {
-      _id: 0,
+      _id: 1,
       description: 1,
       workedHours: 1,
       date: 1,
     }).populate('employeeId', {
-      _id: 0,
+      _id: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
@@ -53,17 +53,17 @@ const getByOne = async (req, res) => {
 const getAll = async (req, res) => {
   try {
     const allTimeSheets = await Timesheet.find({}).populate('projectId', {
-      _id: 0,
+      _id: 1,
       name: 1,
       client: 1,
       admins: 1,
     }).populate('tasks', {
-      _id: 0,
+      _id: 1,
       description: 1,
       workedHours: 1,
       date: 1,
     }).populate('employeeId', {
-      _id: 0,
+      _id: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
