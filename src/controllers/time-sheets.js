@@ -213,21 +213,6 @@ const updateTimesheet = async (req, res) => {
         });
       }
     }
-    if (req.body.tasks) {
-      const taskIdChecker = req.body.tasks.forEach(async (task) => {
-        const check = await Task.findById(task);
-        if (!check) {
-          return [undefined, task];
-        }
-      });
-      if (taskIdChecker[0] === undefined) {
-        return res.status(400).json({
-          msg: `Code 400: No tasks with the id ${taskIdChecker[1]}`,
-          data: undefined,
-          error: true,
-        });
-      }
-    }
     // validate that is not creating a duplicate
     if (req.body.employeeId) {
       const asssignedTimesheet = await Timesheet.findOne({
@@ -238,20 +223,6 @@ const updateTimesheet = async (req, res) => {
         return res.status(400).json({
           msg: 'Code 400: Timesheet already assigned to the employee',
           data: asssignedTimesheet,
-          error: true,
-        });
-      }
-    }
-    if (req.body.tasks && req.body.tasks.length > 0) {
-      const assignedTask = req.body.tasks.forEach((task) => {
-        found.tasks.forEach((existingTask) => {
-          if (task === existingTask) return existingTask;
-        });
-      });
-      if (assignedTask) {
-        return res.status(400).json({
-          msg: 'Code 400: task already assigned',
-          data: assignedTask,
           error: true,
         });
       }
