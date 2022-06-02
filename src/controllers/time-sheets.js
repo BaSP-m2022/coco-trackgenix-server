@@ -214,19 +214,19 @@ const updateTimesheet = async (req, res) => {
       }
     }
     // validate that is not creating a duplicate
-    if (req.body.employeeId) {
-      const asssignedTimesheet = await Timesheet.findOne({
-        employeeId: req.body.employeeId,
-        projectId: found.projectId,
-      });
-      if (asssignedTimesheet) {
-        return res.status(400).json({
-          msg: 'Code 400: Timesheet already assigned to the employee',
-          data: asssignedTimesheet,
-          error: true,
-        });
-      }
-    }
+    // if (req.body.employeeId) {
+    //   const asssignedTimesheet = await Timesheet.findOne({
+    //     employeeId: req.body.employeeId,
+    //     projectId: found.projectId,
+    //   });
+    //   if (asssignedTimesheet) {
+    //     return res.status(400).json({
+    //       msg: 'Code 400: Timesheet already assigned to the employee',
+    //       data: asssignedTimesheet,
+    //       error: true,
+    //     });
+    //   }
+    // }
     // if everything passes check what is provided and update it
     if (req.body.tasks) found.tasks = found.tasks.concat(req.body.tasks);
     if (req.body.employeeId) found.employeeId = req.body.employeeId;
