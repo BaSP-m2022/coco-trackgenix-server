@@ -57,13 +57,13 @@ const validateUpdate = async (req, res, next) => {
       error: true,
     });
   }
-  if (existing) {
-    return res.status(400).json({
-      msg: 'Code 400: This task already exists',
-      data: existing,
-      error: true,
-    });
-  }
+//   if (existing) {
+//     return res.status(400).json({
+//       msg: 'Code 400: This task already exists',
+//       data: existing,
+//       error: true,
+//     });
+//   }
   return next();
 };
 
