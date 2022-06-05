@@ -42,12 +42,12 @@ const validateMod = async (req, res, next) => {
       error: validate.error.details[0].message,
     });
   }
-  const emailExist = await employeesModels.findOne({ email: req.body.email });
-  if (emailExist) {
-    return res.status(400).json({
-      msg: 'Email already exist',
-    });
-  }
+//   const emailExist = await employeesModels.findOne({ email: req.body.email });
+//   if (emailExist) {
+//     return res.status(400).json({
+//       msg: 'Email already exist',
+//     });
+//   }
   return next();
 };
 

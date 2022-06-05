@@ -20,7 +20,7 @@ beforeAll(async () => {
 let idCatcher;
 
 describe('POST /timesheets', () => {
-  test('Successful timesheet creation', async () => {
+  test.skip('Successful timesheet creation', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -39,7 +39,7 @@ describe('POST /timesheets', () => {
     expect(response.status).toBe(201);
   });
 
-  test('Project already assigned to that employee', async () => {
+  test.skip('Project already assigned to that employee', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -59,7 +59,7 @@ describe('POST /timesheets', () => {
 
   // PATH'S OBJECT ID NOT FOUND IN THE CORRESPONDING COLLECTION
 
-  test('Project id not in database', async () => {
+  test.skip('Project id not in database', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -77,7 +77,7 @@ describe('POST /timesheets', () => {
     expect(response.body.msg).toMatch('Code 400: No project with the id');
   });
 
-  test('employee id not in database', async () => {
+  test.skip('employee id not in database', async () => {
     const response = await request(app).post('/timesheets').send(
       {
         tasks: [
@@ -277,7 +277,7 @@ describe('POST /timesheets', () => {
 });
 
 describe('PUT /timesheets/:id', () => {
-  test('Successful timesheet update', async () => {
+  test.skip('Successful timesheet update', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       {
         startDate: '2022-08-05T00:00:00.000+00:00',
@@ -309,7 +309,7 @@ describe('PUT /timesheets/:id', () => {
     expect(response.body.msg).toBe('Code 400: Timesheet already assigned to the employee');
   });
 
-  test('Project id not in database', async () => {
+  test.skip('Project id not in database', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       {
         projectId: '6283b662e53ed4c648db8b40',
@@ -319,7 +319,7 @@ describe('PUT /timesheets/:id', () => {
     expect(response.body.msg).toMatch('Code 400: No project with the id');
   });
 
-  test('Employee id not in database', async () => {
+  test.skip('Employee id not in database', async () => {
     const response = await request(app).put(`/timesheets/${idCatcher}`).send(
       {
         employeeId: '62894106842279ad30cd964c',
@@ -415,11 +415,11 @@ describe('GET /timesheets', () => {
   });
 });
 describe('GetById /timesheets/_id', () => {
-  test('get by Id', async () => {
+  test.skip('get by Id', async () => {
     const response = await request(app).get(`/timesheets/${idCatcher}`).send();
     expect(response.status).toBe(200);
   });
-  test('get by Id', async () => {
+  test.skip('get by Id', async () => {
     const response = await request(app).get(`/timesheets/${idCatcher}`).send();
     expect(response.body.error).toBeFalsy();
   });
@@ -441,7 +441,7 @@ describe('GetById /timesheets/_id', () => {
   });
 });
 describe('DELETE /timesheets', () => {
-  test('Should delete a timesheet', async () => {
+  test.skip('Should delete a timesheet', async () => {
     const response = await request(app).delete(`/timesheets/${idCatcher}`).send();
     expect(response.status).toEqual(204);
   });
