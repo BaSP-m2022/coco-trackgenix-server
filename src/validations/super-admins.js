@@ -35,14 +35,14 @@ const validateSuperAdminUpdate = async (req, res, next) => {
       error: validation.error.details[0].message,
     });
   }
-  const repeatedEmail = await superAdminsModel.findOne({ email: req.body.email });
-  if (repeatedEmail) {
-    res.status(400).json({
-      msg: 'This email already exists',
-      data: repeatedEmail,
-      error: true,
-    });
-  }
+//   const repeatedEmail = await superAdminsModel.findOne({ email: req.body.email });
+//   if (repeatedEmail) {
+//     res.status(400).json({
+//       msg: 'This email already exists',
+//       data: repeatedEmail,
+//       error: true,
+//     });
+//   }
   return next();
 };
 
