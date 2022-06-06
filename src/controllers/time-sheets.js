@@ -182,6 +182,7 @@ const createTimesheet = async (req, res) => {
 };
 
 const updateTimesheet = async (req, res) => {
+    console.log("req.body", req.body)
   try {
     // check for matching timesheet for the id given
     const found = await Timesheet.findById(req.params.id);
@@ -228,15 +229,20 @@ const updateTimesheet = async (req, res) => {
     //   }
     // }
     // if everything passes check what is provided and update it
-    if (req.body.tasks) found.tasks = found.tasks.concat(req.body.tasks);
-    if (req.body.employeeId) found.employeeId = req.body.employeeId;
-    if (req.body.projectId) found.projectId = req.body.projectId;
-    if (req.body.startDate) found.startDate = req.body.startDate;
-    if (req.body.endDate) found.endDate = req.body.endDate;
-    await found.save();
+    // if (req.body.tasks) found.tasks = found.tasks.concat(req.body.tasks);
+    // if (req.body.employeeId) found.employeeId = req.body.employeeId;
+    // if (req.body.projectId) found.projectId = req.body.projectId;
+    // if (req.body.startDate) found.startDate = req.body.startDate;
+    // if (req.body.endDate) found.endDate = req.body.endDate;
+    // await found.save();
+    const updateTimesheet = await Timesheet.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        { new: true },
+      );
     res.status(201).json({
-      msg: 'Code 201: Task successfully updated',
-      data: found,
+      msg: 'Code 201: Timesheet successfully updated',
+      data: updateTimesheet,
       error: false,
     });
   } catch (error) {

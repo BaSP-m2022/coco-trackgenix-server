@@ -21,7 +21,6 @@ const timesheetSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Project',
     required: true,
-    immutable: true,
   },
   startDate: {
     type: Date,
