@@ -2,9 +2,9 @@ import joi from 'joi';
 
 const validateCreation = (req, res, next) => {
   const timesheetSchema = joi.object({
-    tasks: joi.array().items(joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/)),
-    employeeId: joi.string().lowercase().required().regex(/^[0-9a-z]{24,24}$/),
-    projectId: joi.string().lowercase().required().regex(/^[0-9a-z]{24,24}$/),
+    tasks: joi.array().items(joi.string().lowercase()),
+    employeeId: joi.string().lowercase().required(),
+    projectId: joi.string().lowercase().required(),
     startDate: joi.date().min(Date.now()),
     endDate: joi.date().min(joi.ref('startDate')).required(),
   });
@@ -21,9 +21,9 @@ const validateCreation = (req, res, next) => {
 
 const validateUpdate = (req, res, next) => {
   const timesheetSchema = joi.object({
-    tasks: joi.array().items(joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/)),
-    employeeId: joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/),
-    projectId: joi.string().lowercase().regex(/^[0-9a-z]{24,24}$/),
+    tasks: joi.array().items(joi.string().lowercase()),
+    employeeId: joi.string().lowercase(),
+    projectId: joi.string().lowercase(),
     startDate: joi.date().min(Date.now()),
     endDate: joi.date().min(joi.ref('startDate')),
   });
