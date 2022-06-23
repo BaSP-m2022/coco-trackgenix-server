@@ -12,7 +12,7 @@ const ProjectSchema = new Schema({
   employees: {
     type: [mongoose.SchemaTypes.ObjectId],
     required: true,
-    ref: 'Members',
+    ref: 'Employee',
   },
   admins: { type: String, required: true },
 }, { timestamps: true });
