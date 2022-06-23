@@ -21,9 +21,7 @@ describe('POST /projects endpoints', () => {
       active: true,
       admins: 'Ricardo',
       employees: [
-        {
-          name: '62829f2c70298d2e5168f1e2',
-        },
+        '62829f2c70298d2e5168f1e2',
       ],
     });
     expect(response.status).toBe(201);
@@ -38,9 +36,7 @@ describe('POST /projects endpoints', () => {
       active: true,
       admins: 'Day',
       employees: [
-        {
-          name: '628d6db998a9749e0a37c9bf',
-        },
+        '628d6db998a9749e0a37c9bf',
       ],
     });
     expect(response.body.msg).toEqual('success');
