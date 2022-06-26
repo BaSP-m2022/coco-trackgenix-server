@@ -1,5 +1,4 @@
 import express from 'express';
-// Routes import
 import tasksRouter from './tasks';
 import projectsRouter from './projects';
 import employeeRouter from './employees';
