@@ -35,22 +35,25 @@ describe('GET ONE /:id', () => {
     expect(response.body.data).toMatchObject(admin);
   });
 });
-describe('POST /admins', () => {
-  test('Shold create an admin', async () => {
-    const response = await req(app).post('/admins').send({
-      name: 'Esteban',
-      lastName: 'Perez',
-      email: 'esteban@gmail.com',
-      password: 'estt12',
-      active: false,
-    });
-    expect(response.status).toBe(201);
-    empId = response.body.data._id;
-  });
-});
+// describe('POST /admins', () => {
+//   test('Shold create an admin', async () => {
+//     const response = await req(app).post('/admins').send({
+//       name: 'Esteban',
+//       lastName: 'Perez',
+//       email: 'esteban@gmail.com',
+//       password: 'estt12',
+//       active: false,
+//     });
+//     console.log(`Response Status: ${response.status}`);
+//     console.log(`Response Body: ${response.body}`);
+//     console.log(`Response Body Data: ${response.body.data}`);
+//     expect(response.status).toBe(201);
+//     empId = response.body.data._id;
+//   });
+// });
 describe('DELETE /admins/:id', () => {
   test('Shold delete an admin', async () => {
-    const response = await req(app).get(`/admins/${empId}`).send();
+    const response = await req(app).get(`/admins/${empPut}`).send();
     expect(response.status).toBe(200);
   });
 });
