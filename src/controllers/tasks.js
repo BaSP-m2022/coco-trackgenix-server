@@ -48,7 +48,6 @@ const createTask = async (req, res) => {
   try {
     const newTask = await Tasks.create({
       description: req.body.description.toLowerCase(),
-      workedHours: req.body.workedHours,
     });
     res.status(201).json({
       message: 'Task successfully created',

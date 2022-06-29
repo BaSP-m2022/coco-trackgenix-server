@@ -1,7 +1,6 @@
 import joi from 'joi';
 import Tasks from '../models/Tasks';
 
-// Validation Schema
 const validationSchema = joi.object({
   description: joi
     .string()
@@ -9,14 +8,8 @@ const validationSchema = joi.object({
     .max(90)
     .required()
     .regex(/^[0-:A-Za-z ",-.]{1,90}$/),
-  workedHours: joi
-    .number()
-    .integer()
-    .positive()
-    .required(),
 });
 
-// Validations
 const validateCreation = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
   if (validation.error) {
