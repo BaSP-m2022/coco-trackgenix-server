@@ -21,7 +21,7 @@ const validateCreation = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      msg: `Code 400: ${validation.error.details[0].message}`,
+      message: `Code 400: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -29,7 +29,7 @@ const validateCreation = async (req, res, next) => {
   const found = await Tasks.findOne({ description: req.body.description.toLowerCase().trim() });
   if (found) {
     return res.status(400).json({
-      msg: 'Code 400: This task already exists',
+      message: 'Code 400: This task already exists',
       data: found,
       error: true,
     });
@@ -41,29 +41,19 @@ const validateUpdate = async (req, res, next) => {
   const validation = validationSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      msg: `Code 400: ${validation.error.details[0].message}`,
+      message: `Code 400: ${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
   }
-  const existing = await Tasks.findOne({
-    description: req.body.description.toLowerCase().trim(),
-  });
   const found = await Tasks.findOne({ _id: req.params.id });
   if (!found) {
     return res.status(400).json({
-      msg: 'Code 400: This task do not exist',
+      message: 'Code 400: This task do not exist',
       data: undefined,
       error: true,
     });
   }
-//   if (existing) {
-//     return res.status(400).json({
-//       msg: 'Code 400: This task already exists',
-//       data: existing,
-//       error: true,
-//     });
-//   }
   return next();
 };
 
