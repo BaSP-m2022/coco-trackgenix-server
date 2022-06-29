@@ -1,16 +1,16 @@
-import Employee from '../models/Employees';
+import Employee from "../models/Employees";
 
 const getAllEmployees = async (req, res) => {
   try {
     const allEmployees = await Employee.find({});
     return res.status(200).json({
-      msg: 'status 200',
+      msg: "status 200",
       data: allEmployees,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'Status 500: internal server error',
+      msg: "Status 500: internal server error",
       data: undefined,
       error: true,
     });
@@ -22,13 +22,14 @@ const getEmployeeById = async (req, res) => {
   try {
     if (oneEmployee) {
       res.status(200).json({
-        msg: 'Status 200',
+        msg: "Status 200",
         data: oneEmployee,
         error: false,
       });
-    } if (!oneEmployee) {
+    }
+    if (!oneEmployee) {
       res.status(404).json({
-        msg: 'Status 404: Employee not found with id',
+        msg: "Status 404: Employee not found with id",
         data: undefined,
         error: true,
       });
@@ -36,7 +37,7 @@ const getEmployeeById = async (req, res) => {
   } catch (error) {
     if (error) {
       res.status(500).json({
-        msg: 'Status 500: internal server error',
+        msg: "Status 500: internal server error",
         data: undefined,
         error: true,
       });
@@ -45,8 +46,19 @@ const getEmployeeById = async (req, res) => {
 };
 
 const addNewEmployee = async (req, res) => {
+  let firebaseUid;
   try {
+    const newFirebaseUser = await Firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    firebaseUid = newFirebaseUser.uid;
+
+    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, {
+      role: "EMPLOYEE",
+    });
     const AddEmployee = new Employee({
+      firebaseUid: newFirebaseUser.uid,
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       phone: req.body.phone,
@@ -55,14 +67,17 @@ const addNewEmployee = async (req, res) => {
       active: req.body.active,
     });
     const Rta = await AddEmployee.save();
-    return res.status(201).json({
-      msg: 'Status 201',
+    return res.status(200).json({
+      message: "A new employee has been added successfully.",
       data: Rta,
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({
-      msg: 'Status 500: internal server error',
+    if (firebaseUid) {
+      await Firebase.auth().deleteUser(firebaseUid);
+    }
+    return res.json({
+      message: "Status 500: internal server error",
       data: undefined,
       error: true,
     });
@@ -71,20 +86,18 @@ const addNewEmployee = async (req, res) => {
 
 const modifyEmployee = async (req, res) => {
   try {
-    const update = await Employee.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-    );
+    const update = await Employee.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json({
-      msg: 'Status 200',
+      msg: "Status 200",
       data: update,
       error: false,
     });
   } catch (error) {
     if (error) {
       res.status(500).json({
-        msg: 'Status 500: internal server error',
+        msg: "Status 500: internal server error",
         data: undefined,
         error: true,
       });
@@ -101,9 +114,10 @@ const deleteEmployee = async (req, res) => {
         data: undefined,
         error: false,
       });
-    } if (!del) {
+    }
+    if (!del) {
       res.status(404).json({
-        msg: 'Status 404: Employee not found',
+        msg: "Status 404: Employee not found",
         data: undefined,
         error: true,
       });
@@ -111,7 +125,7 @@ const deleteEmployee = async (req, res) => {
   } catch (error) {
     if (error) {
       res.status(500).json({
-        msg: 'Status 500: internal server error',
+        msg: "Status 500: internal server error",
         data: undefined,
         error: true,
       });
