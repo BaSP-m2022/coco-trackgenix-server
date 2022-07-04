@@ -6,7 +6,7 @@ const validateAdminCreation = async (req, res, next) => {
     name: Joi.string().required().regex(/^[a-zA-Z]+$/),
     lastName: Joi.string().required().regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase().required(),
-    password: Joi.string().min(4).max(20),
+    password: Joi.string().min(8).regex(/^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/).required(),
     active: Joi.boolean(),
   });
   const validation = adminPropSchema.validate(req.body);

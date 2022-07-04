@@ -1,4 +1,5 @@
 import AdminModel from '../models/Admins';
+import Firebase from '../helper/firebase';
 
 const getAllAdmins = async (req, res) => {
   try {
@@ -70,24 +71,36 @@ const deleteAdmin = async (req, res) => {
 };
 
 const createAdmin = async (req, res) => {
+  let firebaseUid;
   try {
-    const admin = await AdminModel.create({
+    const newFirebaseUser = await Firebase.auth().createUser({
+      email: req.body.email,
+      password: req.body.password,
+    });
+    firebaseUid = newFirebaseUser.uid;
+
+    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+    const adminCreated = new AdminModel({
+      firebaseUid: newFirebaseUser.uid,
       name: req.body.name,
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
       active: req.body.active,
     });
-    const resultAdmin = await admin.save();
+    const admin = await adminCreated.save();
     return res.status(201).json({
       msg: 'Admin has been successfully created',
-      data: resultAdmin,
+      data: admin,
       error: false,
     });
   } catch (error) {
+    if (firebaseUid) {
+      await Firebase.auth().deleteUser(firebaseUid);
+    }
     return res.json({
       msg: 'An error has occurred',
-      error,
+      message: error.toString(),
     });
   }
 };
