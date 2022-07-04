@@ -8,8 +8,8 @@ const router = express.Router();
 router
   .get('/', authValidation, projects.getAllProjects)
   .get('/:id', authValidation, projects.getProjectById)
-  .post('/', projectValidation.validateCreation, authValidation, projects.createProject)
+  .post('/', authValidation, projectValidation.validateCreation, projects.createProject)
   .delete('/:id', authValidation, projects.deleteProject)
-  .put('/:id', projectValidation.updateValidate, authValidation, projects.updateProject);
+  .put('/:id', authValidation, projectValidation.updateValidate, projects.updateProject);
 
 export default router;
