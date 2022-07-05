@@ -4,13 +4,13 @@ const getAllProjects = async (req, res) => {
   try {
     const allProjects = await ProjectSchema.find({}).populate('employees');
     return res.status(200).json({
-      msg: 'success',
+      msg: 'Projects list displayed correctly',
       data: allProjects,
       error: false,
     });
   } catch (err) {
     return res.status(500).json({
-      msg: 'there was an error',
+      msg: 'There was an error while trying to display the list of projects',
       data: err,
       error: true,
     });
@@ -22,19 +22,19 @@ const getProjectById = async (req, res) => {
     if (req.params.id) {
       const project = await ProjectSchema.findById({ _id: req.params.id }).populate('employees');
       return res.status(200).json({
-        msg: 'found',
+        msg: 'The project has been found',
         data: project,
         error: false,
       });
     }
     return res.status(400).json({
-      msg: 'missing id parameter',
+      msg: 'Missing id parameter',
       data: undefined,
       error: true,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'there was an error',
+      msg: 'There was an error while trying to display a project by Id',
       data: error,
       error: true,
     });
@@ -55,13 +55,13 @@ const createProject = async (req, res) => {
     });
     const result = await project.save();
     return res.status(201).json({
-      msg: 'success',
+      msg: 'The project has been created successfully',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.status(400).json({
-      msg: 'an error has ocurred',
+      msg: 'An error has ocurred',
       data: error,
       error: true,
     });
@@ -72,7 +72,7 @@ const deleteProject = async (req, res) => {
   try {
     if (!req.params.id) {
       return res.status(400).json({
-        msg: 'missing id parameter',
+        msg: 'Missing id parameter',
         data: undefined,
         error: true,
       });
@@ -80,19 +80,19 @@ const deleteProject = async (req, res) => {
     const result = await ProjectSchema.findByIdAndDelete({ _id: req.params.id });
     if (!result) {
       return res.status(404).json({
-        msg: 'the projects has not been found',
+        msg: 'The project has not been found',
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      msg: 'the project has been susccessfully deleted',
+      msg: 'The project has been successfully deleted',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.json({
-      msg: 'an error has ocurred',
+      msg: 'An error has ocurred',
       data: undefined,
       error: true,
     });
@@ -103,7 +103,7 @@ const updateProject = async (req, res) => {
   try {
     if (!req.params) {
       return res.status(400).json({
-        msg: 'missing id parameter',
+        msg: 'Missing id parameter',
         data: undefined,
         error: true,
       });
@@ -115,12 +115,16 @@ const updateProject = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        msg: 'the project has not been found',
+        msg: 'The project has not been found',
         data: undefined,
         error: true,
       });
     }
-    return res.status(200).json(result);
+    return res.status(200).json({
+      msg: 'The project has been updated successfully',
+      data: result,
+      error: false,
+    });
   } catch (error) {
     return res.status(500).json({
       msg: 'An error has ocurred',
