@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const superAdminModel = new Schema({
+const SuperAdminModel = new Schema({
   email: {
     type: String,
     required: true,
@@ -15,4 +15,4 @@ const superAdminModel = new Schema({
   },
 });
 
-export default mongoose.model('Superadmin', superAdminModel);
+export default mongoose.model('Superadmin', SuperAdminModel);

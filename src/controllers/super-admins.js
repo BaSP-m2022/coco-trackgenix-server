@@ -1,9 +1,9 @@
-import superAdminModel from '../models/Super-admins';
+import SuperAdminModel from '../models/Super-admins';
 import Firebase from '../helper/firebase';
 
 const getAllSuperAdmins = async (req, res) => {
   try {
-    const AllSuperAdmins = await superAdminModel.find({});
+    const AllSuperAdmins = await SuperAdminModel.find({});
     return res.status(200).json({
       message: 'Super-admin list displayed correctly',
       data: AllSuperAdmins,
@@ -21,7 +21,7 @@ const getAllSuperAdmins = async (req, res) => {
 const getSuperAdminById = async (req, res) => {
   try {
     if (req.params.id) {
-      const superAdmin = await superAdminModel.findById({ _id: req.params.id });
+      const superAdmin = await SuperAdminModel.findById({ _id: req.params.id });
       return res.status(200).json({
         message: 'The super-admin has been found!',
         data: superAdmin,
@@ -47,7 +47,7 @@ const deleteSuperAdmin = async (req, res) => {
         message: 'Missing id parameter',
       });
     }
-    const result = await superAdminModel.findByIdAndDelete({
+    const result = await SuperAdminModel.findByIdAndDelete({
       _id: req.params.id,
     });
     if (!result) {
@@ -81,7 +81,7 @@ const createSuperAdmin = async (req, res) => {
     await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, {
       role: 'SUPERADMIN',
     });
-    const superAdmin = superAdminModel.create({
+    const superAdmin = new SuperAdminModel({
       firebaseUid: newFirebaseUser.uid,
       email: req.body.email,
       password: req.body.password,
@@ -110,7 +110,7 @@ const updateSuperAdmin = async (req, res) => {
         message: 'Missing id parameter',
       });
     }
-    const result = await superAdminModel.findByIdAndUpdate(
+    const result = await SuperAdminModel.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },
