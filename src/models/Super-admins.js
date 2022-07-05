@@ -3,14 +3,6 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const superAdminModel = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
   email: {
     type: String,
     required: true,
@@ -20,10 +12,6 @@ const superAdminModel = new Schema({
     minlength: 4,
     maxlength: 20,
     required: true,
-  },
-  active: {
-    type: Boolean,
-    required: false,
   },
 });
 

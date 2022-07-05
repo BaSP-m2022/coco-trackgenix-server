@@ -1,4 +1,5 @@
 import superAdminModel from '../models/Super-admins';
+import Firebase from '../helper/firebase';
 
 const getAllSuperAdmins = async (req, res) => {
   try {
@@ -69,22 +70,36 @@ const deleteSuperAdmin = async (req, res) => {
 };
 
 const createSuperAdmin = async (req, res) => {
+  let firebaseUid;
   try {
-    const superAdmin = await superAdminModel.create({
-      name: req.body.name,
-      lastName: req.body.lastName,
+    const newFirebaseUser = await Firebase.auth().createUser({
       email: req.body.email,
       password: req.body.password,
-      active: req.body.active,
     });
-    const resultSuperAdmin = await superAdmin.save();
+    firebaseUid = newFirebaseUser.uid;
+
+    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, {
+      role: 'SUPERADMIN',
+    });
+    const superAdmin = superAdminModel.create({
+      firebaseUid: newFirebaseUser.uid,
+      email: req.body.email,
+      password: req.body.password,
+    });
+    const SuperAdmin = await superAdmin.save();
     return res.status(201).json({
       message: 'Super-Admin has been created',
-      data: resultSuperAdmin,
+      data: SuperAdmin,
       error: false,
     });
   } catch (error) {
-    return res.status(500);
+    if (firebaseUid) {
+      await Firebase.auth().deleteUser(firebaseUid);
+    }
+    return res.json({
+      msg: 'An error has ocurred',
+      message: error.toString(),
+    });
   }
 };
 
