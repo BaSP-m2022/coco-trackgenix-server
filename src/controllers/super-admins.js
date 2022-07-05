@@ -4,13 +4,13 @@ const getAllSuperAdmins = async (req, res) => {
   try {
     const AllSuperAdmins = await superAdminModel.find({});
     return res.status(200).json({
-      msg: 'success',
+      message: 'Super-admin list displayed correctly',
       data: AllSuperAdmins,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'There was an error',
+      message: 'There was an error',
       data: error,
       error: true,
     });
@@ -22,17 +22,17 @@ const getSuperAdminById = async (req, res) => {
     if (req.params.id) {
       const superAdmin = await superAdminModel.findById({ _id: req.params.id });
       return res.status(200).json({
-        msg: 'success',
+        message: 'The super-admin has been found!',
         data: superAdmin,
         error: false,
       });
     }
     return res.status(400).json({
-      msg: 'missing id parameter',
+      message: 'The super-admin with the ID has been found.',
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'There was an error',
+      message: 'There was an error',
       data: error,
       error: true,
     });
@@ -43,25 +43,27 @@ const deleteSuperAdmin = async (req, res) => {
   try {
     if (!req.params.id) {
       return res.status(400).json({
-        msg: 'missing id parameter',
+        message: 'Missing id parameter',
       });
     }
-    const result = await superAdminModel.findByIdAndDelete({ _id: req.params.id });
+    const result = await superAdminModel.findByIdAndDelete({
+      _id: req.params.id,
+    });
     if (!result) {
       return res.status(404).json({
-        msg: 'The Super-Admin has not been found',
+        message: 'The Super-Admin has not been found',
         data: result,
         error: true,
       });
     }
     return res.status(200).json({
-      msg: 'The Super-Admin has been successfully deleted',
+      message: 'The Super-Admin has been successfully deleted',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'There was an error could not delete Super-Admin',
+      message: 'There was an error could not delete Super-Admin',
     });
   }
 };
@@ -77,7 +79,7 @@ const createSuperAdmin = async (req, res) => {
     });
     const resultSuperAdmin = await superAdmin.save();
     return res.status(201).json({
-      msg: 'a Super-Admin has been created',
+      message: 'Super-Admin has been created',
       data: resultSuperAdmin,
       error: false,
     });
@@ -90,7 +92,7 @@ const updateSuperAdmin = async (req, res) => {
   try {
     if (!req.params) {
       return res.status(400).json({
-        msg: 'Missing id parameter',
+        message: 'Missing id parameter',
       });
     }
     const result = await superAdminModel.findByIdAndUpdate(
@@ -100,11 +102,11 @@ const updateSuperAdmin = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        msg: 'Super-Admin has not been found',
+        message: 'Super-Admin has not been found',
       });
     }
     return res.status(200).json({
-      msg: 'Super-Admin updated',
+      message: 'Super-Admin has been updated',
       data: result,
       error: false,
     });
