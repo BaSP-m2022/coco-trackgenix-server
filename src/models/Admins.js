@@ -3,6 +3,10 @@ import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
 const AdminModel = new Schema({
+  firebaseUid: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,
@@ -17,8 +21,6 @@ const AdminModel = new Schema({
   },
   password: {
     type: String,
-    minlength: 4,
-    maxlength: 20,
     required: true,
   },
   active: {
