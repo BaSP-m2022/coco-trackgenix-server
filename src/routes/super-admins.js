@@ -7,8 +7,18 @@ const router = express.Router();
 
 router
   .get('/', authValidation, superAdminsController.getAllSuperAdmins)
-  .get('/:id', authValidation, superAdminsController.getSuperAdminById)
-  .delete('/:id', authValidation, superAdminsController.deleteSuperAdmin)
+  .get(
+    '/:id',
+    authValidation,
+    superAdminsValidation.idValidation,
+    superAdminsController.getSuperAdminById,
+  )
+  .delete(
+    '/:id',
+    authValidation,
+    superAdminsValidation.idValidation,
+    superAdminsController.deleteSuperAdmin,
+  )
   .post(
     '/',
     authValidation,
@@ -18,6 +28,7 @@ router
   .put(
     '/:id',
     authValidation,
+    superAdminsValidation.idValidation,
     superAdminsValidation.validateSuperAdminUpdate,
     superAdminsController.updateSuperAdmin,
   );

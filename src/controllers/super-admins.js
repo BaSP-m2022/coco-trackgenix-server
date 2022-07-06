@@ -4,6 +4,13 @@ import Firebase from '../helper/firebase';
 const getAllSuperAdmins = async (req, res) => {
   try {
     const AllSuperAdmins = await SuperAdminModel.find({});
+    if (!AllSuperAdmins) {
+      return res.status(400).json({
+        message: 'Super-admin list is empty',
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
       message: 'Super-admin list displayed correctly',
       data: AllSuperAdmins,
@@ -20,22 +27,22 @@ const getAllSuperAdmins = async (req, res) => {
 
 const getSuperAdminById = async (req, res) => {
   try {
-    if (req.params.id) {
-      const superAdmin = await SuperAdminModel.findById({ _id: req.params.id });
-      return res.status(200).json({
-        message: 'The super-admin has been found!',
+    const superAdmin = await SuperAdminModel.findById({ _id: req.params.id });
+    if (!superAdmin) {
+      return res.status(404).json({
+        message: 'The super-admin with the ID has been not found.',
         data: superAdmin,
-        error: false,
+        error: true,
       });
     }
-    return res.status(400).json({
-      message: 'The super-admin with the ID has been not found.',
-      data: undefined,
-      error: true,
+    return res.status(200).json({
+      message: 'The super-admin has been found!',
+      data: superAdmin,
+      error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'There was an error, impossible to get Super-Admin by id',
+      message: 'There was an error',
       data: error,
       error: true,
     });
@@ -54,13 +61,6 @@ const deleteSuperAdmin = async (req, res) => {
     const result = await SuperAdminModel.findByIdAndDelete({
       _id: req.params.id,
     });
-    if (!result) {
-      return res.status(404).json({
-        message: 'The Super-Admin has not been found',
-        data: result,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'The Super-Admin has been successfully deleted',
       data: result,
@@ -124,13 +124,6 @@ const updateSuperAdmin = async (req, res) => {
       req.body,
       { new: true },
     );
-    if (!result) {
-      return res.status(404).json({
-        message: 'Super-Admin has not been found',
-        data: result,
-        error: true,
-      });
-    }
     return res.status(200).json({
       message: 'Super-Admin has been updated',
       data: result,
