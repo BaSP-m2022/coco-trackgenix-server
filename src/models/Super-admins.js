@@ -13,8 +13,6 @@ const SuperAdminModel = new Schema({
   },
   password: {
     type: String,
-    minlength: 4,
-    maxlength: 20,
     required: true,
   },
 });

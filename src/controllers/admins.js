@@ -31,7 +31,7 @@ const getAdminById = async (req, res) => {
   } catch (error) {
     if (error.value) {
       res.status(404).json({
-        msg: 'Admin with that id could not be found',
+        message: 'Admin with that id could not be found',
         data: undefined,
         error: true,
       });
@@ -79,7 +79,9 @@ const createAdmin = async (req, res) => {
     });
     firebaseUid = newFirebaseUser.uid;
 
-    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, {
+      role: 'ADMIN',
+    });
     const adminCreated = new AdminModel({
       firebaseUid: newFirebaseUser.uid,
       name: req.body.name,
@@ -107,11 +109,9 @@ const createAdmin = async (req, res) => {
 
 const updateAdmin = async (req, res) => {
   try {
-    const result = await AdminModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-    );
+    const result = await AdminModel.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     res.status(200).json({
       msg: 'Admin successfully updated',
       data: result,
