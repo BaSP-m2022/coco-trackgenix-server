@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
@@ -7,12 +7,26 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
   },
-  firstName: { type: String },
-  lastName: { type: String },
-  phone: { type: Number },
-  email: { type: String },
-  password: { type: String },
-  active: { type: Boolean },
+  firstName: {
+    type: String,
+    required: true,
+  },
+  lastName: {
+    type: String,
+    required: true,
+  },
+  phone: {
+    type: Number,
+    required: true,
+  },
+  email: {
+    type: String,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true,
+  },
 });
 
-export default mongoose.model("Employee", employeeSchema);
+export default mongoose.model('Employee', employeeSchema);
