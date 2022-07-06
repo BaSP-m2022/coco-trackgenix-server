@@ -7,23 +7,25 @@ const validateAdminCreation = async (req, res, next) => {
     lastName: Joi.string().required().regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase().required(),
     password: Joi.string().min(8).regex(/^(?=.*?\d)(?=.*?[a-zA-Z])[a-zA-Z\d]+$/).required(),
-    active: Joi.boolean(),
   });
+
   const validation = adminPropSchema.validate(req.body);
   if (validation.error) {
     res.status(400).json({
-      msg: 'There was an error during the validation of the request',
+      message: 'There was an error during the validation of the request',
       error: validation.error.details[0].message,
     });
   }
+
   const repeatedEmail = await AdminsModel.findOne({ email: req.body.email });
   if (repeatedEmail) {
     res.status(400).json({
-      msg: 'This email already exists',
+      message: 'This email already exists',
       data: repeatedEmail,
       error: true,
     });
   }
+
   return next();
 };
 
@@ -33,23 +35,16 @@ const validateUpdate = async (req, res, next) => {
     lastName: Joi.string().regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase(),
     password: Joi.string().min(4).max(20),
-    active: Joi.boolean(),
   });
+
   const validation = adminPropSchema.validate(req.body);
   if (validation.error) {
     res.status(400).json({
-      msg: 'There was an error during the validation of the request',
+      message: 'There was an error during the validation of the request',
       error: validation.error.details[0].message,
     });
   }
-//   const repeatedEmail = await AdminsModel.findOne({ email: req.body.email });
-//   if (repeatedEmail) {
-//     res.status(400).json({
-//       msg: 'This email already exists',
-//       data: repeatedEmail,
-//       error: true,
-//     });
-//   }
+
   return next();
 };
 
