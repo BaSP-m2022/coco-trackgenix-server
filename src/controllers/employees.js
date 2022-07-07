@@ -75,7 +75,7 @@ const addNewEmployee = async (req, res) => {
     if (firebaseUid) {
       await Firebase.auth().deleteUser(firebaseUid);
     }
-    return res.json({
+    return res.status(500).json({
       message: 'There was an error',
       data: error,
       error: true,
@@ -85,14 +85,23 @@ const addNewEmployee = async (req, res) => {
 
 const modifyEmployee = async (req, res) => {
   try {
+    const focusEmployee = await Employee.findById(req.params.id);
     const update = await Employee.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
-    res.status(200).json({
-      message: `The employee (ID:'${req.params.id}') data has been updated correctly.`,
-      data: update,
-      error: false,
-    });
+    if (!focusEmployee) {
+      res.status(404).json({
+        message: `Employee with ID:'${req.params.id}' not found`,
+        data: undefined,
+        error: true,
+      });
+    } else {
+      res.status(200).json({
+        message: `The employee (ID:'${req.params.id}') data has been updated correctly.`,
+        data: update,
+        error: false,
+      });
+    }
   } catch (error) {
     if (error) {
       res.status(500).json({
