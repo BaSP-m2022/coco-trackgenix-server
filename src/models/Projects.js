@@ -9,12 +9,18 @@ const ProjectSchema = new Schema({
   endDate: { type: Date, required: false },
   clientName: { type: String, required: true },
   active: { type: Boolean, required: true },
-  employees: {
+  members: [
+    {
+      type: [mongoose.SchemaTypes.ObjectId],
+      required: true,
+      ref: 'Member',
+    },
+  ],
+  pm: {
     type: [mongoose.SchemaTypes.ObjectId],
     required: true,
     ref: 'Employee',
   },
-  admins: { type: String, required: true },
 }, { timestamps: true });
 
 export default mongoose.model('Project', ProjectSchema);

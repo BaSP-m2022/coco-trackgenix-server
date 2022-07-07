@@ -19,10 +19,10 @@ describe('POST /projects endpoints', () => {
       startDate: '2022',
       clientName: 'coco',
       active: true,
-      admins: 'Ricardo',
-      employees: [
+      members: [
         '62829f2c70298d2e5168f1e2',
       ],
+      pm: '62829f2c70298d2e5168f1e2',
     });
     expect(response.status).toBe(201);
     projectId = response.body.data._id;
@@ -34,10 +34,10 @@ describe('POST /projects endpoints', () => {
       startDate: '2022',
       clientName: 'Alfonso',
       active: true,
-      admins: 'Day',
-      employees: [
+      members: [
         '628d6db998a9749e0a37c9bf',
       ],
+      pm: '628d6db998a9749e0a37c9bf',
     });
     expect(response.body.msg).toEqual('success');
     projectId2 = response.body.data._id;
@@ -106,7 +106,6 @@ describe('DELETE /projects/:id', () => {
     const response = await request(app).delete(`/projects/${projectId}`).send();
     expect(response.status).toBe(200);
   });
-  // eslint-disable-next-line max-len
   test.skip('Response should return 404 status error, because the id parameter is missing', async () => {
     const response = await request(app).delete('/projects/').send();
     expect(response.status).toEqual(404);
