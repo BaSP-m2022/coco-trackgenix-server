@@ -1,21 +1,44 @@
 import Joi from 'joi';
+import mongoose from 'mongoose';
 import superAdminsModel from '../models/Super-admins';
 
-const validateSuperAdminCreation = (req, res, next) => {
+const idValidation = (req, res, next) => {
+  const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
+  if (!isValid) {
+    return res.status(400).json({
+      message: `${req.params.id} is not a valid id`,
+      data: undefined,
+      error: true,
+    });
+  }
+  return next();
+};
+
+const validateSuperAdminCreation = async (req, res, next) => {
   const superAdminPropSchema = Joi.object({
-    name: Joi.string().min(1).max(50).required()
-      .regex(/^[a-zA-Z]+$/),
-    lastName: Joi.string().min(1).max(50).required()
-      .regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase().required(),
-    password: Joi.string().min(4).max(20),
-    active: Joi.boolean(),
+    password: Joi.string()
+      .min(4)
+      .max(20)
+      .required()
+      .regex(/^(?=.*?[a-zA-Z])(?=.*?[0-9])/),
   });
   const validation = superAdminPropSchema.validate(req.body);
   if (validation.error) {
     res.status(400).json({
-      msg: 'There was an error during the validation of the request',
+      message: 'There was an error during the request validation',
+      data: undefined,
       error: validation.error.details[0].message,
+    });
+  }
+  const repeatedEmail = await superAdminsModel.findOne({
+    email: req.body.email,
+  });
+  if (repeatedEmail) {
+    res.status(400).json({
+      message: 'This email already exists',
+      data: repeatedEmail,
+      error: true,
     });
   }
   return next();
@@ -23,30 +46,25 @@ const validateSuperAdminCreation = (req, res, next) => {
 
 const validateSuperAdminUpdate = async (req, res, next) => {
   const SuperAdminPropSchema = Joi.object({
-    name: Joi.string().min(1).max(50).regex(/^[a-zA-Z]+$/),
-    lastName: Joi.string().min(1).max(50).regex(/^[a-zA-Z]+$/),
     email: Joi.string().email().lowercase(),
-    password: Joi.string().min(4).max(20),
-    active: Joi.boolean(),
+    password: Joi.string()
+      .min(4)
+      .max(20)
+      .regex(/^(?=.*?[a-zA-Z])(?=.*?[0-9])/),
   });
   const validation = SuperAdminPropSchema.validate(req.body);
   if (validation.error) {
     res.status(400).json({
+      message: 'There was an error during the request validation',
+      data: undefined,
       error: validation.error.details[0].message,
     });
   }
-//   const repeatedEmail = await superAdminsModel.findOne({ email: req.body.email });
-//   if (repeatedEmail) {
-//     res.status(400).json({
-//       msg: 'This email already exists',
-//       data: repeatedEmail,
-//       error: true,
-//     });
-//   }
   return next();
 };
 
 export default {
   validateSuperAdminCreation,
   validateSuperAdminUpdate,
+  idValidation,
 };
