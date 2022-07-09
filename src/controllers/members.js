@@ -7,44 +7,54 @@ const getAllMembers = async (req, res) => {
       firstName: 1,
       lastName: 1,
     });
-
+    if (!allMembers) {
+      return res.status(400).json({
+        message: 'Members list is empty',
+        data: undefined,
+        error: true,
+      });
+    }
     return res.status(200).json({
-      msg: 'Status 200',
+      message: 'Members list displayed correctly',
       data: allMembers,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'Status 500: internal server error',
-      data: undefined,
+      message: 'There was an error, impossible to get all members',
+      data: error,
       error: true,
     });
   }
 };
 const getByIdMembers = async (req, res) => {
   try {
-    const oneMember = await Members.findById(req.params.id).populate('employee', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-    });
+    const oneMember = await Members.findById(req.params.id).populate(
+      'employee',
+      {
+        _id: 1,
+        firstName: 1,
+        lastName: 1,
+      },
+    );
     if (oneMember) {
       res.status(200).json({
-        msg: 'Status 200',
+        message: 'The member has been found!',
         data: oneMember,
         error: false,
       });
-    } if (!oneMember) {
+    }
+    if (!oneMember) {
       res.status(404).json({
-        msg: 'Status 404: Member not found',
+        message: 'The member with the ID has been not found.',
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {
     res.status(500).json({
-      msg: 'Status 500: internal server error',
-      data: undefined,
+      message: 'There was an error',
+      data: error,
       error: true,
     });
   }
@@ -52,24 +62,27 @@ const getByIdMembers = async (req, res) => {
 
 const putMembers = async (req, res) => {
   try {
-    const putMember = await Members.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const putMember = await Members.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
     if (putMember) {
       res.status(200).json({
-        msg: 'Status 200',
+        message: 'Member has been updated!',
         data: putMember,
         error: false,
       });
-    } if (!putMember) {
+    }
+    if (!putMember) {
       res.status(404).json({
-        msg: 'Status 404: Member not found',
+        message: 'Member not found',
         data: undefined,
-        error: false,
+        error: true,
       });
     }
   } catch (error) {
     res.status(500).json({
-      msg: 'Status 500: internal server error',
-      data: undefined,
+      message: 'There was an error, member not updated',
+      data: error,
       error: true,
     });
   }
@@ -82,15 +95,15 @@ const addMembers = async (req, res) => {
       role: req.body.role,
       rate: req.body.rate,
     });
-    const rta = await AddMember.save();
+    const newMember = await AddMember.save();
     return res.status(201).json({
-      msg: 'Status 201: Employee created',
-      data: rta,
+      message: 'Member has been created',
+      data: newMember,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'Status 500:internal server error',
+      message: 'There was an error, member not created',
       data: undefined,
       error: true,
     });
@@ -99,24 +112,25 @@ const addMembers = async (req, res) => {
 
 const deleteMember = async (req, res) => {
   try {
-    const del = await Members.findByIdAndDelete(req.params.id);
-    if (del) {
+    const memberDeleted = await Members.findByIdAndDelete(req.params.id);
+    if (memberDeleted) {
       res.status(200).json({
-        msg: 'Status 200: Member deleted',
+        message: 'The member has been successfully deleted',
         data: undefined,
         error: false,
       });
-    } if (!del) {
+    }
+    if (!memberDeleted) {
       res.status(404).json({
-        msg: 'Status 404: Member deleted',
+        message: 'The member id to delete is not found',
         data: undefined,
         error: false,
       });
     }
   } catch (error) {
     res.status(500).json({
-      msg: 'Status 500:internal server error',
-      data: undefined,
+      message: 'There was an error, member not deleted',
+      data: error,
       error: true,
     });
   }
