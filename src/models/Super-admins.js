@@ -2,12 +2,8 @@ import mongoose from 'mongoose';
 
 const { Schema } = mongoose;
 
-const superAdminModel = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  lastName: {
+const SuperAdminModel = new Schema({
+  firebaseUid: {
     type: String,
     required: true,
   },
@@ -17,14 +13,8 @@ const superAdminModel = new Schema({
   },
   password: {
     type: String,
-    minlength: 4,
-    maxlength: 20,
     required: true,
-  },
-  active: {
-    type: Boolean,
-    required: false,
   },
 });
 
-export default mongoose.model('Superadmin', superAdminModel);
+export default mongoose.model('Superadmin', SuperAdminModel);
