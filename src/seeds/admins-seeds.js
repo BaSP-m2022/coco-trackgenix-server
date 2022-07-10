@@ -6,5 +6,4 @@ export default [{
   lastName: 'Gonzalez',
   email: 'fer@gmail.com',
   password: 'fer12',
-  active: 'true',
 }];
