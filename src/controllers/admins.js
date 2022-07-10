@@ -5,13 +5,13 @@ const getAllAdmins = async (req, res) => {
   try {
     const allAdmins = await AdminModel.find({});
     res.status(200).json({
-      msg: 'Status 200',
+      message: 'Admin list displayed correctly.',
       data: allAdmins,
       error: false,
     });
   } catch (error) {
     res.status(500).json({
-      msg: 'There was an error',
+      message: 'There was an error',
       data: error,
       error: true,
     });
@@ -21,52 +21,50 @@ const getAllAdmins = async (req, res) => {
 const getAdminById = async (req, res) => {
   try {
     const admin = await AdminModel.findById({ _id: req.params.id });
-    if (admin) {
+    if (!admin) {
+      res.status(404).json({
+        message: `Admin with ID:'${req.params.id}' could not be found`,
+        data: undefined,
+        error: true,
+      });
+    } else {
       res.status(200).json({
-        msg: 'Success',
+        message: `The admin with the ID:'${req.params.id}' has been found.`,
         data: admin,
         error: false,
       });
     }
   } catch (error) {
-    if (error.value) {
-      res.status(404).json({
-        message: 'Admin with that id could not be found',
-        data: undefined,
-        error: true,
-      });
-    } else {
-      res.status(500).json({
-        msg: 'There was an error',
-        data: error,
-        error: true,
-      });
-    }
+    res.status(500).json({
+      message: 'There was an error',
+      data: error,
+      error: true,
+    });
   }
 };
 
 const deleteAdmin = async (req, res) => {
   try {
     const result = await AdminModel.findByIdAndDelete({ _id: req.params.id });
-    res.status(204).json({
-      msg: 'The admin has been successfully deleted',
-      data: result,
-      error: false,
-    });
-  } catch (error) {
-    if (error.value) {
+    if (!result) {
       res.status(404).json({
-        msg: 'The admin could not be found',
+        message: `The admin ID:'${req.params.id}' could not be found`,
         data: undefined,
         error: true,
       });
     } else {
-      res.status(500).json({
-        msg: 'There was an error',
-        data: error,
-        error: true,
+      res.status(204).json({
+        message: `The admin ID:'${req.params.id}' has been successfully deleted`,
+        data: result,
+        error: false,
       });
     }
+  } catch (error) {
+    res.status(500).json({
+      message: 'There was an error',
+      data: error,
+      error: true,
+    });
   }
 };
 
@@ -88,11 +86,10 @@ const createAdmin = async (req, res) => {
       lastName: req.body.lastName,
       email: req.body.email,
       password: req.body.password,
-      active: req.body.active,
     });
     const admin = await adminCreated.save();
     return res.status(201).json({
-      msg: 'Admin has been successfully created',
+      message: 'Admin has been successfully created',
       data: admin,
       error: false,
     });
@@ -100,28 +97,40 @@ const createAdmin = async (req, res) => {
     if (firebaseUid) {
       await Firebase.auth().deleteUser(firebaseUid);
     }
-    return res.json({
-      msg: 'An error has occurred',
-      message: error.toString(),
+    return res.status(500).json({
+      message: 'An error has occurred',
+      data: error,
+      error: true,
     });
   }
 };
 
 const updateAdmin = async (req, res) => {
   try {
-    const result = await AdminModel.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.status(200).json({
-      msg: 'Admin successfully updated',
-      data: result,
-      error: false,
-    });
+    const focusAdmin = await AdminModel.findById({ _id: req.params.id });
+    const result = await AdminModel.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
+    if (!focusAdmin) {
+      res.status(404).json({
+        message: `Admin with ID:'${req.params.id}' could not be found`,
+        data: undefined,
+        error: true,
+      });
+    } else {
+      res.status(200).json({
+        message: 'Admin successfully updated',
+        data: result,
+        error: false,
+      });
+    }
   } catch (error) {
     res.status(500).json({
-      msg: 'There was an error',
-      data: undefined,
-      error,
+      message: 'There was an error',
+      data: error,
+      error: true,
     });
   }
 };
