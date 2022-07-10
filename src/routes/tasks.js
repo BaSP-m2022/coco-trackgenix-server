@@ -8,8 +8,8 @@ const router = express.Router();
 router
   .get('/', authValidation, tasksController.getTasks)
   .get('/:id', authValidation, tasksController.getTaskById)
-  .post('/', taskValidation.validateCreation, authValidation, tasksController.createTask)
+  .post('/', authValidation, taskValidation.validateCreation, tasksController.createTask)
   .delete('/:id', authValidation, tasksController.deleteTask)
-  .put('/:id', taskValidation.validateUpdate, authValidation, tasksController.updateTask);
+  .put('/:id', authValidation, taskValidation.validateUpdate, tasksController.updateTask);
 
 export default router;
