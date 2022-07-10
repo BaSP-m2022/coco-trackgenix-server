@@ -77,7 +77,9 @@ const createAdmin = async (req, res) => {
     });
     firebaseUid = newFirebaseUser.uid;
 
-    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, { role: 'ADMIN' });
+    await Firebase.auth().setCustomUserClaims(newFirebaseUser.uid, {
+      role: 'ADMIN',
+    });
     const adminCreated = new AdminModel({
       firebaseUid: newFirebaseUser.uid,
       name: req.body.name,
