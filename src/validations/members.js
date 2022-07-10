@@ -4,46 +4,61 @@ import employeeModel from '../models/Employees';
 
 const validateMember = async (req, res, next) => {
   const member = Joi.object({
-    employee: Joi.string().min(24).max(24).required(),
-    role: Joi.string().valid('DEV', 'QA', 'PM', 'TL').required().regex(/^[a-zA-Z]+$/),
+    employee: Joi.string().min(10).max(30).required(),
+    role: Joi.string()
+      .valid('DEV', 'QA', 'PM')
+      .required()
+      .regex(/^[a-zA-Z]+$/),
     rate: Joi.number().required(),
   });
   const valid = member.validate(req.body);
   if (valid.error) {
     return res.status(400).json({
+      message: 'There was an error during the request validation',
       error: valid.error.details[0].message,
+      data: undefined,
     });
   }
-  const employeeExist = await membersModel.findOne({ employee: req.body.employee });
-  if (employeeExist) {
+  const memberExist = await membersModel.findOne({
+    employee: req.body.employee,
+  });
+  if (memberExist) {
     return res.status(400).json({
-      msg: 'Employee already exist',
+      message: 'Member already exist',
     });
   }
   const employeeNot = await employeeModel.findOne({ _id: req.body.employee });
   if (!employeeNot) {
     return res.status(400).json({
-      msg: 'Employee does not exist',
+      message: 'Employee does not exist',
+      data: undefined,
+      error: true,
     });
   }
   return next();
 };
 const validateMemberPut = async (req, res, next) => {
   const member = Joi.object({
-    employee: Joi.string().min(24).max(24).required(),
-    role: Joi.string().valid('DEV', 'QA', 'PM', 'TL').regex(/^[a-zA-Z]+$/),
-    rate: Joi.number(),
+    employee: Joi.string().min(10).max(30).required(),
+    role: Joi.string()
+      .valid('DEV', 'QA', 'PM')
+      .regex(/^[a-zA-Z]+$/),
+    rate: Joi.number().required(),
   });
   const valid = member.validate(req.body);
   if (valid.error) {
     return res.status(400).json({
+      message: 'There was an error during the request validation',
+      data: undefined,
       error: valid.error.details[0].message,
     });
   }
   const employeeNot = await employeeModel.findOne({ _id: req.body.employee });
   if (!employeeNot) {
     return res.status(400).json({
-      msg: 'Employee does not exist',
+      message: 'Employee does not exist',
+      data: undefined,
+      error: true,
     });
   }
   return next();
