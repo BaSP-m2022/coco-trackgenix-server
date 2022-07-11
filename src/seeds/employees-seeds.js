@@ -8,7 +8,6 @@ export default [
     phone: '2981726',
     email: 'esteban@gmail.com',
     password: 'esteban123',
-    active: false,
   },
   {
     _id: mongoose.Types.ObjectId('628d1eedb91ea97970b7a795'),
@@ -17,7 +16,6 @@ export default [
     phone: '2981726',
     email: 'esteban@gmail.com',
     password: 'esteban123',
-    active: false,
   },
   {
     _id: mongoose.Types.ObjectId('62895106842279ad30cd964c'),
@@ -26,6 +24,5 @@ export default [
     phone: '2981726',
     email: 'esteban@gmail.com',
     password: 'esteban123',
-    active: false,
   },
 ];

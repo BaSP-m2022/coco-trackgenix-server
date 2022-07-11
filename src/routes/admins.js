@@ -7,9 +7,9 @@ const router = express.Router();
 
 router
   .get('/', authValidation, adminsController.getAllAdmins)
-  .get('/:id', authValidation, adminsController.getAdminById)
-  .delete('/:id', authValidation, adminsController.deleteAdmin)
+  .get('/:id', authValidation, adminsValidation.idValidation, adminsController.getAdminById)
+  .delete('/:id', authValidation, adminsValidation.idValidation, adminsController.deleteAdmin)
   .post('/', authValidation, adminsValidation.validateAdminCreation, adminsController.createAdmin)
-  .put('/:id', authValidation, adminsValidation.validateUpdate, adminsController.updateAdmin);
+  .put('/:id', authValidation, adminsValidation.idValidation, adminsValidation.validateUpdate, adminsController.updateAdmin);
 
 export default router;

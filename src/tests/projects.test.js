@@ -106,7 +106,6 @@ describe('DELETE /projects/:id', () => {
     const response = await request(app).delete(`/projects/${projectId}`).send();
     expect(response.status).toBe(200);
   });
-  // eslint-disable-next-line max-len
   test.skip('Response should return 404 status error, because the id parameter is missing', async () => {
     const response = await request(app).delete('/projects/').send();
     expect(response.status).toEqual(404);

@@ -45,7 +45,7 @@ describe('POST /', () => {
   test.skip('should create a new task', async () => {
     const response = await request(app).post('/tasks/').send(
       {
-        description: 'Trying to figure test.skip out',
+        description: 'Trying to figure test out',
         workedHours: '10',
       },
     );
@@ -55,7 +55,7 @@ describe('POST /', () => {
   test.skip('should indicate that the task already exists', async () => {
     const response = await request(app).post('/tasks/').send(
       {
-        description: 'Trying to figure test.skip out',
+        description: 'Trying to figure test out',
         workedHours: '10',
       },
     );

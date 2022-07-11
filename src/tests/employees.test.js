@@ -31,7 +31,6 @@ describe('POST /employees', () => {
       phone: '2481726',
       email: 'ezequiel@gmail.com',
       password: 'ezequiel123',
-      active: false,
     });
     expect(response.status).toBe(201);
     employeeId = response.body.data._id;
@@ -44,7 +43,6 @@ describe('POST /employees', () => {
       phone: '2461726',
       email: 'coco@gmail.com',
       password: 'coco123',
-      active: false,
     });
     expect(response.body.msg).toEqual('Status 201');
     employeeId2 = response.body.data._id;
@@ -61,7 +59,6 @@ describe('POST /employees', () => {
       phone: '2461786',
       email: 'coco2@gmail.com',
       password: 'coco1234',
-      active: false,
     });
     expect(response.status).toBe(400);
   });
@@ -72,7 +69,6 @@ describe('POST /employees', () => {
       phone: '2462726',
       email: 'coco3@gmail.com',
       password: 'coco1235',
-      active: false,
     });
     expect(response.status).toBe(400);
   });
@@ -83,7 +79,6 @@ describe('POST /employees', () => {
       lastName: 'dosko',
       phone: '2481826',
       password: 'richard123',
-      active: false,
     });
     expect(response.status).toBe(400);
   });
@@ -95,7 +90,6 @@ describe('POST /employees', () => {
       phone: '2481826',
       email: 'nery@gmail.com',
       password: 'richard123',
-      active: false,
     });
     expect(response.body.msg).toEqual(undefined);
   });
@@ -106,7 +100,6 @@ describe('POST /employees', () => {
       phone: '2481826',
       email: 'nery@gmail.com',
       password: 'richard123',
-      active: false,
     });
     expect(response.status).toBe(400);
   });

@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import request from 'supertest';
 import app from '../app';
 import SuperAdmins from '../models/Super-admins';
@@ -9,8 +10,6 @@ beforeAll(async () => {
 
 let sAdmin;
 let sAdmin2;
-
-/* eslint-disable no-underscore-dangle */
 
 describe('GET /superadmins', () => {
   test.skip('response should return a 200 status', async () => {

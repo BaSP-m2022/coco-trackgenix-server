@@ -8,14 +8,6 @@ const taskSchema = new mongoose.Schema({
     maxlength: 120,
     lowercase: true,
   },
-  workedHours: {
-    type: Number,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: () => Date.now(),
-  },
 });
 
 export default mongoose.model('Task', taskSchema);

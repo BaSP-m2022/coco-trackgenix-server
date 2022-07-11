@@ -23,11 +23,6 @@ const AdminModel = new Schema({
     type: String,
     required: true,
   },
-  active: {
-    type: Boolean,
-    required: false,
-  },
-
 });
 
 export default mongoose.model('Admin', AdminModel);
