@@ -1,14 +1,15 @@
 import express from 'express';
 import taskValidation from '../validations/tasks';
 import tasksController from '../controllers/tasks';
+import authValidation from '../validations/auth';
 
 const router = express.Router();
 
 router
-  .get('/', tasksController.getTasks)
-  .get('/:id', tasksController.getTaskById)
-  .post('/', taskValidation.validateCreation, tasksController.createTask)
-  .delete('/:id', tasksController.deleteTask)
-  .put('/:id', taskValidation.validateUpdate, tasksController.updateTask);
+  .get('/', authValidation, tasksController.getTasks)
+  .get('/:id', authValidation, tasksController.getTaskById)
+  .post('/', authValidation, taskValidation.validateCreation, tasksController.createTask)
+  .delete('/:id', authValidation, tasksController.deleteTask)
+  .put('/:id', authValidation, taskValidation.validateUpdate, tasksController.updateTask);
 
 export default router;
