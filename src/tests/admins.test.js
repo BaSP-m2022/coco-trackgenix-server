@@ -67,4 +67,3 @@ describe('PUT /admins/:id', () => {
     expect(response.status).toBe(200);
   });
 });
-test.todo('complete test');

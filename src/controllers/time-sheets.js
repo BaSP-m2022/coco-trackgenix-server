@@ -182,7 +182,6 @@ const createTimesheet = async (req, res) => {
 };
 
 const updateTimesheet = async (req, res) => {
-    console.log("req.body", req.body)
   try {
     // check for matching timesheet for the id given
     const found = await Timesheet.findById(req.params.id);
@@ -235,14 +234,14 @@ const updateTimesheet = async (req, res) => {
     // if (req.body.startDate) found.startDate = req.body.startDate;
     // if (req.body.endDate) found.endDate = req.body.endDate;
     // await found.save();
-    const updateTimesheet = await Timesheet.findByIdAndUpdate(
-        req.params.id,
-        req.body,
-        { new: true },
-      );
+    const update = await Timesheet.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true },
+    );
     res.status(201).json({
       msg: 'Code 201: Timesheet successfully updated',
-      data: updateTimesheet,
+      data: update,
       error: false,
     });
   } catch (error) {
