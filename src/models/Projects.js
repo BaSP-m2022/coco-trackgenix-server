@@ -9,12 +9,14 @@ const ProjectSchema = new Schema({
   endDate: { type: Date, required: false },
   clientName: { type: String, required: true },
   active: { type: Boolean, required: true },
-  members: [{
-    type: mongoose.SchemaTypes.ObjectId,
+  members: {
+    type: Map,
+    of: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: 'Member',
+    },
     required: true,
-    ref: 'Member',
   },
-  ],
   pm: {
     type: mongoose.SchemaTypes.ObjectId,
     required: true,
