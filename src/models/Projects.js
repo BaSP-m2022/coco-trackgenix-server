@@ -9,14 +9,21 @@ const ProjectSchema = new Schema({
   endDate: { type: Date, required: false },
   clientName: { type: String, required: true },
   active: { type: Boolean, required: true },
-  members: {
-    type: Map,
-    of: {
-      type: mongoose.SchemaTypes.ObjectId,
-      ref: 'Member',
+  members: [
+    {
+      employee: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: 'Employee',
+      },
+      role: {
+        type: String,
+        required: true,
+        enum: ['DEV', 'QA', 'TL'],
+      },
+      rate: { type: Number, required: true },
     },
-    required: true,
-  },
+  ],
   pm: {
     type: mongoose.SchemaTypes.ObjectId,
     required: true,

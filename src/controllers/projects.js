@@ -2,14 +2,17 @@ import ProjectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const allProjects = await ProjectSchema.find({});
-    allProjects.populate('pm', {
+    const allProjects = await ProjectSchema.find({}).populate('pm', {
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+    }).populate('members.employee', {
       _id: 1,
       firstName: 1,
       lastName: 1,
       email: 1,
     });
-    allProjects.populate('members.member');
     if (!allProjects) {
       return res.status(404).json({
         message: 'None projects found',
@@ -33,14 +36,17 @@ const getAllProjects = async (req, res) => {
 
 const getProjectById = async (req, res) => {
   try {
-    const project = await ProjectSchema.findById({ _id: req.params.id })
-      .populate('pm', {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        email: 1,
-      })
-      .populate('members');
+    const project = await ProjectSchema.findById({ _id: req.params.id }).populate('pm', {
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+    }).populate('members.employee', {
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
+    });
     if (!project) {
       return res.status(404).json({
         message: `The project with ID:'${req.params.id}' has not been found`,

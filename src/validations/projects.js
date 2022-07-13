@@ -23,7 +23,7 @@ const validateCreation = (req, res, next) => {
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean().required(),
-    members: Joi.object(),
+    members: Joi.array(),
     pm: Joi.string(),
   });
   const validate = projectValidation.validate(req.body);
