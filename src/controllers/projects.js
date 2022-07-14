@@ -2,16 +2,28 @@ import ProjectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const allProjects = await ProjectSchema.find({}).populate('pm', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-    }).populate('members.employee', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
+    const allProjects = await ProjectSchema.find({}).populate({
+      path: 'pm',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
+    }).populate({
+      path: 'members',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
     });
     if (!allProjects) {
       return res.status(404).json({
@@ -36,16 +48,28 @@ const getAllProjects = async (req, res) => {
 
 const getProjectById = async (req, res) => {
   try {
-    const project = await ProjectSchema.findById({ _id: req.params.id }).populate('pm', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-    }).populate('members.employee', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
+    const project = await ProjectSchema.findById({ _id: req.params.id }).populate({
+      path: 'pm',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
+    }).populate({
+      path: 'members',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
     });
     if (!project) {
       return res.status(404).json({

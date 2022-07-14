@@ -19,7 +19,7 @@ const validateCreation = (req, res, next) => {
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(1).max(130).required(),
     startDate: Joi.date().required(),
-    endDate: Joi.date().optional(),
+    endDate: Joi.date().optional().greater(Joi.ref('startDate')),
     clientName: Joi.string().min(1).max(50).required()
       .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean().required(),
@@ -43,7 +43,7 @@ const updateValidate = (req, res, next) => {
       .regex(/^[a-zA-Z]+$/),
     description: Joi.string().min(10).max(130),
     startDate: Joi.string(),
-    endDate: Joi.string().optional(),
+    endDate: Joi.string().optional().greater(Joi.ref('startDate')),
     clientName: Joi.string().min(3).max(50)
       .regex(/^[a-zA-Z]+$/),
     active: Joi.boolean(),
