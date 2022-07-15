@@ -1,31 +1,14 @@
-import joi from 'joi';
+import Joi from 'joi';
 
-const validateCreation = (req, res, next) => {
-  const timesheetSchema = joi.object({
-    tasks: joi.array().items(joi.string().lowercase()),
-    employeeId: joi.string().lowercase().required(),
-    projectId: joi.string().lowercase().required(),
-    startDate: joi.date().min(Date.now()),
-    endDate: joi.date().min(joi.ref('startDate')).required(),
-  });
-  const validation = timesheetSchema.validate(req.body);
-  if (validation.error) {
-    return res.status(400).json({
-      msg: `Code 400: ${validation.error.details[0].message}`,
-      data: undefined,
-      error: true,
-    });
-  }
-  return next();
-};
-
-const validateUpdate = (req, res, next) => {
-  const timesheetSchema = joi.object({
-    tasks: joi.array().items(joi.string().lowercase()),
-    employeeId: joi.string().lowercase(),
-    projectId: joi.string().lowercase(),
-    startDate: joi.date().min(Date.now()),
-    endDate: joi.date().min(joi.ref('startDate')),
+const validate = (req, res, next) => {
+  const timesheetSchema = Joi.object({
+    member: Joi.string().lowercase().required(),
+    project: Joi.string().lowercase().required(),
+    startDate: Joi.date().min(Date.now()),
+    endDate: Joi.date().min(Joi.ref('startDate')).required(),
+    task: Joi.string().required(),
+    workedHours: Joi.array(),
+    approved: Joi.boolean().required(),
   });
   const validation = timesheetSchema.validate(req.body);
   if (validation.error) {
@@ -39,6 +22,5 @@ const validateUpdate = (req, res, next) => {
 };
 
 export default {
-  validateCreation,
-  validateUpdate,
+  validate,
 };
