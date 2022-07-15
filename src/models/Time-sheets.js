@@ -8,13 +8,9 @@ function dateFormat(date) {
 }
 
 const timesheetSchema = new mongoose.Schema({
-  tasks: {
+  member: {
     type: [mongoose.SchemaTypes.ObjectId],
-    ref: 'Task',
-  },
-  employeeId: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Employee',
+    ref: 'Member',
     required: true,
   },
   projectId: {
@@ -24,14 +20,26 @@ const timesheetSchema = new mongoose.Schema({
   },
   startDate: {
     type: Date,
-    min: () => Date.now(),
+    required: true,
     get: dateFormat,
   },
   endDate: {
     type: Date,
     required: true,
-    min: () => Date.now(),
     get: dateFormat,
+  },
+  Task: {
+    type: String,
+    required: true,
+  },
+  workedHours: {
+    type: [Number],
+    required: true,
+  },
+  approved: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
 });
 
