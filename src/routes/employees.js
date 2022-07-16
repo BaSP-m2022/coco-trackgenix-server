@@ -8,7 +8,7 @@ const router = express.Router();
 router
   .get('/', authValidation, employeeController.getAllEmployees)
   .get('/:id', authValidation, employeeValidation.idValidation, employeeController.getEmployeeById)
-  .post('/', authValidation, employeeValidation.validateEmployee, employeeController.addNewEmployee)
+  .post('/', employeeValidation.validateEmployee, employeeController.addNewEmployee)
   .put('/:id', authValidation, employeeValidation.idValidation, employeeValidation.validateMod, employeeController.modifyEmployee)
   .delete('/:id', authValidation, employeeValidation.idValidation, employeeController.deleteEmployee);
 
