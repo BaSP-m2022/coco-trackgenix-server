@@ -1,42 +1,42 @@
 import Timesheet from '../models/Time-sheets';
-import Employee from '../models/Employees';
 import Member from '../models/Members';
 import Project from '../models/Projects';
 
 const getByOne = async (req, res) => {
   try {
-    const oneTimeSheet = await Timesheet.findById(req.params.id).populate('projectId', {
-      _id: 1,
-      name: 1,
-      clientName: 1,
-      admins: 1,
-    }).populate('tasks', {
-      _id: 1,
-      description: 1,
-      workedHours: 1,
-      date: 1,
-    }).populate('employeeId', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
-    });
+    const oneTimeSheet = await Timesheet.findById(req.params.id).populate({
+      path: 'members',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
+    });/* .populate({ */
+    //   path: 'ProjectId',
+    //   populate: {
+    //     path: 'pm',
+    //   },
+    // });
     if (oneTimeSheet) {
       return res.status(200).json({
-        message: 'TimeSheet fetched successfully',
+        message: 'Success! TimeSheet fetched.',
         data: oneTimeSheet,
         error: false,
       });
     }
     return res.status(404).json({
-      message: `TimeSheets with id ${req.params.id} not found`,
+      message: `TimeSheets ${req.params.id} not found`,
       data: undefined,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
       message: 'Internal server error',
-      data: error,
+      data: undefined,
       error: true,
     });
   }
@@ -84,7 +84,7 @@ const deleteTimesheet = async (req, res) => {
         error: true,
       });
     }
-    res.status(204).json({
+    res.status(200).json({
       message: 'Success! Timesheet deleted.',
       data: result,
       error: false,
@@ -101,7 +101,6 @@ const deleteTimesheet = async (req, res) => {
 
 const createTimesheet = async (req, res) => {
   try {
-    // Check if there's an existing timesheet of that project for that employee
     const timesheetExists = await Timesheet.findOne({
       member: req.body.member,
       project: req.body.projectId,
@@ -113,7 +112,6 @@ const createTimesheet = async (req, res) => {
         error: true,
       });
     }
-    // Check that the ID's provided are valid
     const member = await Member.findById(req.body.member);
     if (!member) {
       return res.status(404).json({
@@ -130,7 +128,6 @@ const createTimesheet = async (req, res) => {
         error: true,
       });
     }
-    // If pass all validations create timesheet
     const newTimesheet = await Timesheet.create({
       member: req.body.member,
       projectId: req.body.projectId,
@@ -157,7 +154,6 @@ const createTimesheet = async (req, res) => {
 
 const updateTimesheet = async (req, res) => {
   try {
-    // check for matching timesheet for the id given
     const found = await Timesheet.findById(req.params.id);
     if (!found) {
       return res.status(404).json({
@@ -166,12 +162,11 @@ const updateTimesheet = async (req, res) => {
         error: true,
       });
     }
-    // Check that the ID's provided are valid
-    if (req.body.employeeId) {
-      const employee = await Employee.findById(req.body.employeeId);
-      if (!employee) {
-        return res.status(400).json({
-          message: `Code 400: No employee with the id ${req.body.employeeId}`,
+    if (req.body.member) {
+      const member = await Member.findById(req.body.member);
+      if (!member) {
+        return res.status(404).json({
+          message: `member ${req.body.member} not found`,
           data: undefined,
           error: true,
         });
@@ -180,47 +175,26 @@ const updateTimesheet = async (req, res) => {
     if (req.body.projectId) {
       const project = await Project.findById(req.body.projectId);
       if (!project) {
-        return res.status(400).json({
-          message: `Code 400: No project with the id ${req.body.projectId}`,
+        return res.status(404).json({
+          message: `Project ${req.body.projectId} not found`,
           data: undefined,
           error: true,
         });
       }
     }
-    // validate that is not creating a duplicate
-    // if (req.body.employeeId) {
-    //   const asssignedTimesheet = await Timesheet.findOne({
-    //     employeeId: req.body.employeeId,
-    //     projectId: found.projectId,
-    //   });
-    //   if (asssignedTimesheet) {
-    //     return res.status(400).json({
-    //       message: 'Code 400: Timesheet already assigned to the employee',
-    //       data: asssignedTimesheet,
-    //       error: true,
-    //     });
-    //   }
-    // }
-    // if everything passes check what is provided and update it
-    // if (req.body.tasks) found.tasks = found.tasks.concat(req.body.tasks);
-    // if (req.body.employeeId) found.employeeId = req.body.employeeId;
-    // if (req.body.projectId) found.projectId = req.body.projectId;
-    // if (req.body.startDate) found.startDate = req.body.startDate;
-    // if (req.body.endDate) found.endDate = req.body.endDate;
-    // await found.save();
     const update = await Timesheet.findByIdAndUpdate(
       req.params.id,
       req.body,
       { new: true },
     );
     return res.status(201).json({
-      message: 'Code 201: Timesheet successfully updated',
+      message: 'Success! Timesheet updated',
       data: update,
       error: false,
     });
   } catch (error) {
-    return res.status(500).json({ // internal error
-      message: 'Code 500: There was an internal error',
+    return res.status(500).json({
+      message: 'There was an internal server error',
       data: error,
       error: true,
     });

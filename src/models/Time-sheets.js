@@ -1,5 +1,3 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-console */
 import mongoose from 'mongoose';
 
 function dateFormat(date) {
