@@ -1,10 +1,7 @@
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable no-return-assign */
-/* eslint-disable consistent-return */
 import Timesheet from '../models/Time-sheets';
 import Employee from '../models/Employees';
+import Member from '../models/Members';
 import Project from '../models/Projects';
-import Task from '../models/Tasks';
 
 const getByOne = async (req, res) => {
   try {
@@ -24,7 +21,6 @@ const getByOne = async (req, res) => {
       lastName: 1,
       email: 1,
     });
-
     if (oneTimeSheet) {
       return res.status(200).json({
         message: 'TimeSheet fetched successfully',
@@ -32,20 +28,16 @@ const getByOne = async (req, res) => {
         error: false,
       });
     }
-    if (!oneTimeSheet) {
-      res.status(404).json({
-        message: `TimeSheets with id ${req.params.id} not found`,
-        data: undefined,
-        error: false,
-        status: 404,
-      });
-    }
+    return res.status(404).json({
+      message: `TimeSheets with id ${req.params.id} not found`,
+      data: undefined,
+      error: false,
+    });
   } catch (error) {
-    res.status(500).json({
+    return res.status(500).json({
       message: 'Internal server error',
       data: error,
       error: true,
-      status: 500,
     });
   }
 };
@@ -75,10 +67,9 @@ const getAll = async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: 'internal server error',
+      message: 'internal server error...',
       data: undefined,
       error: true,
-      status: 500,
     });
   }
 };
@@ -88,19 +79,21 @@ const deleteTimesheet = async (req, res) => {
     const result = await Timesheet.findByIdAndDelete({ _id: req.params.id });
     if (!result) {
       return res.status(404).json({
-        msg: 'Wrong id. Status code: 404',
+        message: 'Error! Timesheet not found.',
         data: undefined,
         error: true,
       });
     }
     res.status(204).json({
-      msg: 'Timesheet deleted. Status code: 204',
+      message: 'Success! Timesheet deleted.',
       data: result,
       error: false,
     });
   } catch (error) {
     return res.status(500).json({
-      msg: 'There was an error. Status code: 500',
+      message: 'There where an internal server error.',
+      data: undefined,
+      error: true,
     });
   }
   return null;
@@ -110,74 +103,55 @@ const createTimesheet = async (req, res) => {
   try {
     // Check if there's an existing timesheet of that project for that employee
     const timesheetExists = await Timesheet.findOne({
-      employeeId: req.body.employeeId,
-      projectId: req.body.projectId,
+      member: req.body.member,
+      project: req.body.projectId,
     });
     if (timesheetExists) {
-      return res.status(400).json({
-        msg: 'Code 400: Timesheet already exists',
+      return res.status(409).json({
+        message: 'Conflict! Timesheet already exists.',
         data: timesheetExists,
         error: true,
       });
     }
     // Check that the ID's provided are valid
-    const employee = await Employee.findById(req.body.employeeId);
-    if (!employee) {
-      return res.status(400).json({
-        msg: `Code 400: No employee with the id ${req.body.employeeId}`,
+    const member = await Member.findById(req.body.member);
+    if (!member) {
+      return res.status(404).json({
+        message: `Error! Member ${req.body.employeeId} not found.`,
         data: undefined,
         error: true,
       });
     }
     const project = await Project.findById(req.body.projectId);
     if (!project) {
-      return res.status(400).json({
-        msg: `Code 400: No project with the id ${req.body.projectId}`,
-        data: undefined,
-        error: true,
-      });
-    }
-    const taskIdChecker = req.body.tasks.forEach(async (task) => {
-      const check = await Task.findById(task);
-      if (!check) {
-        return task;
-      }
-    });
-    if (taskIdChecker !== undefined) {
-      return res.status(400).json({
-        msg: `Code 400: No tasks with the id ${taskIdChecker}`,
+      return res.status(404).json({
+        message: `Error! Project ${req.body.projectId} not found.`,
         data: undefined,
         error: true,
       });
     }
     // If pass all validations create timesheet
     const newTimesheet = await Timesheet.create({
-      tasks: req.body.tasks,
-      employeeId: req.body.employeeId,
+      member: req.body.member,
       projectId: req.body.projectId,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
+      task: req.body.task,
+      workedHours: req.body.workedHours,
+      approved: req.body.approved,
     });
     await newTimesheet.save();
     return res.status(201).json({
-      message: 'Code 201: Timesheet successfully created',
+      message: 'Success! Timesheet created.',
       data: newTimesheet,
       error: false,
     });
   } catch (error) {
-    if (error.message) { // mongoose request error
-      res.status(400).json({
-        msg: `Code 400: ${error.message}`,
-        data: error,
-        error: true,
-      });
-    } else {
-      res.status(500).json({ // internal error
-        msg: 'Code 500: There was an internal error',
-        data: error,
-        error: true,
-      });
-    }
+    return res.status(500).json({
+      message: 'There were an internal error.',
+      data: error,
+      error: true,
+    });
   }
 };
 
@@ -187,7 +161,7 @@ const updateTimesheet = async (req, res) => {
     const found = await Timesheet.findById(req.params.id);
     if (!found) {
       return res.status(404).json({
-        msg: 'Code 404: Timesheet not found',
+        message: 'Code 404: Timesheet not found',
         data: req.params.id,
         error: true,
       });
@@ -197,7 +171,7 @@ const updateTimesheet = async (req, res) => {
       const employee = await Employee.findById(req.body.employeeId);
       if (!employee) {
         return res.status(400).json({
-          msg: `Code 400: No employee with the id ${req.body.employeeId}`,
+          message: `Code 400: No employee with the id ${req.body.employeeId}`,
           data: undefined,
           error: true,
         });
@@ -207,7 +181,7 @@ const updateTimesheet = async (req, res) => {
       const project = await Project.findById(req.body.projectId);
       if (!project) {
         return res.status(400).json({
-          msg: `Code 400: No project with the id ${req.body.projectId}`,
+          message: `Code 400: No project with the id ${req.body.projectId}`,
           data: undefined,
           error: true,
         });
@@ -221,7 +195,7 @@ const updateTimesheet = async (req, res) => {
     //   });
     //   if (asssignedTimesheet) {
     //     return res.status(400).json({
-    //       msg: 'Code 400: Timesheet already assigned to the employee',
+    //       message: 'Code 400: Timesheet already assigned to the employee',
     //       data: asssignedTimesheet,
     //       error: true,
     //     });
@@ -239,25 +213,17 @@ const updateTimesheet = async (req, res) => {
       req.body,
       { new: true },
     );
-    res.status(201).json({
-      msg: 'Code 201: Timesheet successfully updated',
+    return res.status(201).json({
+      message: 'Code 201: Timesheet successfully updated',
       data: update,
       error: false,
     });
   } catch (error) {
-    if (error.message) { // mongoose request error
-      res.status(400).json({
-        msg: `Code 400: ${error.message}`,
-        data: error,
-        error: true,
-      });
-    } else {
-      res.status(500).json({ // internal error
-        msg: 'Code 500: There was an internal error',
-        data: error,
-        error: true,
-      });
-    }
+    return res.status(500).json({ // internal error
+      message: 'Code 500: There was an internal error',
+      data: error,
+      error: true,
+    });
   }
 };
 

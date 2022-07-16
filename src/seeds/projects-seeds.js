@@ -8,12 +8,12 @@ export default [
     starDate: 2022,
     clientName: 'rose',
     active: true,
-    employees: [
+    members: [
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a46'),
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a45'),
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a44'),
     ],
-    admins: 'Coco Lobos',
+    pm: mongoose.Types.ObjectId('6283b662e53ed4c648db8a49'),
     createdAt: 2022,
     updatedAt: 2022,
   },
@@ -24,12 +24,12 @@ export default [
     starDate: 2022,
     clientName: 'rose',
     active: true,
-    employees: [
+    members: [
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a46'),
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a45'),
       mongoose.Types.ObjectId('6283b662e53ed4c648db8a44'),
     ],
-    admins: 'Coco Lobos',
+    pm: mongoose.Types.ObjectId('6283b662e53ed4c648db8a49'),
     createdAt: 2022,
     updatedAt: 2022,
   },
@@ -40,7 +40,7 @@ export default [
     startDate: '2022',
     clientName: 'rose',
     active: true,
-    employees: [{
+    members: [{
       object: {
         role: 'PM',
         rate: '42',
@@ -57,6 +57,6 @@ export default [
         id: '3',
       },
     }],
-    admins: 'Coco Lobos',
+    pm: mongoose.Types.ObjectId('6283b662e53ed4c648db8a49'),
   },
 ];

@@ -9,7 +9,7 @@ function dateFormat(date) {
 
 const timesheetSchema = new mongoose.Schema({
   member: {
-    type: [mongoose.SchemaTypes.ObjectId],
+    type: mongoose.SchemaTypes.ObjectId,
     ref: 'Member',
     required: true,
   },
@@ -28,7 +28,7 @@ const timesheetSchema = new mongoose.Schema({
     required: true,
     get: dateFormat,
   },
-  Task: {
+  task: {
     type: String,
     required: true,
   },
