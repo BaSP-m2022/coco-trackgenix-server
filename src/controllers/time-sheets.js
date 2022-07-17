@@ -5,7 +5,7 @@ import Project from '../models/Projects';
 const getByOne = async (req, res) => {
   try {
     const oneTimeSheet = await Timesheet.findById(req.params.id).populate({
-      path: 'members',
+      path: 'member',
       populate: {
         path: 'employee',
         select: {
@@ -15,12 +15,21 @@ const getByOne = async (req, res) => {
           email: 1,
         },
       },
-    });/* .populate({ */
-    //   path: 'ProjectId',
-    //   populate: {
-    //     path: 'pm',
-    //   },
-    // });
+    }).populate({
+      path: 'projectId',
+      populate: {
+        path: 'pm',
+        populate: {
+          path: 'employee',
+          select: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+          },
+        },
+      },
+    });
     if (oneTimeSheet) {
       return res.status(200).json({
         message: 'Success! TimeSheet fetched.',
@@ -44,30 +53,40 @@ const getByOne = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const allTimeSheets = await Timesheet.find({}).populate('projectId', {
-      _id: 1,
-      name: 1,
-      client: 1,
-      admins: 1,
-    }).populate('tasks', {
-      _id: 1,
-      description: 1,
-      workedHours: 1,
-      date: 1,
-    }).populate('employeeId', {
-      _id: 1,
-      firstName: 1,
-      lastName: 1,
-      email: 1,
+    const allTimeSheets = await Timesheet.find().populate({
+      path: 'member',
+      populate: {
+        path: 'employee',
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
+        },
+      },
+    }).populate({
+      path: 'projectId',
+      populate: {
+        path: 'pm',
+        populate: {
+          path: 'employee',
+          select: {
+            _id: 1,
+            firstName: 1,
+            lastName: 1,
+            email: 1,
+          },
+        },
+      },
     });
     res.status(200).json({
-      message: 'TimeSheets fetched successfully',
+      message: 'Success! TimeSheets fetched.',
       data: allTimeSheets,
       error: false,
     });
   } catch (error) {
     res.status(500).json({
-      message: 'internal server error...',
+      message: 'internal server error',
       data: undefined,
       error: true,
     });
