@@ -11,7 +11,7 @@ const timesheetSchema = new mongoose.Schema({
     ref: 'Member',
     required: true,
   },
-  projectId: {
+  project: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Project',
     required: true,

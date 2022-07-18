@@ -16,11 +16,11 @@ const idValidation = (req, res, next) => {
 const validate = (req, res, next) => {
   const timesheetSchema = Joi.object({
     member: Joi.string().lowercase().required(),
-    projectId: Joi.string().lowercase().required(),
+    project: Joi.string().lowercase().required(),
     startDate: Joi.date(),
     endDate: Joi.date().min(Joi.ref('startDate')).required(),
     task: Joi.string().required(),
-    workedHours: Joi.array(),
+    workedHours: Joi.array().max(7),
     approved: Joi.boolean().required(),
   });
   const validation = timesheetSchema.validate(req.body);

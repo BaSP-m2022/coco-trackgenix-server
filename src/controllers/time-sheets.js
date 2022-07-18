@@ -16,7 +16,7 @@ const getByOne = async (req, res) => {
         },
       },
     }).populate({
-      path: 'projectId',
+      path: 'project',
       populate: {
         path: 'pm',
         populate: {
@@ -45,7 +45,7 @@ const getByOne = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: 'Internal server error',
-      data: undefined,
+      data: error,
       error: true,
     });
   }
@@ -65,7 +65,7 @@ const getAll = async (req, res) => {
         },
       },
     }).populate({
-      path: 'projectId',
+      path: 'project',
       populate: {
         path: 'pm',
         populate: {
@@ -87,7 +87,7 @@ const getAll = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: 'internal server error',
-      data: undefined,
+      data: error,
       error: true,
     });
   }
@@ -111,7 +111,7 @@ const deleteTimesheet = async (req, res) => {
   } catch (error) {
     return res.status(500).json({
       message: 'There where an internal server error.',
-      data: undefined,
+      data: error,
       error: true,
     });
   }
@@ -120,17 +120,6 @@ const deleteTimesheet = async (req, res) => {
 
 const createTimesheet = async (req, res) => {
   try {
-    const timesheetExists = await Timesheet.findOne({
-      member: req.body.member,
-      project: req.body.projectId,
-    });
-    if (timesheetExists) {
-      return res.status(409).json({
-        message: 'Conflict! Timesheet already exists.',
-        data: timesheetExists,
-        error: true,
-      });
-    }
     const member = await Member.findById(req.body.member);
     if (!member) {
       return res.status(404).json({
@@ -139,7 +128,7 @@ const createTimesheet = async (req, res) => {
         error: true,
       });
     }
-    const project = await Project.findById(req.body.projectId);
+    const project = await Project.findById(req.body.project);
     if (!project) {
       return res.status(404).json({
         message: `Error! Project ${req.body.projectId} not found.`,
@@ -149,7 +138,7 @@ const createTimesheet = async (req, res) => {
     }
     const newTimesheet = await Timesheet.create({
       member: req.body.member,
-      projectId: req.body.projectId,
+      project: req.body.project,
       startDate: req.body.startDate,
       endDate: req.body.endDate,
       task: req.body.task,
@@ -176,8 +165,8 @@ const updateTimesheet = async (req, res) => {
     const found = await Timesheet.findById(req.params.id);
     if (!found) {
       return res.status(404).json({
-        message: 'Code 404: Timesheet not found',
-        data: req.params.id,
+        message: 'Error! Timesheet not found',
+        data: undefined,
         error: true,
       });
     }
