@@ -115,5 +115,3 @@ describe('DELETE /projects/:id', () => {
     expect(response.error).toBeFalsy();
   });
 });
-
-test.todo('complete test');

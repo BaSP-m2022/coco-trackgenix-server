@@ -1,5 +1,3 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-console */
 import mongoose from 'mongoose';
 
 function dateFormat(date) {
@@ -8,30 +6,38 @@ function dateFormat(date) {
 }
 
 const timesheetSchema = new mongoose.Schema({
-  tasks: {
-    type: [mongoose.SchemaTypes.ObjectId],
-    ref: 'Task',
-  },
-  employeeId: {
+  member: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Employee',
+    ref: 'Member',
     required: true,
   },
-  projectId: {
+  project: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'Project',
     required: true,
   },
   startDate: {
     type: Date,
-    min: () => Date.now(),
+    required: true,
     get: dateFormat,
   },
   endDate: {
     type: Date,
     required: true,
-    min: () => Date.now(),
     get: dateFormat,
+  },
+  task: {
+    type: String,
+    required: true,
+  },
+  workedHours: {
+    type: [Number],
+    required: true,
+  },
+  approved: {
+    type: Boolean,
+    required: true,
+    default: false,
   },
 });
 
