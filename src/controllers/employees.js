@@ -116,18 +116,18 @@ const modifyEmployee = async (req, res) => {
 const deleteEmployee = async (req, res) => {
   try {
     const del = await Employee.findByIdAndDelete(req.params.id);
-    if (del) {
-      res.status(200).json({
-        message: `Employee with ID:'${req.params.id}' was deleted succesfully`,
-        data: del,
-        error: false,
-      });
-    }
     if (!del) {
       res.status(404).json({
         message: `Employee with ID:'${req.params.id}' not found`,
         data: undefined,
         error: true,
+      });
+    } else {
+      await Firebase.auth().deleteUser(req.headers.uid);
+      res.status(200).json({
+        message: `Employee with ID:'${req.params.id}' was deleted succesfully`,
+        data: del,
+        error: false,
       });
     }
   } catch (error) {

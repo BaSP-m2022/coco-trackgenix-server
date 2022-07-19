@@ -53,7 +53,8 @@ const deleteAdmin = async (req, res) => {
         error: true,
       });
     } else {
-      res.status(204).json({
+      await Firebase.auth().deleteUser(req.headers.uid);
+      res.status(200).json({
         message: `The admin ID:'${req.params.id}' has been successfully deleted`,
         data: result,
         error: false,

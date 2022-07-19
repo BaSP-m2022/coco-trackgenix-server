@@ -61,6 +61,7 @@ const deleteSuperAdmin = async (req, res) => {
     const result = await SuperAdminModel.findByIdAndDelete({
       _id: req.params.id,
     });
+    await Firebase.auth().deleteUser(req.headers.uid);
     return res.status(200).json({
       message: 'The Super-Admin has been successfully deleted',
       data: result,
