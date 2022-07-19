@@ -104,7 +104,7 @@ const deleteTimesheet = async (req, res) => {
       });
     }
     res.status(200).json({
-      message: 'Success! Timesheet deleted.',
+      message: 'Timesheet successfully deleted.',
       data: result,
       error: false,
     });
@@ -147,7 +147,7 @@ const createTimesheet = async (req, res) => {
     });
     await newTimesheet.save();
     return res.status(201).json({
-      message: 'Success! Timesheet created.',
+      message: 'Timesheet successfully created.',
       data: newTimesheet,
       error: false,
     });
@@ -196,7 +196,7 @@ const updateTimesheet = async (req, res) => {
       { new: true },
     );
     return res.status(201).json({
-      message: 'Success! Timesheet updated',
+      message: 'Timesheet successfully updated',
       data: update,
       error: false,
     });
