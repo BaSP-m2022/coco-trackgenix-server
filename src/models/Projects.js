@@ -12,13 +12,11 @@ const ProjectSchema = new Schema({
   members: [
     {
       type: mongoose.SchemaTypes.ObjectId,
-      required: true,
       ref: 'Member',
     },
   ],
   pm: {
     type: mongoose.SchemaTypes.ObjectId,
-    required: true,
     ref: 'Member',
   },
 }, { timestamps: true });
