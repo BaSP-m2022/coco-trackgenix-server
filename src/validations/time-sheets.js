@@ -13,7 +13,7 @@ const idValidation = (req, res, next) => {
   return next();
 };
 
-const validate = (req, res, next) => {
+const validateAdd = (req, res, next) => {
   const timesheetSchema = Joi.object({
     member: Joi.string().lowercase().required(),
     project: Joi.string().lowercase().required(),
@@ -26,7 +26,28 @@ const validate = (req, res, next) => {
   const validation = timesheetSchema.validate(req.body);
   if (validation.error) {
     return res.status(400).json({
-      message: `Code 400: ${validation.error.details[0].message}`,
+      message: `${validation.error.details[0].message}`,
+      data: undefined,
+      error: true,
+    });
+  }
+  return next();
+};
+
+const validateEdit = (req, res, next) => {
+  const timesheetSchema = Joi.object({
+    member: Joi.string().lowercase(),
+    project: Joi.string().lowercase(),
+    startDate: Joi.date(),
+    endDate: Joi.date().min(Joi.ref('startDate')),
+    task: Joi.string(),
+    workedHours: Joi.array().max(7),
+    approved: Joi.boolean(),
+  });
+  const validation = timesheetSchema.validate(req.body);
+  if (validation.error) {
+    return res.status(400).json({
+      message: `${validation.error.details[0].message}`,
       data: undefined,
       error: true,
     });
@@ -35,6 +56,7 @@ const validate = (req, res, next) => {
 };
 
 export default {
-  validate,
+  validateAdd,
+  validateEdit,
   idValidation,
 };
