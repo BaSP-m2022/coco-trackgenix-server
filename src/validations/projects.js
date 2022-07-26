@@ -36,7 +36,7 @@ const validateCreation = (req, res, next) => {
       .regex(/^[a-zA-Z]+(\s)*$/),
     active: Joi.boolean().required(),
     members: Joi.array(),
-    pm: Joi.string(),
+    pm: Joi.string().min(0),
   });
   const validate = projectValidation.validate(req.body);
   if (validate.error) {
