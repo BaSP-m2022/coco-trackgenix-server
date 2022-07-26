@@ -7,9 +7,9 @@ const router = express.Router();
 
 router
   .get('/', authValidation, timesheetsController.getAll)
-  .get('/:id', authValidation, timesheetsController.getByOne)
-  .delete('/:id', authValidation, timesheetsController.deleteTimesheet)
-  .post('/', authValidation, timesheetValidation.validate, timesheetsController.createTimesheet)
-  .put('/:id', authValidation, timesheetValidation.validate, timesheetsController.updateTimesheet);
+  .get('/:id', authValidation, timesheetValidation.idValidation, timesheetsController.getByOne)
+  .delete('/:id', authValidation, timesheetValidation.idValidation, timesheetsController.deleteTimesheet)
+  .post('/', authValidation, timesheetValidation.validateAdd, timesheetsController.createTimesheet)
+  .put('/:id', authValidation, timesheetValidation.idValidation, timesheetValidation.validateEdit, timesheetsController.updateTimesheet);
 
 export default router;
