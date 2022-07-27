@@ -19,14 +19,11 @@ const getByOne = async (req, res) => {
       path: 'project',
       populate: {
         path: 'pm',
-        populate: {
-          path: 'employee',
-          select: {
-            _id: 1,
-            firstName: 1,
-            lastName: 1,
-            email: 1,
-          },
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
         },
       },
     });
@@ -53,7 +50,7 @@ const getByOne = async (req, res) => {
 
 const getAll = async (req, res) => {
   try {
-    const allTimeSheets = await Timesheet.find().populate({
+    const allTimeSheets = await Timesheet.find({ ...req.query }).populate({
       path: 'member',
       populate: {
         path: 'employee',
@@ -68,14 +65,11 @@ const getAll = async (req, res) => {
       path: 'project',
       populate: {
         path: 'pm',
-        populate: {
-          path: 'employee',
-          select: {
-            _id: 1,
-            firstName: 1,
-            lastName: 1,
-            email: 1,
-          },
+        select: {
+          _id: 1,
+          firstName: 1,
+          lastName: 1,
+          email: 1,
         },
       },
     });

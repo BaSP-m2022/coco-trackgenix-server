@@ -2,7 +2,7 @@ import Members from '../models/Members';
 
 const getAllMembers = async (req, res) => {
   try {
-    const allMembers = await Members.find({}).populate('employee', {
+    const allMembers = await Members.find({ ...req.query }).populate('employee', {
       _id: 1,
       firstName: 1,
       lastName: 1,

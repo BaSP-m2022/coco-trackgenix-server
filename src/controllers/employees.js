@@ -3,7 +3,7 @@ import Firebase from '../helper/firebase';
 
 const getAllEmployees = async (req, res) => {
   try {
-    const allEmployees = await Employee.find({});
+    const allEmployees = await Employee.find({ ...req.query });
     return res.status(200).json({
       message: 'Employees list displayed correctly.',
       data: allEmployees,

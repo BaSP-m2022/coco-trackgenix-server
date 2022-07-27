@@ -3,7 +3,7 @@ import Firebase from '../helper/firebase';
 
 const getAllSuperAdmins = async (req, res) => {
   try {
-    const AllSuperAdmins = await SuperAdminModel.find({});
+    const AllSuperAdmins = await SuperAdminModel.find({ ...req.query });
     if (!AllSuperAdmins) {
       return res.status(400).json({
         message: 'Super-admin list is empty',
