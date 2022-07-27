@@ -5,13 +5,10 @@ const getAllProjects = async (req, res) => {
     const allProjects = await ProjectSchema.find({}).populate({
       path: 'pm',
       populate: {
-        path: 'employee',
-        select: {
-          _id: 1,
-          firstName: 1,
-          lastName: 1,
-          email: 1,
-        },
+        _id: 1,
+        firstName: 1,
+        lastName: 1,
+        email: 1,
       },
     }).populate({
       path: 'members',
@@ -51,13 +48,10 @@ const getProjectById = async (req, res) => {
     const project = await ProjectSchema.findById({ _id: req.params.id }).populate({
       path: 'pm',
       populate: {
-        path: 'employee',
-        select: {
-          _id: 1,
-          firstName: 1,
-          lastName: 1,
-          email: 1,
-        },
+        _id: 1,
+        firstName: 1,
+        lastName: 1,
+        email: 1,
       },
     }).populate({
       path: 'members',
