@@ -17,7 +17,7 @@ const ProjectSchema = new Schema({
   ],
   pm: {
     type: mongoose.SchemaTypes.ObjectId,
-    ref: 'Member',
+    ref: 'Employee',
   },
 }, { timestamps: true });
 

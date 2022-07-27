@@ -3,7 +3,7 @@ import Firebase from '../helper/firebase';
 
 const getAllAdmins = async (req, res) => {
   try {
-    const allAdmins = await AdminModel.find({});
+    const allAdmins = await AdminModel.find({ ...req.query });
     res.status(200).json({
       message: 'Admin list displayed correctly.',
       data: allAdmins,

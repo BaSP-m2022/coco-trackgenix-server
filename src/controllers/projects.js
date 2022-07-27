@@ -2,14 +2,11 @@ import ProjectSchema from '../models/Projects';
 
 const getAllProjects = async (req, res) => {
   try {
-    const allProjects = await ProjectSchema.find({}).populate({
-      path: 'pm',
-      populate: {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        email: 1,
-      },
+    const allProjects = await ProjectSchema.find({ ...req.query }).populate('pm', {
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
     }).populate({
       path: 'members',
       populate: {
@@ -45,14 +42,11 @@ const getAllProjects = async (req, res) => {
 
 const getProjectById = async (req, res) => {
   try {
-    const project = await ProjectSchema.findById({ _id: req.params.id }).populate({
-      path: 'pm',
-      populate: {
-        _id: 1,
-        firstName: 1,
-        lastName: 1,
-        email: 1,
-      },
+    const project = await ProjectSchema.findById({ _id: req.params.id }).populate('pm', {
+      _id: 1,
+      firstName: 1,
+      lastName: 1,
+      email: 1,
     }).populate({
       path: 'members',
       populate: {

@@ -2,7 +2,7 @@ import Tasks from '../models/Tasks';
 
 const getTasks = async (req, res) => {
   try {
-    const list = await Tasks.find({});
+    const list = await Tasks.find({ ...req.query });
     res.status(200).json({
       message: 'List of tasks successfully fetched',
       data: list,
