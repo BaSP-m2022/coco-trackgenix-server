@@ -61,7 +61,7 @@ const getProjectById = async (req, res) => {
     });
     if (!project) {
       return res.status(404).json({
-        message: `The project with ID:'${req.params.id}' has not been found`,
+        message: 'The project has not been found',
         data: undefined,
         error: true,
       });
@@ -112,13 +112,13 @@ const deleteProject = async (req, res) => {
     const result = await ProjectSchema.findByIdAndDelete({ _id: req.params.id });
     if (!result) {
       return res.status(404).json({
-        message: `The project with ID:'${req.params.id}' has not been found`,
+        message: 'The project has not been found',
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: `The project with ID:'${req.params.id}' has been deleted successfully`,
+      message: 'The project has been deleted successfully',
       data: result,
       error: false,
     });
@@ -140,13 +140,13 @@ const updateProject = async (req, res) => {
     );
     if (!result) {
       return res.status(404).json({
-        message: `The project with ID:'${req.params.id}' has not been found`,
+        message: 'The project has not been found',
         data: undefined,
         error: true,
       });
     }
     return res.status(200).json({
-      message: `The project with ID:'${req.params.id}' has been updated successfully`,
+      message: 'The project has been updated successfully',
       data: result,
       error: false,
     });

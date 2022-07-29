@@ -27,6 +27,7 @@ const getAllMembers = async (req, res) => {
     });
   }
 };
+
 const getByIdMembers = async (req, res) => {
   try {
     const oneMember = await Members.findById(req.params.id).populate(
@@ -46,7 +47,7 @@ const getByIdMembers = async (req, res) => {
     }
     if (!oneMember) {
       res.status(404).json({
-        message: 'The member with the ID has been not found.',
+        message: 'The member has been not found.',
         data: undefined,
         error: true,
       });

@@ -27,6 +27,9 @@ const employeeSchema = new Schema({
     type: String,
     required: true,
   },
+  pm: {
+    type: Boolean,
+  },
 });
 
 export default mongoose.model('Employee', employeeSchema);

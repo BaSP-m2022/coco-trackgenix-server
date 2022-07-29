@@ -35,7 +35,7 @@ const getByOne = async (req, res) => {
       });
     }
     return res.status(404).json({
-      message: `TimeSheets ${req.params.id} not found`,
+      message: 'TimeSheets not found',
       data: undefined,
       error: false,
     });
@@ -117,7 +117,7 @@ const createTimesheet = async (req, res) => {
     const member = await Member.findById(req.body.member);
     if (!member) {
       return res.status(404).json({
-        message: `Error! Member ${req.body.employeeId} not found.`,
+        message: 'Error! Member not found.',
         data: undefined,
         error: true,
       });
@@ -125,7 +125,7 @@ const createTimesheet = async (req, res) => {
     const project = await Project.findById(req.body.project);
     if (!project) {
       return res.status(404).json({
-        message: `Error! Project ${req.body.projectId} not found.`,
+        message: 'Error! Project not found.',
         data: undefined,
         error: true,
       });
@@ -168,7 +168,7 @@ const updateTimesheet = async (req, res) => {
       const member = await Member.findById(req.body.member);
       if (!member) {
         return res.status(404).json({
-          message: `member ${req.body.member} not found`,
+          message: 'Member not found',
           data: undefined,
           error: true,
         });
@@ -178,7 +178,7 @@ const updateTimesheet = async (req, res) => {
       const project = await Project.findById(req.body.projectId);
       if (!project) {
         return res.status(404).json({
-          message: `Project ${req.body.projectId} not found`,
+          message: 'Project not found',
           data: undefined,
           error: true,
         });
