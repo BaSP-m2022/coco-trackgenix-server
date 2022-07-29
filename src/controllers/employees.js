@@ -23,14 +23,14 @@ const getEmployeeById = async (req, res) => {
   try {
     if (oneEmployee) {
       res.status(200).json({
-        message: `The employee with the ID:'${req.params.id}' has been found.`,
+        message: 'The employee has been found.',
         data: oneEmployee,
         error: false,
       });
     }
     if (!oneEmployee) {
       res.status(404).json({
-        message: `Employee with ID:'${req.params.id}' not found.`,
+        message: 'Employee not found.',
         data: undefined,
         error: true,
       });
@@ -64,6 +64,7 @@ const addNewEmployee = async (req, res) => {
       phone: req.body.phone,
       email: req.body.email,
       password: req.body.password,
+      pm: false,
     });
     const employee = await employeeCreated.save();
     return res.status(200).json({
@@ -86,18 +87,33 @@ const addNewEmployee = async (req, res) => {
 const modifyEmployee = async (req, res) => {
   try {
     const focusEmployee = await Employee.findById(req.params.id);
+    const firebaseUidEmployee = focusEmployee.firebaseUid;
     const update = await Employee.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
     });
     if (!focusEmployee) {
       res.status(404).json({
-        message: `Employee with ID:'${req.params.id}' not found`,
+        message: 'Employee not found',
         data: undefined,
         error: true,
       });
+    } else if (update.pm === true) {
+      await Firebase.auth().setCustomUserClaims(firebaseUidEmployee, { role: 'PM' });
+      res.status(200).json({
+        message: 'The employee data has been updated correctly.',
+        data: update,
+        error: false,
+      });
+    } else if (update.pm === false) {
+      await Firebase.auth().setCustomUserClaims(firebaseUidEmployee, { role: 'EMPLOYEE' });
+      res.status(200).json({
+        message: 'The employee data has been updated correctly.',
+        data: update,
+        error: false,
+      });
     } else {
       res.status(200).json({
-        message: `The employee (ID:'${req.params.id}') data has been updated correctly.`,
+        message: 'The employee data has been updated correctly.',
         data: update,
         error: false,
       });
@@ -118,14 +134,14 @@ const deleteEmployee = async (req, res) => {
     const del = await Employee.findByIdAndDelete(req.params.id);
     if (!del) {
       res.status(404).json({
-        message: `Employee with ID:'${req.params.id}' not found`,
+        message: 'Employee not found',
         data: undefined,
         error: true,
       });
     } else {
       await Firebase.auth().deleteUser(req.headers.uid);
       res.status(200).json({
-        message: `Employee with ID:'${req.params.id}' was deleted succesfully`,
+        message: 'Employee was deleted succesfully',
         data: del,
         error: false,
       });

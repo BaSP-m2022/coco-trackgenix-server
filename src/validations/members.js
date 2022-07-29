@@ -1,6 +1,5 @@
 import Joi from 'joi';
 import mongoose from 'mongoose';
-import membersModel from '../models/Members';
 import employeeModel from '../models/Employees';
 
 const idValidation = (req, res, next) => {
@@ -43,14 +42,6 @@ const validateMember = async (req, res, next) => {
       data: undefined,
     });
   }
-  const memberExist = await membersModel.findOne({
-    employee: req.body.employee,
-  });
-  if (memberExist) {
-    return res.status(400).json({
-      message: 'Member already exist',
-    });
-  }
   const employeeNot = await employeeModel.findOne({ _id: req.body.employee });
   if (!employeeNot) {
     return res.status(404).json({
@@ -61,6 +52,7 @@ const validateMember = async (req, res, next) => {
   }
   return next();
 };
+
 const validateMemberPut = async (req, res, next) => {
   const member = Joi.object({
     employee: Joi.string().required(),
@@ -86,6 +78,7 @@ const validateMemberPut = async (req, res, next) => {
   }
   return next();
 };
+
 export default {
   validateMember,
   validateMemberPut,

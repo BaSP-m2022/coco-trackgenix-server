@@ -22,7 +22,7 @@ const getTaskById = async (req, res) => {
     const task = await Tasks.findById({ _id: req.params.id });
     if (task) {
       res.status(200).json({
-        message: `Task with id ${req.params.id} successfully fetched`,
+        message: 'Task successfully fetched',
         data: task,
         error: false,
       });
@@ -30,7 +30,7 @@ const getTaskById = async (req, res) => {
   } catch (error) {
     if (error.value) {
       res.status(404).json({
-        message: `Task with id ${req.params.id} not found`,
+        message: 'Task not found',
         data: undefined,
         error: true,
       });
@@ -83,7 +83,7 @@ const deleteTask = async (req, res) => {
   } catch (error) {
     if (error.value) {
       res.status(404).json({
-        message: `Task with id ${req.params.id} not found`,
+        message: 'Task not found',
         data: undefined,
         error: true,
       });
@@ -113,7 +113,7 @@ const updateTask = async (req, res) => {
       });
     } else {
       res.status(404).json({
-        message: `Task with id ${req.params.id} not found`,
+        message: 'Task not found',
         data: undefined,
         error: true,
       });

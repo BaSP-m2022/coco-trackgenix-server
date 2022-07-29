@@ -10,6 +10,6 @@ router
   .get('/:id', authValidation, projectValidation.idValidation, projects.getProjectById)
   .post('/', authValidation, projectValidation.validateCreation, projects.createProject)
   .delete('/:id', authValidation, projectValidation.idValidation, projects.deleteProject)
-  .put('/:id', authValidation, projectValidation.idValidationPM, projectValidation.idValidation, projectValidation.updateValidate, projects.updateProject);
+  .put('/:id', authValidation, projectValidation.idValidation, projectValidation.updateValidate, projects.updateProject);
 
 export default router;

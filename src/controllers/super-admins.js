@@ -30,7 +30,7 @@ const getSuperAdminById = async (req, res) => {
     const superAdmin = await SuperAdminModel.findById({ _id: req.params.id });
     if (!superAdmin) {
       return res.status(404).json({
-        message: 'The super-admin with the ID has been not found.',
+        message: 'The super-admin has been not found.',
         data: superAdmin,
         error: true,
       });

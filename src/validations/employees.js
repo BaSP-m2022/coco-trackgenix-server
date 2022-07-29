@@ -24,6 +24,7 @@ const validateEmployee = async (req, res, next) => {
     email: Joi.string().email().required(),
     password: Joi.string().min(3).max(30).regex(/^(?=.*?[a-zA-Z])(?=.*?[0-9])/)
       .required(),
+    pm: Joi.boolean(),
   });
 
   const validate = employee.validate(req.body);
@@ -54,6 +55,7 @@ const validateMod = async (req, res, next) => {
     phone: Joi.number(),
     email: Joi.string().email(),
     password: Joi.string().min(3).max(30).regex(/^(?=.*?[a-zA-Z])(?=.*?[0-9])/),
+    pm: Joi.boolean(),
   });
 
   const validate = employee.validate(req.body);

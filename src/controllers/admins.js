@@ -23,13 +23,13 @@ const getAdminById = async (req, res) => {
     const admin = await AdminModel.findById({ _id: req.params.id });
     if (!admin) {
       res.status(404).json({
-        message: `Admin with ID:'${req.params.id}' could not be found`,
+        message: 'Admin could not be found',
         data: undefined,
         error: true,
       });
     } else {
       res.status(200).json({
-        message: `The admin with the ID:'${req.params.id}' has been found.`,
+        message: 'The admin has been found.',
         data: admin,
         error: false,
       });
@@ -48,14 +48,14 @@ const deleteAdmin = async (req, res) => {
     const result = await AdminModel.findByIdAndDelete({ _id: req.params.id });
     if (!result) {
       res.status(404).json({
-        message: `The admin ID:'${req.params.id}' could not be found`,
+        message: 'The admin could not be found',
         data: undefined,
         error: true,
       });
     } else {
       await Firebase.auth().deleteUser(req.headers.uid);
       res.status(200).json({
-        message: `The admin ID:'${req.params.id}' has been successfully deleted`,
+        message: 'The admin has been successfully deleted',
         data: result,
         error: false,
       });
@@ -116,7 +116,7 @@ const updateAdmin = async (req, res) => {
     );
     if (!focusAdmin) {
       res.status(404).json({
-        message: `Admin with ID:'${req.params.id}' could not be found`,
+        message: 'Admin could not be found',
         data: undefined,
         error: true,
       });
